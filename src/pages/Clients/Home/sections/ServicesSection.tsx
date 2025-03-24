@@ -1,23 +1,30 @@
-
-import React from 'react';
-import { Box, Container, Grid, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 
 const services = [
   {
-    title: 'Massage Trị Liệu',
-    description: 'Giảm căng thẳng, mệt mỏi với các liệu pháp massage chuyên nghiệp',
-    image: '/images/services/massage.jpg'
+    title: "Massage Trị Liệu",
+    description:
+      "Giảm căng thẳng, mệt mỏi với các liệu pháp massage chuyên nghiệp",
+    image: "/images/services/massage.jpg",
   },
   {
-    title: 'Chăm Sóc Da',
-    description: 'Các liệu trình chăm sóc da mặt với sản phẩm cao cấp',
-    image: '/images/services/facial.jpg'
+    title: "Chăm Sóc Da",
+    description: "Các liệu trình chăm sóc da mặt với sản phẩm cao cấp",
+    image: "/images/services/facial.jpg",
   },
   {
-    title: 'Gội Đầu Dưỡng Sinh',
-    description: 'Thư giãn với dịch vụ gội đầu kết hợp massage đầu, vai, gáy',
-    image: '/images/services/hair.jpg'
-  }
+    title: "Gội Đầu Dưỡng Sinh",
+    description: "Thư giãn với dịch vụ gội đầu kết hợp massage đầu, vai, gáy",
+    image: "/images/services/hair.jpg",
+  },
 ];
 
 export const ServicesSection = () => {
@@ -33,7 +40,13 @@ export const ServicesSection = () => {
         <Grid container spacing={4}>
           {services.map((service, index) => (
             <Grid item xs={12} md={4} key={index}>
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <CardMedia
                   component="img"
                   height="200"
