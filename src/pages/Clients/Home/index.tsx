@@ -23,6 +23,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
+import GoogleMapsComponent from './GoogleMaps';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -369,6 +370,19 @@ const HomePage = () => {
                 </Grid>
               </Grid>
             </Paper>
+          </Container>
+        </Box>
+
+        {/* Map Section */}
+        <Box sx={{ backgroundColor: '#FFF', py: 8 }}>
+          <Container maxWidth="lg">
+            <Typography variant="h4" component="h2" align="center" gutterBottom sx={{ color: '#6D4C41' }}>
+              Vị trí các chi nhánh
+            </Typography>
+            <Typography variant="body1" align="center" paragraph sx={{ mb: 6 }}>
+              Tìm chi nhánh Tấm Ơi Spa gần bạn nhất
+            </Typography>
+            <GoogleMapsComponent />
           </Container>
         </Box>
 
