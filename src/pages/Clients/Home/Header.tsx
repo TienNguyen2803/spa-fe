@@ -17,13 +17,16 @@ import {
   useTheme
 } from '@mui/material';
 
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import SpaIcon from '@mui/icons-material/Spa';
-import EventNoteIcon from '@mui/icons-material/EventNote';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import InfoIcon from '@mui/icons-material/Info';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 
 const Header = () => {
   const theme = useTheme();
@@ -90,29 +93,34 @@ const Header = () => {
             <Typography variant="subtitle2">Nâng niu mái tóc Việt</Typography>
           </Box>
           <List>
-            <ListItem button>
-              <ListItemIcon><SpaIcon /></ListItemIcon>
+            <ListItem button component={Link} to="/home">
+              <ListItemIcon><HomeIcon /></ListItemIcon>
               <ListItemText primary="Trang chủ" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/about">
+              <ListItemIcon><InfoIcon /></ListItemIcon>
+              <ListItemText primary="Giới thiệu" />
+            </ListItem>
+            <ListItem button component={Link} to="/services">
               <ListItemIcon><SpaIcon /></ListItemIcon>
               <ListItemText primary="Dịch vụ" />
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/products">
+              <ListItemIcon><ShoppingBasketIcon /></ListItemIcon>
+              <ListItemText primary="Sản phẩm" />
+            </ListItem>
+            <ListItem button component={Link} to="/gallery">
+              <ListItemIcon><PhotoLibraryIcon /></ListItemIcon>
+              <ListItemText primary="Hình ảnh" />
+            </ListItem>
+            <ListItem button component={Link} to="/news">
               <ListItemIcon><NewspaperIcon /></ListItemIcon>
               <ListItemText primary="Tin tức" />
             </ListItem>
-            <ListItem button>
-              <ListItemIcon><InfoIcon /></ListItemIcon>
-              <ListItemText primary="Về chúng tôi" />
-            </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to="/contact">
               <ListItemIcon><LocationOnIcon /></ListItemIcon>
               <ListItemText primary="Liên hệ" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon><EventNoteIcon /></ListItemIcon>
-              <ListItemText primary="Đặt lịch" />
+            </ListItem>t lịch" />
             </ListItem>
           </List>
           <Divider />

@@ -150,6 +150,12 @@ function App() {
             >
               <Routes>
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/about" element={lazy(() => import("./pages/Clients/About"))} />
+                <Route path="/services" element={lazy(() => import("./pages/Clients/Services"))} />
+                <Route path="/products" element={lazy(() => import("./pages/Clients/Products"))} />
+                <Route path="/gallery" element={lazy(() => import("./pages/Clients/Gallery"))} />
+                <Route path="/news" element={lazy(() => import("./pages/Clients/News"))} />
+                <Route path="/contact" element={lazy(() => import("./pages/Clients/Contact"))} />
 
                 <Route
                   element={
