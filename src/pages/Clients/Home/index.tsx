@@ -33,25 +33,25 @@ const HomePage = () => {
     {
       id: 1,
       title: 'Gội đầu dưỡng sinh đông y',
-      image: '/images/service1.jpg',
+      image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600',
       description: 'Trải nghiệm gội đầu thư giãn với các thảo dược đông y giúp nuôi dưỡng tóc chắc khỏe.'
     },
     {
       id: 2,
       title: 'Massage body thư giãn - trị liệu',
-      image: '/images/service2.jpg',
+      image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600',
       description: 'Liệu pháp massage toàn thân giúp thư giãn, giải tỏa căng thẳng và phục hồi năng lượng.'
     },
     {
       id: 3,
       title: 'Massage cổ - vai - gáy chuyên sâu',
-      image: '/images/service3.jpg',
+      image: 'https://images.unsplash.com/photo-1646858171410-d4b7af7b9c0f?w=600',
       description: 'Liệu trình 60 phút massage trị liệu cổ vai gáy giúp đánh bay stress hiệu quả.'
     },
     {
       id: 4,
       title: 'Chăm sóc da mặt',
-      image: '/images/service4.jpg',
+      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600',
       description: 'Các liệu pháp chăm sóc da mặt chuyên sâu giúp da khỏe đẹp, rạng rỡ.'
     }
   ];
@@ -99,7 +99,7 @@ const HomePage = () => {
             <div>
               <Box 
                 component="img"
-                src="/images/banner1.jpg"
+                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200"
                 alt="Tấm Ơi Spa"
                 sx={{ 
                   width: '100%',
@@ -111,8 +111,20 @@ const HomePage = () => {
             <div>
               <Box 
                 component="img"
-                src="/images/banner2.jpg"
+                src="https://images.unsplash.com/photo-1619946794135-5bc917a27793?w=1200"
                 alt="Dịch vụ spa"
+                sx={{ 
+                  width: '100%',
+                  height: { xs: '50vh', md: '70vh' },
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+            <div>
+              <Box 
+                component="img"
+                src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200"
+                alt="Không gian spa"
                 sx={{ 
                   width: '100%',
                   height: { xs: '50vh', md: '70vh' },
