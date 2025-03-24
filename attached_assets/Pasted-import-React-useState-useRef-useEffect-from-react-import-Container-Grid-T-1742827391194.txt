@@ -1,0 +1,787 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { 
+  Container, 
+  Grid, 
+  Typography, 
+  Box, 
+  TextField, 
+  Button, 
+  Paper, 
+  Card,
+  CardContent,
+  Divider,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Snackbar,
+  Alert,
+  useMediaQuery,
+  useTheme,
+  Chip,
+  FormControlLabel,
+  Checkbox
+} from '@mui/material';
+import { 
+  Phone, 
+  Email, 
+  LocationOn, 
+  AccessTime, 
+  Send,
+  WhatsApp,
+  Facebook,
+  Instagram,
+  YouTube,
+  Check,
+  ArrowForward,
+  CalendarToday,
+  QuestionAnswer,
+  Spa
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+
+// Giả lập các thành phần từ thư viện animation
+const MotionBox = motion(Box);
+const MotionTypography = motion(Typography);
+const MotionPaper = motion(Paper);
+const MotionCard = motion(Card);
+const MotionGrid = motion(Grid);
+
+const ContactPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const mapRef = useRef(null);
+  
+  // Form states
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+    service: '',
+    subscribe: true
+  });
+  
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+  
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
+  // Chi nhánh Spa
+  const spaLocations = [
+    {
+      id: 1,
+      name: 'Tấm Ơi Spa - Chi nhánh Quận 1',
+      address: '123 Nguyễn Huệ, Quận 1, TP.HCM',
+      phone: '028 3822 1234',
+      email: 'quan1@tamoispa.vn',
+      hours: 'Thứ 2 - Chủ nhật: 09:00 - 21:00',
+      map: 'https://maps.google.com/maps?q=123+Nguyen+Hue+HCMC&output=embed',
+      image: '/images/locations/spa-location-1.jpg'
+    },
+    {
+      id: 2,
+      name: 'Tấm Ơi Spa - Chi nhánh Quận 3',
+      address: '45 Võ Văn Tần, Quận 3, TP.HCM',
+      phone: '028 3822 5678',
+      email: 'quan3@tamoispa.vn',
+      hours: 'Thứ 2 - Chủ nhật: 09:00 - 21:00',
+      map: 'https://maps.google.com/maps?q=45+Vo+Van+Tan+HCMC&output=embed',
+      image: '/images/locations/spa-location-2.jpg'
+    },
+    {
+      id: 3,
+      name: 'Tấm Ơi Spa - Chi nhánh Quận 7',
+      address: '78 Nguyễn Lương Bằng, Quận 7, TP.HCM',
+      phone: '028 3822 9012',
+      email: 'quan7@tamoispa.vn',
+      hours: 'Thứ 2 - Chủ nhật: 09:00 - 21:00',
+      map: 'https://maps.google.com/maps?q=78+Nguyen+Luong+Bang+HCMC&output=embed',
+      image: '/images/locations/spa-location-3.jpg'
+    },
+    {
+      id: 4,
+      name: 'Tấm Ơi Spa - Chi nhánh Hà Nội',
+      address: '25 Phố Huế, Hai Bà Trưng, Hà Nội',
+      phone: '024 3822 3456',
+      email: 'hanoi@tamoispa.vn',
+      hours: 'Thứ 2 - Chủ nhật: 09:00 - 21:00',
+      map: 'https://maps.google.com/maps?q=25+Pho+Hue+Hanoi&output=embed',
+      image: '/images/locations/spa-location-4.jpg'
+    }
+  ];
+  
+  // Danh sách dịch vụ
+  const serviceOptions = [
+    { value: '', label: 'Chọn dịch vụ bạn quan tâm' },
+    { value: 'massage', label: 'Massage Thư Giãn' },
+    { value: 'facial', label: 'Chăm Sóc Da Mặt' },
+    { value: 'body', label: 'Chăm Sóc Cơ Thể' },
+    { value: 'herbal', label: 'Tắm Thảo Dược' },
+    { value: 'special', label: 'Liệu Pháp Đặc Biệt' },
+    { value: 'other', label: 'Dịch Vụ Khác' }
+  ];
+  
+  // Xử lý thay đổi form
+  const handleChange = (e) => {
+    const { name, value, checked, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+  
+  // Xử lý gửi form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Kiểm tra form
+    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+      setSnackbar({
+        open: true,
+        message: 'Vui lòng điền đầy đủ thông tin bắt buộc',
+        severity: 'error'
+      });
+      return;
+    }
+    
+    // Giả lập gửi form thành công
+    setTimeout(() => {
+      setSnackbar({
+        open: true,
+        message: 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.',
+        severity: 'success'
+      });
+      setFormSubmitted(true);
+      // Reset form sau khi gửi thành công
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+        service: '',
+        subscribe: true
+      });
+    }, 1000);
+  };
+  
+  // Xử lý đóng snackbar
+  const handleCloseSnackbar = () => {
+    setSnackbar(prev => ({
+      ...prev,
+      open: false
+    }));
+  };
+  
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+  
+  const [selectedLocation, setSelectedLocation] = useState(spaLocations[0]);
+  
+  // Xử lý chọn chi nhánh
+  const handleSelectLocation = (location) => {
+    setSelectedLocation(location);
+  };
+  
+  // Hiệu ứng khi chọn chi nhánh
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.src = selectedLocation.map;
+    }
+  }, [selectedLocation]);
+
+  return (
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      {/* Hero Section */}
+      <MotionBox
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        sx={{ mb: 8, textAlign: 'center' }}
+      >
+        <MotionTypography 
+          variant="h2" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: 'bold',
+            color: '#8D6E63',
+            mb: 2
+          }}
+          initial={{ y: -50 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Liên Hệ Với Chúng Tôi
+        </MotionTypography>
+        
+        <MotionTypography 
+          variant="h5" 
+          color="textSecondary"
+          sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          Chúng tôi luôn sẵn sàng lắng nghe và phục vụ bạn
+        </MotionTypography>
+      </MotionBox>
+
+      {/* Thông tin liên hệ chính */}
+      <Grid container spacing={4} sx={{ mb: 8 }}>
+        <Grid item xs={12} md={4}>
+          <MotionCard
+            elevation={3}
+            sx={{ height: '100%', borderRadius: 3, overflow: 'hidden' }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ y: -10, boxShadow: '0 12px 20px rgba(0,0,0,0.1)' }}
+          >
+            <Box sx={{ 
+              bgcolor: '#8D6E63', 
+              color: 'white', 
+              p: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 1
+            }}>
+              <Phone fontSize="small" />
+              <Typography variant="h6">Điện thoại</Typography>
+            </Box>
+            <CardContent sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="h5" component="p" gutterBottom>
+                1900 6789
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Hotline tư vấn và đặt lịch 24/7
+              </Typography>
+            </CardContent>
+          </MotionCard>
+        </Grid>
+        
+        <Grid item xs={12} md={4}>
+          <MotionCard
+            elevation={3}
+            sx={{ height: '100%', borderRadius: 3, overflow: 'hidden' }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            whileHover={{ y: -10, boxShadow: '0 12px 20px rgba(0,0,0,0.1)' }}
+          >
+            <Box sx={{ 
+              bgcolor: '#8D6E63', 
+              color: 'white', 
+              p: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 1
+            }}>
+              <Email fontSize="small" />
+              <Typography variant="h6">Email</Typography>
+            </Box>
+            <CardContent sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="h5" component="p" gutterBottom>
+                info@tamoispa.vn
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Phản hồi trong vòng 24 giờ
+              </Typography>
+            </CardContent>
+          </MotionCard>
+        </Grid>
+        
+        <Grid item xs={12} md={4}>
+          <MotionCard
+            elevation={3}
+            sx={{ height: '100%', borderRadius: 3, overflow: 'hidden' }}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={{ y: -10, boxShadow: '0 12px 20px rgba(0,0,0,0.1)' }}
+          >
+            <Box sx={{ 
+              bgcolor: '#8D6E63', 
+              color: 'white', 
+              p: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 1
+            }}>
+              <AccessTime fontSize="small" />
+              <Typography variant="h6">Giờ làm việc</Typography>
+            </Box>
+            <CardContent sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="h5" component="p" gutterBottom>
+                09:00 - 21:00
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Mở cửa tất cả các ngày trong tuần
+              </Typography>
+            </CardContent>
+          </MotionCard>
+        </Grid>
+      </Grid>
+
+      {/* Chi nhánh và Form liên hệ */}
+      <Grid container spacing={6} sx={{ mb: 8 }}>
+        {/* Danh sách chi nhánh */}
+        <Grid item xs={12} md={5}>
+          <MotionTypography
+            variant="h4"
+            component="h2"
+            gutterBottom
+            sx={{ color: '#6D4C41', mb: 3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Chi Nhánh Của Chúng Tôi
+          </MotionTypography>
+          
+          <Box sx={{ mb: 4 }}>
+            {spaLocations.map((location, index) => (
+              <MotionBox
+                key={location.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ x: 5 }}
+              >
+                <Card 
+                  sx={{ 
+                    mb: 2, 
+                    cursor: 'pointer',
+                    borderLeft: selectedLocation.id === location.id ? '4px solid #8D6E63' : 'none',
+                    boxShadow: selectedLocation.id === location.id ? 3 : 1,
+                    transition: 'all 0.3s ease'
+                  }}
+                  onClick={() => handleSelectLocation(location)}
+                >
+                  <CardContent sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
+                    <Box 
+                      component="img"
+                      src={location.image}
+                      alt={location.name}
+                      sx={{ 
+                        width: 80, 
+                        height: 80, 
+                        borderRadius: 2,
+                        mr: 2,
+                        objectFit: 'cover'
+                      }}
+                    />
+                    <Box>
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {location.name}
+                      </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                        <LocationOn fontSize="small" sx={{ color: 'text.secondary', mr: 0.5 }} />
+                        <Typography variant="body2" color="textSecondary">
+                          {location.address}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Phone fontSize="small" sx={{ color: 'text.secondary', mr: 0.5 }} />
+                        <Typography variant="body2" color="textSecondary">
+                          {location.phone}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </MotionBox>
+            ))}
+          </Box>
+          
+          {/* Chi tiết chi nhánh đã chọn */}
+          <MotionPaper
+            elevation={3}
+            sx={{ p: 3, borderRadius: 3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Typography variant="h6" gutterBottom>
+              {selectedLocation.name}
+            </Typography>
+            
+            <Grid container spacing={2} sx={{ mb: 2 }}>
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1.5 }}>
+                  <LocationOn sx={{ color: '#8D6E63', mr: 1, mt: 0.3 }} />
+                  <Typography variant="body1">
+                    {selectedLocation.address}
+                  </Typography>
+                </Box>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                  <Phone sx={{ color: '#8D6E63', mr: 1 }} />
+                  <Typography variant="body1">
+                    {selectedLocation.phone}
+                  </Typography>
+                </Box>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                  <Email sx={{ color: '#8D6E63', mr: 1 }} />
+                  <Typography variant="body1">
+                    {selectedLocation.email}
+                  </Typography>
+                </Box>
+                
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <AccessTime sx={{ color: '#8D6E63', mr: 1 }} />
+                  <Typography variant="body1">
+                    {selectedLocation.hours}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            
+            <Box sx={{ mt: 3 }}>
+              <iframe
+                ref={mapRef}
+                src={selectedLocation.map}
+                width="100%"
+                height="200"
+                style={{ border: 0, borderRadius: '8px' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Bản đồ ${selectedLocation.name}`}
+              ></iframe>
+            </Box>
+            
+            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+              <Button
+                variant="contained"
+                startIcon={<CalendarToday />}
+                sx={{ 
+                  backgroundColor: '#8D6E63',
+                  '&:hover': {
+                    backgroundColor: '#6D4C41'
+                  }
+                }}
+              >
+                Đặt lịch tại chi nhánh này
+              </Button>
+            </Box>
+          </MotionPaper>
+        </Grid>
+        
+        {/* Form liên hệ */}
+        <Grid item xs={12} md={7}>
+          <MotionTypography
+            variant="h4"
+            component="h2"
+            gutterBottom
+            sx={{ color: '#6D4C41', mb: 3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Gửi Tin Nhắn Cho Chúng Tôi
+          </MotionTypography>
+          
+          <MotionPaper
+            elevation={3}
+            sx={{ p: 4, borderRadius: 3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {formSubmitted ? (
+              <MotionBox
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                sx={{ 
+                  textAlign: 'center', 
+                  py: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    width: 80, 
+                    height: 80, 
+                    borderRadius: '50%', 
+                    bgcolor: '#8D6E63',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mb: 3
+                  }}
+                >
+                  <Check sx={{ fontSize: 40, color: 'white' }} />
+                </Box>
+                <Typography variant="h5" gutterBottom>
+                  Cảm ơn bạn đã liên hệ!
+                </Typography>
+                <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
+                  Chúng tôi đã nhận được tin nhắn của bạn và sẽ phản hồi trong thời gian sớm nhất.
+                </Typography>
+                <Button 
+                  variant="outlined"
+                  onClick={() => setFormSubmitted(false)}
+                  sx={{ 
+                    borderColor: '#8D6E63',
+                    color: '#8D6E63',
+                    '&:hover': {
+                      borderColor: '#6D4C41',
+                      backgroundColor: 'rgba(141, 110, 99, 0.04)'
+                    }
+                  }}
+                >
+                  Gửi tin nhắn khác
+                </Button>
+              </MotionBox>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Họ và tên *"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      variant="outlined"
+                      required
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Email *"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      variant="outlined"
+                      required
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Số điện thoại *"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      variant="outlined"
+                      required
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      select
+                      label="Dịch vụ quan tâm"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      variant="outlined"
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    >
+                      {serviceOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Tiêu đề"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      variant="outlined"
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Nội dung tin nhắn *"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      variant="outlined"
+                      multiline
+                      rows={5}
+                      required
+                      InputProps={{
+                        sx: { borderRadius: 2 }
+                      }}
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox 
+                          checked={formData.subscribe} 
+                          onChange={handleChange}
+                          name="subscribe"
+                          color="primary"
+                          sx={{ 
+                            color: '#8D6E63',
+                            '&.Mui-checked': {
+                              color: '#8D6E63',
+                            }
+                          }}
+                        />
+                      }
+                      label="Tôi muốn nhận thông tin về ưu đãi và dịch vụ mới"
+                    />
+                  </Grid>
+                  
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                      size="large"
+                      endIcon={<Send />}
+                      sx={{ 
+                        mt: 2,
+                        py: 1.5,
+                        backgroundColor: '#8D6E63',
+                        borderRadius: 2,
+                        '&:hover': {
+                          backgroundColor: '#6D4C41'
+                        }
+                      }}
+                    >
+                      Gửi tin nhắn
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            )}
+          </MotionPaper>
+        </Grid>
+      </Grid>
+
+      {/* Các kênh liên lạc khác */}
+      <Box sx={{ mb: 8 }}>
+        <MotionTypography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{ color: '#6D4C41', mb: 4, textAlign: 'center' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Kết Nối Với Chúng Tôi
+        </MotionTypography>
+        
+        <MotionGrid
+          container 
+          spacing={3}
+          justifyContent="center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {[
+            { icon: <Facebook fontSize="large" />, name: 'Facebook', color: '#1877F2', link: 'https://facebook.com/tamoispa' },
+            { icon: <Instagram fontSize="large" />, name: 'Instagram', color: '#E4405F', link: 'https://instagram.com/tamoispa' },
+            { icon: <YouTube fontSize="large" />, name: 'YouTube', color: '#FF0000', link: 'https://youtube.com/tamoispa' },
+            { icon: <WhatsApp fontSize="large" />, name: 'WhatsApp', color: '#25D366', link: 'https://wa.me/84901234567' }
+          ].map((social, index) => (
+            <Grid item xs={6} sm={3} key={index}>
+              <MotionCard
+                variants={itemVariants}
+                whileHover={{ y: -10, boxShadow: '0 12px 20px rgba(0,0,0,0.1)' }}
+                sx={{ 
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  p: 3,
+                  borderRadius: 3,
+                  cursor: 'pointer'
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    color: social.color,
+                    mb: 1.5,
+                    transition: 'transform 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.2)'
+                    }
+                  }}
+                >
+                  {social.icon}
+                </Box>
+                <Typography variant="h6" align="center">
+                  {social.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" align="center">
+                  @tamoispa
+                </Typography>
+              </MotionCard>
+            </Grid>
+          ))}
+        </MotionGrid>
+      </Box>
+
+      {/* FAQ Section */}
+      <Box sx={{ mb: 8 }}>
+        <MotionTypography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{ color: '#6D4C41', mb: 4, textAlign: 'center' }}
+          initial={{ opacity: 
