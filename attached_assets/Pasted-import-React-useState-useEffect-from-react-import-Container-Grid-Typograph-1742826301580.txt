@@ -1,0 +1,739 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Container, 
+  Grid, 
+  Typography, 
+  Box, 
+  Card, 
+  CardContent, 
+  CardMedia,
+  CardActions,
+  Button,
+  Tabs,
+  Tab,
+  Chip,
+  Rating,
+  Divider,
+  IconButton,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
+import { 
+  Spa, 
+  AccessTime, 
+  LocalOffer, 
+  Favorite,
+  FavoriteBorder,
+  ArrowForward,
+  Info
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+
+// Giả lập các thành phần từ thư viện animation
+const MotionBox = motion(Box);
+const MotionTypography = motion(Typography);
+const MotionCard = motion(Card);
+const MotionGrid = motion(Grid);
+
+const ServicesPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [activeTab, setActiveTab] = useState(0);
+  const [favorites, setFavorites] = useState([]);
+
+  // Các danh mục dịch vụ
+  const serviceCategories = [
+    "Tất cả", 
+    "Massage", 
+    "Chăm sóc da", 
+    "Tắm thảo dược", 
+    "Liệu pháp đặc biệt"
+  ];
+
+  // Dữ liệu dịch vụ
+  const services = [
+    {
+      id: 1,
+      name: "Massage Thư Giãn Toàn Thân",
+      description: "Liệu pháp massage kết hợp các kỹ thuật Thụy Điển và Thái giúp thư giãn cơ bắp, giảm căng thẳng và cải thiện tuần hoàn máu.",
+      duration: "90 phút",
+      price: "850.000đ",
+      rating: 4.9,
+      reviewCount: 124,
+      image: "/images/services/massage-body.jpg",
+      category: "Massage",
+      featured: true,
+      benefits: [
+        "Giảm căng thẳng và mệt mỏi",
+        "Cải thiện tuần hoàn máu",
+        "Giảm đau nhức cơ bắp",
+        "Tăng cường sức khỏe tinh thần"
+      ]
+    },
+    {
+      id: 2,
+      name: "Chăm Sóc Da Mặt Cao Cấp",
+      description: "Liệu trình chăm sóc da mặt toàn diện với các sản phẩm hữu cơ, giúp làm sạch sâu, dưỡng ẩm và trẻ hóa làn da.",
+      duration: "60 phút",
+      price: "750.000đ",
+      rating: 4.8,
+      reviewCount: 98,
+      image: "/images/services/facial-care.jpg",
+      category: "Chăm sóc da",
+      featured: true,
+      benefits: [
+        "Làm sạch sâu và se khít lỗ chân lông",
+        "Cấp ẩm và dưỡng chất cho da",
+        "Cải thiện kết cấu và độ đàn hồi",
+        "Làm sáng và đều màu da"
+      ]
+    },
+    {
+      id: 3,
+      name: "Tắm Thảo Dược Việt Nam",
+      description: "Trải nghiệm tắm thảo dược truyền thống Việt Nam với các loại thảo mộc quý giúp detox cơ thể, thư giãn tinh thần.",
+      duration: "45 phút",
+      price: "650.000đ",
+      rating: 4.7,
+      reviewCount: 76,
+      image: "/images/services/herbal-bath.jpg",
+      category: "Tắm thảo dược",
+      featured: false,
+      benefits: [
+        "Thanh lọc và detox cơ thể",
+        "Cải thiện sức đề kháng",
+        "Làm mềm và mịn da",
+        "Giảm căng thẳng và mệt mỏi"
+      ]
+    },
+    {
+      id: 4,
+      name: "Liệu Pháp Đá Nóng",
+      description: "Kết hợp massage với đá bazan nóng giúp thư giãn cơ bắp sâu, cải thiện tuần hoàn và giảm đau nhức hiệu quả.",
+      duration: "75 phút",
+      price: "950.000đ",
+      rating: 4.9,
+      reviewCount: 89,
+      image: "/images/services/hot-stone.jpg",
+      category: "Liệu pháp đặc biệt",
+      featured: true,
+      benefits: [
+        "Thư giãn cơ bắp sâu",
+        "Giảm đau và căng cứng",
+        "Cải thiện tuần hoàn",
+        "Tăng cường trao đổi chất"
+      ]
+    },
+    {
+      id: 5,
+      name: "Massage Đầu và Vai Gáy",
+      description: "Tập trung vào các điểm căng thẳng ở đầu, vai và gáy, giúp giảm đau đầu, cải thiện giấc ngủ và giảm căng thẳng.",
+      duration: "45 phút",
+      price: "450.000đ",
+      rating: 4.6,
+      reviewCount: 112,
+      image: "/images/services/head-massage.jpg",
+      category: "Massage",
+      featured: false,
+      benefits: [
+        "Giảm đau đầu và chứng đau nửa đầu",
+        "Cải thiện giấc ngủ",
+        "Giảm căng thẳng và lo âu",
+        "Tăng cường tập trung"
+      ]
+    },
+    {
+      id: 6,
+      name: "Trẻ Hóa Da Công Nghệ Cao",
+      description: "Sử dụng công nghệ hiện đại kết hợp với dưỡng chất tự nhiên để trẻ hóa da, giảm nếp nhăn và tăng độ đàn hồi.",
+      duration: "90 phút",
+      price: "1.200.000đ",
+      rating: 4.8,
+      reviewCount: 67,
+      image: "/images/services/skin-rejuvenation.jpg",
+      category: "Chăm sóc da",
+      featured: false,
+      benefits: [
+        "Giảm nếp nhăn và dấu hiệu lão hóa",
+        "Tăng sinh collagen",
+        "Cải thiện độ đàn hồi và săn chắc",
+        "Làm đều màu và kết cấu da"
+      ]
+    },
+    {
+      id: 7,
+      name: "Tắm Sữa và Hoa Hồng",
+      description: "Trải nghiệm sang trọng với liệu pháp tắm sữa và cánh hoa hồng tươi, nuôi dưỡng làn da mềm mại và thơm mát.",
+      duration: "60 phút",
+      price: "850.000đ",
+      rating: 4.9,
+      reviewCount: 54,
+      image: "/images/services/milk-bath.jpg",
+      category: "Tắm thảo dược",
+      featured: true,
+      benefits: [
+        "Làm mềm và dưỡng ẩm da",
+        "Làm sáng và đều màu da",
+        "Thư giãn tinh thần",
+        "Mang lại hương thơm tự nhiên"
+      ]
+    },
+    {
+      id: 8,
+      name: "Liệu Pháp Trị Liệu Bằng Âm Thanh",
+      description: "Sử dụng bát âm Himalaya và âm thanh chữa lành để cân bằng năng lượng, giảm căng thẳng và tăng cường sức khỏe tinh thần.",
+      duration: "60 phút",
+      price: "750.000đ",
+      rating: 4.7,
+      reviewCount: 42,
+      image: "/images/services/sound-therapy.jpg",
+      category: "Liệu pháp đặc biệt",
+      featured: false,
+      benefits: [
+        "Cân bằng năng lượng",
+        "Giảm căng thẳng và lo âu",
+        "Cải thiện giấc ngủ",
+        "Tăng cường tập trung và sáng tạo"
+      ]
+    }
+  ];
+
+  // Lọc dịch vụ theo danh mục đang chọn
+  const filteredServices = activeTab === 0 
+    ? services 
+    : services.filter(service => service.category === serviceCategories[activeTab]);
+
+  // Xử lý thay đổi tab
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
+
+  // Xử lý thêm/xóa yêu thích
+  const toggleFavorite = (id) => {
+    setFavorites(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id) 
+        : [...prev, id]
+    );
+  };
+
+  // Hiệu ứng fade-in khi trang tải
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  return (
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      {/* Hero Section */}
+      <MotionBox
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        sx={{ mb: 8, textAlign: 'center' }}
+      >
+        <MotionTypography 
+          variant="h2" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: 'bold',
+            color: '#8D6E63',
+            mb: 2
+          }}
+          initial={{ y: -50 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          Dịch Vụ Tấm Ơi Spa
+        </MotionTypography>
+        
+        <MotionTypography 
+          variant="h5" 
+          color="textSecondary"
+          sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          Trải nghiệm các liệu pháp chăm sóc sức khỏe và sắc đẹp đỉnh cao
+        </MotionTypography>
+        
+        <MotionBox
+          component="img"
+          src="/images/services/spa-services-hero.jpg"
+          alt="Dịch vụ Tấm Ơi Spa"
+          sx={{ 
+            width: '100%', 
+            height: '400px',
+            objectFit: 'cover',
+            borderRadius: 4,
+            boxShadow: 3
+          }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        />
+      </MotionBox>
+
+      {/* Danh mục dịch vụ */}
+      <Box sx={{ mb: 6 }}>
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Tabs 
+            value={activeTab} 
+            onChange={handleTabChange} 
+            variant={isMobile ? "scrollable" : "standard"}
+            scrollButtons={isMobile ? "auto" : false}
+            centered={!isMobile}
+            sx={{ 
+              mb: 4,
+              '& .MuiTabs-indicator': { backgroundColor: '#8D6E63' },
+              '& .Mui-selected': { color: '#8D6E63 !important' }
+            }}
+          >
+            {serviceCategories.map((category, index) => (
+              <Tab 
+                key={index} 
+                label={category} 
+                sx={{ 
+                  fontWeight: 'medium',
+                  fontSize: '1rem',
+                  textTransform: 'none'
+                }}
+              />
+            ))}
+          </Tabs>
+        </MotionBox>
+
+        {/* Dịch vụ nổi bật */}
+        {activeTab === 0 && (
+          <MotionBox
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            sx={{ mb: 8 }}
+          >
+            <Typography 
+              variant="h4" 
+              component="h2" 
+              sx={{ 
+                mb: 4, 
+                color: '#8D6E63', 
+                fontWeight: 'bold',
+                textAlign: 'center' 
+              }}
+            >
+              Dịch Vụ Nổi Bật
+            </Typography>
+            
+            <Grid container spacing={4}>
+              {services
+                .filter(service => service.featured)
+                .slice(0, 3)
+                .map((service, index) => (
+                  <Grid item xs={12} md={4} key={service.id}>
+                    <MotionCard 
+                      elevation={3}
+                      sx={{ 
+                        height: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        borderRadius: 4,
+                        overflow: 'hidden'
+                      }}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.2 }}
+                      whileHover={{ 
+                        y: -10,
+                        boxShadow: '0 12px 20px rgba(0,0,0,0.1)',
+                        transition: { duration: 0.3 }
+                      }}
+                    >
+                      <Box sx={{ position: 'relative' }}>
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image={service.image}
+                          alt={service.name}
+                        />
+                        <Chip
+                          label="Nổi bật"
+                          color="primary"
+                          size="small"
+                          sx={{ 
+                            position: 'absolute', 
+                            top: 16, 
+                            right: 16,
+                            backgroundColor: '#8D6E63'
+                          }}
+                        />
+                      </Box>
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="h3" gutterBottom>
+                          {service.name}
+                        </Typography>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                          <Rating 
+                            value={service.rating} 
+                            precision={0.1} 
+                            readOnly 
+                            size="small" 
+                            sx={{ color: '#8D6E63' }}
+                          />
+                          <Typography variant="body2" sx={{ ml: 1 }}>
+                            ({service.reviewCount})
+                          </Typography>
+                        </Box>
+                        <Typography variant="body2" color="textSecondary" paragraph>
+                          {service.description.length > 100 
+                            ? `${service.description.substring(0, 100)}...` 
+                            : service.description}
+                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <AccessTime fontSize="small" sx={{ color: 'text.secondary', mr: 0.5 }} />
+                            <Typography variant="body2" color="textSecondary">
+                              {service.duration}
+                            </Typography>
+                          </Box>
+                          <Typography variant="subtitle1" fontWeight="bold" color="primary">
+                            {service.price}
+                          </Typography>
+                        </Box>
+                      </CardContent>
+                      <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 2 }}>
+                        <Button 
+                          variant="outlined" 
+                          size="small"
+                          sx={{ 
+                            borderColor: '#8D6E63',
+                            color: '#8D6E63',
+                            '&:hover': {
+                              borderColor: '#6D4C41',
+                              backgroundColor: 'rgba(141, 110, 99, 0.04)'
+                            }
+                          }}
+                        >
+                          Chi tiết
+                        </Button>
+                        <Button 
+                          variant="contained" 
+                          size="small"
+                          sx={{ 
+                            backgroundColor: '#8D6E63',
+                            '&:hover': {
+                              backgroundColor: '#6D4C41'
+                            }
+                          }}
+                        >
+                          Đặt lịch
+                        </Button>
+                      </CardActions>
+                    </MotionCard>
+                  </Grid>
+                ))}
+            </Grid>
+          </MotionBox>
+        )}
+
+        {/* Danh sách dịch vụ */}
+        <MotionGrid
+          container 
+          spacing={4}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {filteredServices.map((service) => (
+            <Grid item xs={12} sm={6} md={4} key={service.id}>
+              <MotionCard 
+                elevation={2}
+                sx={{ 
+                  height: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  borderRadius: 3,
+                  overflow: 'hidden'
+                }}
+                variants={itemVariants}
+                whileHover={{ 
+                  y: -10,
+                  boxShadow: '0 12px 20px rgba(0,0,0,0.1)',
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <Box sx={{ position: 'relative' }}>
+                  <CardMedia
+                    component="img"
+                    height="180"
+                    image={service.image}
+                    alt={service.name}
+                  />
+                  <IconButton
+                    sx={{ 
+                      position: 'absolute', 
+                      top: 8, 
+                      right: 8,
+                      backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                      '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.9)' }
+                    }}
+                    onClick={() => toggleFavorite(service.id)}
+                  >
+                    {favorites.includes(service.id) ? (
+                      <Favorite sx={{ color: '#e91e63' }} />
+                    ) : (
+                      <FavoriteBorder />
+                    )}
+                  </IconButton>
+                </Box>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Typography variant="h6" component="h3" gutterBottom>
+                      {service.name}
+                    </Typography>
+                    <Chip 
+                      label={service.category} 
+                      size="small" 
+                      sx={{ 
+                        backgroundColor: '#f5f0ec', 
+                        color: '#8D6E63',
+                        fontWeight: 'medium'
+                      }} 
+                    />
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    <Rating 
+                      value={service.rating} 
+                      precision={0.1} 
+                      readOnly 
+                      size="small" 
+                      sx={{ color: '#8D6E63' }}
+                    />
+                    <Typography variant="body2" sx={{ ml: 1 }}>
+                      ({service.reviewCount})
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    {service.description.length > 120 
+                      ? `${service.description.substring(0, 120)}...` 
+                      : service.description}
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <AccessTime fontSize="small" sx={{ color: 'text.secondary', mr: 0.5 }} />
+                      <Typography variant="body2" color="textSecondary">
+                        {service.duration}
+                      </Typography>
+                    </Box>
+                    <Typography variant="subtitle1" fontWeight="bold" color="primary">
+                      {service.price}
+                    </Typography>
+                  </Box>
+                </CardContent>
+                <Divider />
+                <Box sx={{ p: 2, backgroundColor: '#f9f9f9' }}>
+                  <Typography variant="subtitle2" gutterBottom>
+                    Lợi ích chính:
+                  </Typography>
+                  <Grid container spacing={1}>
+                    {service.benefits.slice(0, 2).map((benefit, index) => (
+                      <Grid item xs={6} key={index}>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Box 
+                            component={Spa} 
+                            sx={{ 
+                              fontSize: 14, 
+                              mr: 1, 
+                              color: '#8D6E63' 
+                            }} 
+                          />
+                          <Typography variant="caption" noWrap>
+                            {benefit}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+                <CardActions sx={{ justifyContent: 'space-between', px: 2, py: 1.5 }}>
+                  <Button 
+                    variant="text" 
+                    size="small"
+                    startIcon={<Info />}
+                    sx={{ 
+                      color: '#8D6E63',
+                      '&:hover': {
+                        backgroundColor: 'rgba(141, 110, 99, 0.04)'
+                      }
+                    }}
+                  >
+                    Chi tiết
+                  </Button>
+                  <Button 
+                    variant="contained" 
+                    size="small"
+                    endIcon={<ArrowForward />}
+                    sx={{ 
+                      backgroundColor: '#8D6E63',
+                      '&:hover': {
+                        backgroundColor: '#6D4C41'
+                      }
+                    }}
+                  >
+                    Đặt lịch
+                  </Button>
+                </CardActions>
+              </MotionCard>
+            </Grid>
+          ))}
+        </MotionGrid>
+      </Box>
+
+      {/* Quy trình dịch vụ */}
+      <MotionBox
+        sx={{ mb: 10, py: 6, px: { xs: 2, md: 6 }, backgroundColor: '#f5f0ec', borderRadius: 4 }}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <Typography 
+          variant="h4" 
+          component="h2" 
+          sx={{ 
+            mb: 6, 
+            textAlign: 'center',
+            color: '#8D6E63',
+            fontWeight: 'bold'
+          }}
+        >
+          Quy Trình Dịch Vụ Tại Tấm Ơi Spa
+        </Typography>
+
+        <Grid container spacing={4}>
+          {[
+            {
+              step: 1,
+              title: "Tư vấn & đánh giá",
+              description: "Chuyên viên sẽ tư vấn và đánh giá tình trạng để đề xuất liệu trình phù hợp nhất.",
+              icon: "🔍"
+            },
+            {
+              step: 2,
+              title: "Chuẩn bị",
+              description: "Khách hàng được chuẩn bị với trang phục và không gian thư giãn trước khi bắt đầu dịch vụ.",
+              icon: "👗"
+            },
+            {
+              step: 3,
+              title: "Trải nghiệm dịch vụ",
+              description: "Chuyên viên thực hiện dịch vụ với các kỹ thuật chuyên nghiệp và sản phẩm cao cấp.",
+              icon: "✨"
+            },
+            {
+              step: 4,
+              title: "Tư vấn hậu dịch vụ",
+              description: "Nhận tư vấn chăm sóc và duy trì kết quả tại nhà sau khi hoàn thành liệu trình.",
+              icon: "📝"
+            }
+          ].map((step, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <MotionBox
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                sx={{ 
+                  textAlign: 'center',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <Box 
+                  sx={{ 
+                    width: 80, 
+                    height: 80, 
+                    borderRadius: '50%', 
+                    backgroundColor: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mb: 2,
+                    fontSize: '2rem',
+                    boxShadow: 2
+                  }}
+                >
+                  {step.icon}
+                </Box>
+                <Typography 
+                  variant="h6" 
+                  component="h3" 
+                  gutterBottom
+                  sx={{ color: '#6D4C41' }}
+                >
+                  {step.step}. {step.title}
+                </Typography>
+                <Typography variant="body2">
+                  {step.description}
+                </Typography>
+              </MotionBox>
+            </Grid>
+          ))}
+        </Grid>
+      </MotionBox>
+
+      {/* Gói dịch vụ */}
+      <Box sx={{ mb: 10 }}>
+        <Typography 
+          variant="h4" 
+          component="h2" 
+          sx={{ 
+            mb: 6, 
+            textAlign: 'center',
+            color: '#8D6E63',
+            fontWeight: 'bold'
+          }}
+        >
+          Gói Dịch Vụ Đặc Biệt
+        </Typography>
+
+        <Grid container spacing={4}>
+          {[
+            {
+              title: "Gói Thư Giãn Toàn Diện",
+              description: "Trải nghiệm 3 giờ thư giãn với massage toàn thân, chăm sóc da mặt và tắm thảo dược.",
+              price: "1.950.000đ",
+              originalPrice: "2.250.000đ",
+              saving: "Tiết kiệm 300.000đ",
+              image: "/images/services/package-relax.jpg",
+              popular: true
+            },
+            {
+              title: "Gói Làm Đẹp Cao Cấp",
+              description: "Chăm sóc da mặt chuyên sâu, trẻ hóa da và massage đầu vai gáy trong
