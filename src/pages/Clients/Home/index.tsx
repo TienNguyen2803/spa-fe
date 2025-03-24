@@ -1,10 +1,27 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+
+import React from 'react';
+import { Box, Container } from '@mui/material';
+import { motion } from 'framer-motion';
+import Header from './Header';
+
+// Import components from the provided code
+const {
+  HeroSection,
+  AboutSection, 
+  ServicesSection
+} = require('./sections');
 
 const HomePage = () => {
   return (
-    <Box>
-      <Typography variant="h4">Sản phẩm</Typography>
+    <Box sx={{ minHeight: '100vh' }}>
+      {/* Hero Section */}
+      <HeroSection />
+      
+      {/* About Section */}
+      <AboutSection />
+      
+      {/* Services Section */}
+      <ServicesSection />
     </Box>
   );
 };
