@@ -1,19 +1,17 @@
+
 import React from "react";
-import { Box, Container } from "@mui/material";
-import { motion } from "framer-motion";
+import { Box } from "@mui/material";
 import Header from "./Header";
-import { AboutSection, HeroSection, ServicesSection } from "./sections";
+import { HeroSection } from "./sections/HeroSection";
+import { AboutSection } from "./sections/AboutSection";
+import { ServicesSection } from "./sections/ServicesSection";
 
 const HomePage = () => {
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      {/* Hero Section */}
+      <Header />
       <HeroSection />
-
-      {/* About Section */}
       <AboutSection />
-
-      {/* Services Section */}
       <ServicesSection />
     </Box>
   );
