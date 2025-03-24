@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Box, Container, Typography, Grid, Card, CardMedia, CardContent, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -12,7 +11,8 @@ const HeroSection = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   color: 'white',
-  textAlign: 'center'
+  textAlign: 'center',
+  backgroundColor: '#FFFAF0' // Added light pink background
 }));
 
 const ServiceCard = styled(Card)(({ theme }) => ({
@@ -58,7 +58,7 @@ export default function HomePage() {
         <Typography variant="h3" align="center" gutterBottom>
           Ghé chữa lành - Ghé Tấm Ơi!
         </Typography>
-        
+
         <Typography variant="body1" align="center" sx={{ mb: 6 }}>
           Giữa những bộn bề và lo toan của cuộc sống, giữa những áp lực công việc và gia đình… 
           bạn cần những giây phút để yêu thương và bù đắp cho chính bản thân mình.
