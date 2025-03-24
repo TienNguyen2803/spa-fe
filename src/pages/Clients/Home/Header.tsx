@@ -69,25 +69,52 @@ const Header = () => {
                 <SpaIcon sx={{ mr: 1, verticalAlign: "middle" }} />
                 Tấm Ơi Spa
               </Typography>
-              <Button color="inherit" component={Link} to="/home" startIcon={<HomeIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/home"
+                startIcon={<HomeIcon />}
+              >
                 Trang chủ
               </Button>
-              <Button color="inherit" component={Link} to="/about" startIcon={<InfoIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/about"
+                startIcon={<InfoIcon />}
+              >
                 Giới thiệu
               </Button>
-              <Button color="inherit" component={Link} to="/services" startIcon={<SpaIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/services"
+                startIcon={<SpaIcon />}
+              >
                 Dịch vụ
               </Button>
-              <Button color="inherit" component={Link} to="/products" startIcon={<ShoppingBasketIcon />}>
-                Sản phẩm
-              </Button>
-              <Button color="inherit" component={Link} to="/gallery" startIcon={<PhotoLibraryIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/gallery"
+                startIcon={<PhotoLibraryIcon />}
+              >
                 Hình ảnh
               </Button>
-              <Button color="inherit" component={Link} to="/news" startIcon={<NewspaperIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/news"
+                startIcon={<NewspaperIcon />}
+              >
                 Tin tức
               </Button>
-              <Button color="inherit" component={Link} to="/contact" startIcon={<LocationOnIcon />}>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/contact"
+                startIcon={<LocationOnIcon />}
+              >
                 Liên hệ
               </Button>
               <Button
@@ -131,12 +158,6 @@ const Header = () => {
                 <SpaIcon />
               </ListItemIcon>
               <ListItemText primary="Dịch vụ" />
-            </ListItem>
-            <ListItem component={Link} to="/products">
-              <ListItemIcon>
-                <ShoppingBasketIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sản phẩm" />
             </ListItem>
             <ListItem component={Link} to="/gallery">
               <ListItemIcon>

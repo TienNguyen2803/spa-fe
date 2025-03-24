@@ -29,9 +29,8 @@ import { IUserResponse } from "./types/auth";
 import HomePage from "./pages/Clients/Home";
 import AboutPage from "./pages/Clients/About";
 import ServicesPage from "./pages/Clients/Services";
-import ProductsPage from "./pages/Clients/Products";
+import ContactPage from "./pages/Clients/Contact";
 import NewsPage from "./pages/Clients/News";
-import { ContactPage } from "@mui/icons-material";
 import GalleryPage from "./pages/Clients/Gallery";
 import ThemeClientLayout from "./components/layouts/ThemeClientLayout";
 
@@ -160,7 +159,6 @@ function App() {
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/services" element={<ServicesPage />} />
-                  <Route path="/products" element={<ProductsPage />} />
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/news" element={<NewsPage />} />
                   <Route path="/contact" element={<ContactPage />} />
