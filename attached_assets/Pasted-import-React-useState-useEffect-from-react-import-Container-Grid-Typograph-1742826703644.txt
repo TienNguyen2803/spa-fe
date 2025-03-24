@@ -1,0 +1,790 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Container, 
+  Grid, 
+  Typography, 
+  Box, 
+  Card, 
+  CardContent, 
+  CardMedia,
+  Button,
+  Avatar,
+  Rating,
+  Chip,
+  Tabs,
+  Tab,
+  IconButton,
+  Dialog,
+  DialogContent,
+  useMediaQuery,
+  useTheme,
+  Divider,
+  Paper
+} from '@mui/material';
+import { 
+  Close, 
+  FormatQuote, 
+  NavigateBefore, 
+  NavigateNext,
+  Instagram,
+  Facebook,
+  Favorite,
+  VerifiedUser,
+  Star
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+
+// Giả lập các thành phần từ thư viện animation
+const MotionBox = motion(Box);
+const MotionTypography = motion(Typography);
+const MotionCard = motion(Card);
+const MotionGrid = motion(Grid);
+const MotionPaper = motion(Paper);
+
+const GalleryAndFeedbackPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [activeTab, setActiveTab] = useState(0);
+  const [openLightbox, setOpenLightbox] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // Danh mục hình ảnh
+  const imageCategories = [
+    { id: 'all', label: 'Tất cả' },
+    { id: 'spa-space', label: 'Không gian spa' },
+    { id: 'treatments', label: 'Liệu trình' },
+    { id: 'customers', label: 'Khách hàng' },
+    { id: 'events', label: 'Sự kiện' }
+  ];
+
+  // Dữ liệu hình ảnh
+  const galleryImages = [
+    {
+      id: 1,
+      src: '/images/gallery/spa-reception.jpg',
+      alt: 'Khu vực lễ tân sang trọng',
+      category: 'spa-space',
+      featured: true
+    },
+    {
+      id: 2,
+      src: '/images/gallery/massage-room.jpg',
+      alt: 'Phòng massage với không gian riêng tư',
+      category: 'spa-space',
+      featured: true
+    },
+    {
+      id: 3,
+      src: '/images/gallery/facial-treatment.jpg',
+      alt: 'Liệu trình chăm sóc da mặt',
+      category: 'treatments',
+      featured: false
+    },
+    {
+      id: 4,
+      src: '/images/gallery/herbal-bath.jpg',
+      alt: 'Tắm thảo dược truyền thống',
+      category: 'treatments',
+      featured: true
+    },
+    {
+      id: 5,
+      src: '/images/gallery/happy-customer-1.jpg',
+      alt: 'Khách hàng hài lòng sau liệu trình',
+      category: 'customers',
+      featured: true
+    },
+    {
+      id: 6,
+      src: '/images/gallery/relaxation-area.jpg',
+      alt: 'Khu vực thư giãn',
+      category: 'spa-space',
+      featured: false
+    },
+    {
+      id: 7,
+      src: '/images/gallery/hot-stone-massage.jpg',
+      alt: 'Massage đá nóng',
+      category: 'treatments',
+      featured: false
+    },
+    {
+      id: 8,
+      src: '/images/gallery/happy-customer-2.jpg',
+      alt: 'Khách hàng thư giãn',
+      category: 'customers',
+      featured: false
+    },
+    {
+      id: 9,
+      src: '/images/gallery/anniversary-event.jpg',
+      alt: 'Sự kiện kỷ niệm 5 năm thành lập',
+      category: 'events',
+      featured: true
+    },
+    {
+      id: 10,
+      src: '/images/gallery/product-launch.jpg',
+      alt: 'Ra mắt dòng sản phẩm mới',
+      category: 'events',
+      featured: false
+    },
+    {
+      id: 11,
+      src: '/images/gallery/spa-exterior.jpg',
+      alt: 'Không gian bên ngoài spa',
+      category: 'spa-space',
+      featured: false
+    },
+    {
+      id: 12,
+      src: '/images/gallery/happy-customer-3.jpg',
+      alt: 'Khách hàng và nhân viên spa',
+      category: 'customers',
+      featured: false
+    }
+  ];
+
+  // Dữ liệu đánh giá khách hàng
+  const customerReviews = [
+    {
+      id: 1,
+      name: 'Nguyễn Thị Ánh',
+      avatar: '/images/avatars/customer1.jpg',
+      rating: 5,
+      date: '20/03/2025',
+      comment: 'Tuyệt vời! Tôi đã trải nghiệm liệu trình massage toàn thân và cảm thấy như được tái sinh. Nhân viên rất chuyên nghiệp và chu đáo. Không gian spa cũng rất thư giãn và sang trọng.',
+      service: 'Massage Thư Giãn Toàn Thân',
+      verified: true,
+      images: [
+        '/images/reviews/review1-1.jpg',
+        '/images/reviews/review1-2.jpg'
+      ]
+    },
+    {
+      id: 2,
+      name: 'Trần Văn Minh',
+      avatar: '/images/avatars/customer2.jpg',
+      rating: 4.5,
+      date: '15/03/2025',
+      comment: 'Liệu trình chăm sóc da mặt cao cấp thực sự hiệu quả. Sau 2 tuần, làn da của tôi đã cải thiện rõ rệt, các vết thâm mờ đi nhiều. Sẽ quay lại để tiếp tục liệu trình.',
+      service: 'Chăm Sóc Da Mặt Cao Cấp',
+      verified: true,
+      images: [
+        '/images/reviews/review2-1.jpg'
+      ]
+    },
+    {
+      id: 3,
+      name: 'Lê Thị Hương',
+      avatar: '/images/avatars/customer3.jpg',
+      rating: 5,
+      date: '10/03/2025',
+      comment: 'Tôi đã thử gói tắm thảo dược và đó là trải nghiệm thư giãn nhất mà tôi từng có. Hương thơm của các loại thảo mộc giúp tôi thư giãn hoàn toàn. Chắc chắn sẽ quay lại!',
+      service: 'Tắm Thảo Dược Việt Nam',
+      verified: true,
+      images: []
+    },
+    {
+      id: 4,
+      name: 'Phạm Văn Đức',
+      avatar: '/images/avatars/customer4.jpg',
+      rating: 4,
+      date: '05/03/2025',
+      comment: 'Liệu pháp đá nóng thực sự hiệu quả cho vấn đề đau lưng mãn tính của tôi. Tôi cảm thấy nhẹ nhõm hơn nhiều sau buổi trị liệu. Nhân viên rất chuyên nghiệp và tận tâm.',
+      service: 'Liệu Pháp Đá Nóng',
+      verified: false,
+      images: [
+        '/images/reviews/review4-1.jpg'
+      ]
+    },
+    {
+      id: 5,
+      name: 'Hoàng Thị Mai',
+      avatar: '/images/avatars/customer5.jpg',
+      rating: 5,
+      date: '01/03/2025',
+      comment: 'Tôi đã đến nhiều spa khác nhau, nhưng Tấm Ơi Spa thực sự khác biệt. Không gian yên tĩnh, nhân viên chuyên nghiệp và các liệu trình đều mang lại hiệu quả cao. Đặc biệt là gói massage đầu và vai gáy đã giúp tôi giảm đau đầu hiệu quả.',
+      service: 'Massage Đầu và Vai Gáy',
+      verified: true,
+      images: [
+        '/images/reviews/review5-1.jpg',
+        '/images/reviews/review5-2.jpg'
+      ]
+    },
+    {
+      id: 6,
+      name: 'Vũ Thanh Tùng',
+      avatar: '/images/avatars/customer6.jpg',
+      rating: 4.5,
+      date: '25/02/2025',
+      comment: 'Gói liệu trình trẻ hóa da thực sự hiệu quả! Sau 3 lần, làn da của tôi đã săn chắc và tươi sáng hơn rất nhiều. Cảm ơn Tấm Ơi Spa đã mang đến trải nghiệm tuyệt vời này.',
+      service: 'Trẻ Hóa Da Công Nghệ Cao',
+      verified: true,
+      images: []
+    }
+  ];
+
+  // Dữ liệu đánh giá từ nền tảng khác
+  const platformReviews = [
+    {
+      platform: 'Google',
+      rating: 4.8,
+      count: 156,
+      logo: '/images/platforms/google.png'
+    },
+    {
+      platform: 'Facebook',
+      rating: 4.9,
+      count: 98,
+      logo: '/images/platforms/facebook.png'
+    },
+    {
+      platform: 'Foody',
+      rating: 4.7,
+      count: 72,
+      logo: '/images/platforms/foody.png'
+    },
+    {
+      platform: 'TripAdvisor',
+      rating: 4.8,
+      count: 45,
+      logo: '/images/platforms/tripadvisor.png'
+    }
+  ];
+
+  // Lọc hình ảnh theo danh mục
+  const filteredImages = selectedCategory === 'all' 
+    ? galleryImages 
+    : galleryImages.filter(img => img.category === selectedCategory);
+
+  // Xử lý thay đổi tab
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
+
+  // Xử lý mở lightbox
+  const handleOpenLightbox = (image) => {
+    setCurrentImage(image);
+    setOpenLightbox(true);
+  };
+
+  // Xử lý đóng lightbox
+  const handleCloseLightbox = () => {
+    setOpenLightbox(false);
+  };
+
+  // Xử lý chuyển ảnh trong lightbox
+  const handleNavigate = (direction) => {
+    const currentIndex = filteredImages.findIndex(img => img.id === currentImage.id);
+    let newIndex;
+    
+    if (direction === 'next') {
+      newIndex = (currentIndex + 1) % filteredImages.length;
+    } else {
+      newIndex = (currentIndex - 1 + filteredImages.length) % filteredImages.length;
+    }
+    
+    setCurrentImage(filteredImages[newIndex]);
+  };
+
+  // Xử lý thay đổi danh mục hình ảnh
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  return (
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      {/* Tabs chuyển đổi giữa Hình ảnh và Đánh giá */}
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 6 }}>
+        <Tabs 
+          value={activeTab} 
+          onChange={handleTabChange} 
+          centered
+          sx={{ 
+            '& .MuiTabs-indicator': { backgroundColor: '#8D6E63' },
+            '& .Mui-selected': { color: '#8D6E63 !important' }
+          }}
+        >
+          <Tab 
+            label="Thư Viện Hình Ảnh" 
+            sx={{ 
+              fontWeight: 'medium',
+              fontSize: '1.1rem',
+              textTransform: 'none'
+            }}
+          />
+          <Tab 
+            label="Đánh Giá Khách Hàng" 
+            sx={{ 
+              fontWeight: 'medium',
+              fontSize: '1.1rem',
+              textTransform: 'none'
+            }}
+          />
+        </Tabs>
+      </Box>
+
+      {/* Thư viện hình ảnh */}
+      {activeTab === 0 && (
+        <>
+          {/* Hero Section */}
+          <MotionBox
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            sx={{ mb: 6, textAlign: 'center' }}
+          >
+            <MotionTypography 
+              variant="h2" 
+              component="h1" 
+              gutterBottom
+              sx={{ 
+                fontWeight: 'bold',
+                color: '#8D6E63',
+                mb: 2
+              }}
+              initial={{ y: -50 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Thư Viện Hình Ảnh
+            </MotionTypography>
+            
+            <MotionTypography 
+              variant="h5" 
+              color="textSecondary"
+              sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              Khám phá không gian và trải nghiệm tại Tấm Ơi Spa
+            </MotionTypography>
+          </MotionBox>
+
+          {/* Bộ lọc danh mục */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4, flexWrap: 'wrap', gap: 1 }}>
+            {imageCategories.map((category) => (
+              <MotionBox
+                key={category.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Chip 
+                  label={category.label} 
+                  onClick={() => handleCategoryChange(category.id)}
+                  color={selectedCategory === category.id ? "primary" : "default"}
+                  sx={{ 
+                    px: 1,
+                    backgroundColor: selectedCategory === category.id ? '#8D6E63' : undefined,
+                    '&.MuiChip-colorPrimary': {
+                      backgroundColor: '#8D6E63',
+                    },
+                    '&:hover': {
+                      backgroundColor: selectedCategory === category.id ? '#6D4C41' : undefined
+                    }
+                  }}
+                />
+              </MotionBox>
+            ))}
+          </Box>
+
+          {/* Hình ảnh nổi bật */}
+          {selectedCategory === 'all' && (
+            <Box sx={{ mb: 6 }}>
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ mb: 3, color: '#8D6E63', fontWeight: 'medium' }}
+              >
+                Hình Ảnh Nổi Bật
+              </Typography>
+              
+              <Grid container spacing={2}>
+                {galleryImages
+                  .filter(img => img.featured)
+                  .slice(0, 4)
+                  .map((image, index) => (
+                    <Grid item xs={12} sm={6} md={3} key={image.id}>
+                      <MotionBox
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        whileHover={{ scale: 1.03 }}
+                        sx={{ 
+                          position: 'relative',
+                          overflow: 'hidden',
+                          borderRadius: 2,
+                          cursor: 'pointer',
+                          boxShadow: 2,
+                          height: 200
+                        }}
+                        onClick={() => handleOpenLightbox(image)}
+                      >
+                        <Box
+                          component="img"
+                          src={image.src}
+                          alt={image.alt}
+                          sx={{ 
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            transition: 'transform 0.3s ease-in-out',
+                            '&:hover': {
+                              transform: 'scale(1.05)'
+                            }
+                          }}
+                        />
+                        <Box 
+                          sx={{ 
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                            color: 'white',
+                            p: 1,
+                            fontSize: '0.8rem',
+                            textAlign: 'center'
+                          }}
+                        >
+                          {image.alt}
+                        </Box>
+                      </MotionBox>
+                    </Grid>
+                  ))}
+              </Grid>
+            </Box>
+          )}
+
+          {/* Thư viện hình ảnh chính */}
+          <MotionGrid
+            container 
+            spacing={2}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {filteredImages.map((image) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={image.id}>
+                <MotionBox
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
+                  sx={{ 
+                    position: 'relative',
+                    overflow: 'hidden',
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                    boxShadow: 1,
+                    height: 220
+                  }}
+                  onClick={() => handleOpenLightbox(image)}
+                >
+                  <Box
+                    component="img"
+                    src={image.src}
+                    alt={image.alt}
+                    sx={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'scale(1.05)'
+                      }
+                    }}
+                  />
+                  <Box 
+                    sx={{ 
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      color: 'white',
+                      p: 1,
+                      fontSize: '0.8rem',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease',
+                      '&:hover': {
+                        opacity: 1
+                      }
+                    }}
+                  >
+                    {image.alt}
+                  </Box>
+                </MotionBox>
+              </Grid>
+            ))}
+          </MotionGrid>
+
+          {/* Lightbox */}
+          <Dialog
+            open={openLightbox}
+            onClose={handleCloseLightbox}
+            maxWidth="md"
+            fullWidth
+          >
+            <DialogContent sx={{ p: 0, position: 'relative', bgcolor: 'black' }}>
+              <IconButton
+                onClick={handleCloseLightbox}
+                sx={{ 
+                  position: 'absolute', 
+                  top: 8, 
+                  right: 8, 
+                  color: 'white',
+                  bgcolor: 'rgba(0, 0, 0, 0.5)',
+                  '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' }
+                }}
+              >
+                <Close />
+              </IconButton>
+
+              <IconButton
+                onClick={() => handleNavigate('prev')}
+                sx={{ 
+                  position: 'absolute', 
+                  left: 8, 
+                  top: '50%', 
+                  transform: 'translateY(-50%)',
+                  color: 'white',
+                  bgcolor: 'rgba(0, 0, 0, 0.5)',
+                  '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' }
+                }}
+              >
+                <NavigateBefore />
+              </IconButton>
+
+              <IconButton
+                onClick={() => handleNavigate('next')}
+                sx={{ 
+                  position: 'absolute', 
+                  right: 8, 
+                  top: '50%', 
+                  transform: 'translateY(-50%)',
+                  color: 'white',
+                  bgcolor: 'rgba(0, 0, 0, 0.5)',
+                  '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.7)' }
+                }}
+              >
+                <NavigateNext />
+              </IconButton>
+
+              {currentImage && (
+                <Box
+                  component="img"
+                  src={currentImage.src}
+                  alt={currentImage.alt}
+                  sx={{ 
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '80vh',
+                    objectFit: 'contain'
+                  }}
+                />
+              )}
+
+              {currentImage && (
+                <Box 
+                  sx={{ 
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    color: 'white',
+                    p: 2,
+                    textAlign: 'center'
+                  }}
+                >
+                  <Typography variant="body1">
+                    {currentImage.alt}
+                  </Typography>
+                </Box>
+              )}
+            </DialogContent>
+          </Dialog>
+
+          {/* Instagram section */}
+          <Box sx={{ mt: 8, textAlign: 'center' }}>
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ 
+                  mb: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 1
+                }}
+              >
+                <Instagram /> Theo dõi chúng tôi trên Instagram
+              </Typography>
+              <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
+                @tamoispachannel
+              </Typography>
+            </MotionBox>
+
+            <Grid container spacing={1}>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <Grid item xs={4} sm={2} key={index}>
+                  <MotionBox
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.05 }}
+                    sx={{ 
+                      position: 'relative',
+                      paddingTop: '100%',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={`/images/instagram/insta-${index + 1}.jpg`}
+                      alt={`Instagram post ${index + 1}`}
+                      sx={{ 
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: 1
+                      }}
+                    />
+                  </MotionBox>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </>
+      )}
+
+      {/* Đánh giá khách hàng */}
+      {activeTab === 1 && (
+        <>
+          {/* Hero Section */}
+          <MotionBox
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            sx={{ mb: 6, textAlign: 'center' }}
+          >
+            <MotionTypography 
+              variant="h2" 
+              component="h1" 
+              gutterBottom
+              sx={{ 
+                fontWeight: 'bold',
+                color: '#8D6E63',
+                mb: 2
+              }}
+              initial={{ y: -50 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Đánh Giá Từ Khách Hàng
+            </MotionTypography>
+            
+            <MotionTypography 
+              variant="h5" 
+              color="textSecondary"
+              sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              Những trải nghiệm thực tế từ khách hàng của Tấm Ơi Spa
+            </MotionTypography>
+          </MotionBox>
+
+          {/* Tổng hợp đánh giá từ các nền tảng */}
+          <MotionBox
+            sx={{ mb: 6 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Paper 
+              elevation={2} 
+              sx={{ 
+                p: 3, 
+                borderRadius: 4,
+                bgcolor: '#f8f5f2'
+              }}
+            >
+              <Typography 
+                variant="h5" 
+                component="h2" 
+                sx={{ mb: 3, textAlign: 'center', color: '#6D4C41' }}
+              >
+                Đánh Giá Tổng Hợp
+              </Typography>
+              
+              <Grid container spacing={3} justifyContent="center">
+                {platformReviews.map((platform, index) => (
+                  <Grid item xs={6} sm={3} key={platform.platform}>
+                    <MotionBox
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      sx={{ 
+                        textAlign: 'center',
+                        p: 2,
+                        borderRadius: 2,
+                        bgcolor: 'white',
+                        boxShadow: 1,
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Box 
+                        component="img" 
+                        src={platform.logo} 
+                        alt={platform.platform}
+                        sx={{ 
+                          height: 40, 
+                          width: 'auto', 
+                          mx: 'auto',
+                          mb: 1
+                        }}
+                      />
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 0.5 }}>
+                        <Typography variant="h6" component="span" sx={{ mr: 1, fontWeight: 'bold' }}>
+                          {platform.rating}
+                        </Typography>
+                        <Star sx
