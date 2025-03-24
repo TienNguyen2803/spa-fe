@@ -1,3 +1,4 @@
+
 import { ThemeProvider } from "@mui/material/styles";
 import { RefineThemes } from "@refinedev/mui";
 import React, {
@@ -12,9 +13,10 @@ type ColorModeContextType = {
   setMode: () => void;
 };
 
-export const ColorModeContext = createContext<ColorModeContextType>(
-  {} as ColorModeContextType,
-);
+export const ColorModeContext = createContext<ColorModeContextType>({
+  mode: "light",
+  setMode: () => {},
+});
 
 export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -41,6 +43,8 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
 
+  const theme = mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark;
+
   return (
     <ColorModeContext.Provider
       value={{
@@ -48,10 +52,7 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
         mode,
       }}
     >
-      <ThemeProvider
-        // you can change the theme colors here. example: mode === "light" ? RefineThemes.Magenta : RefineThemes.MagentaDark
-        theme={mode === "light" ? RefineThemes.Blue : RefineThemes.BlueDark}
-      >
+      <ThemeProvider theme={theme}>
         {children}
       </ThemeProvider>
     </ColorModeContext.Provider>
