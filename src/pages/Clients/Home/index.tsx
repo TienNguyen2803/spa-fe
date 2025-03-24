@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Container, 
@@ -17,6 +16,7 @@ import {
 
 import Header from './Header';
 import Footer from './Footer';
+import SocialButtons from "./SocialButtons"; // Added import statement
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -133,7 +133,7 @@ const HomePage = () => {
               />
             </div>
           </Carousel>
-          
+
           <Box
             sx={{
               position: 'absolute',
@@ -227,7 +227,7 @@ const HomePage = () => {
             <Typography variant="body1" align="center" paragraph sx={{ mb: 6 }}>
               Khám phá các dịch vụ chăm sóc sức khỏe và làm đẹp tại Tấm Ơi Spa
             </Typography>
-            
+
             <Grid container spacing={4}>
               {services.map((service) => (
                 <Grid item xs={12} sm={6} md={3} key={service.id}>
@@ -295,7 +295,7 @@ const HomePage = () => {
             bottom: 0,
             backgroundColor: 'rgba(0,0,0,0.7)'
           }} />
-          
+
           <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
             <Paper sx={{ p: { xs: 3, md: 5 } }}>
               <Typography variant="h4" component="h2" align="center" gutterBottom sx={{ color: '#6D4C41' }}>
@@ -304,7 +304,7 @@ const HomePage = () => {
               <Typography variant="body1" align="center" paragraph sx={{ mb: 4 }}>
                 Để được tư vấn và đặt lịch sử dụng dịch vụ tại Tấm Ơi Spa
               </Typography>
-              
+
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -406,7 +406,7 @@ const HomePage = () => {
           <Typography variant="body1" align="center" paragraph sx={{ mb: 6 }}>
             Tấm Ơi Spa hiện có mặt tại nhiều địa điểm trên toàn quốc
           </Typography>
-          
+
           <Grid container spacing={4}>
             {branches.map((branch) => (
               <Grid item xs={12} sm={6} md={3} key={branch.id}>
@@ -446,6 +446,7 @@ const HomePage = () => {
             ))}
           </Grid>
         </Container>
+        <SocialButtons/> {/* Added SocialButtons component */}
       </Box>
       <Footer />
     </Box>
