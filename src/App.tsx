@@ -27,6 +27,12 @@ import { Login } from "./pages/login";
 import { UsersCreate, UsersEdit, UsersList, UsersShow } from "./pages/users";
 import { IUserResponse } from "./types/auth";
 import HomePage from "./pages/Clients/Home";
+import AboutPage from "./pages/Clients/About";
+import ServicesPage from "./pages/Clients/Services";
+import ProductsPage from "./pages/Clients/Products";
+import NewsPage from "./pages/Clients/News";
+import { ContactPage } from "@mui/icons-material";
+import GalleryPage from "./pages/Clients/Gallery";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Your backend URL
@@ -50,7 +56,7 @@ function App() {
           "user",
           JSON.stringify({
             ...user,
-          })
+          }),
         );
 
         localStorage.setItem("token", `${user.token}`);
@@ -150,12 +156,12 @@ function App() {
             >
               <Routes>
                 <Route path="/home" element={<HomePage />} />
-                <Route path="/about" element={lazy(() => import("./pages/Clients/About"))} />
-                <Route path="/services" element={lazy(() => import("./pages/Clients/Services"))} />
-                <Route path="/products" element={lazy(() => import("./pages/Clients/Products"))} />
-                <Route path="/gallery" element={lazy(() => import("./pages/Clients/Gallery"))} />
-                <Route path="/news" element={lazy(() => import("./pages/Clients/News"))} />
-                <Route path="/contact" element={lazy(() => import("./pages/Clients/Contact"))} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/contact" element={<ContactPage />} />
 
                 <Route
                   element={
