@@ -1,0 +1,390 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Container, 
+  Grid, 
+  Typography, 
+  Box, 
+  Card, 
+  CardContent, 
+  CardMedia,
+  CardActionArea,
+  CardActions,
+  Button,
+  Chip,
+  Divider,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Tabs,
+  Tab,
+  Pagination,
+  useMediaQuery,
+  useTheme,
+  Paper,
+  Avatar
+} from '@mui/material';
+import { 
+  Search, 
+  AccessTime, 
+  LocalOffer, 
+  ArrowForward,
+  Bookmark,
+  BookmarkBorder,
+  Share,
+  Visibility,
+  TrendingUp,
+  NewReleases,
+  EventNote,
+  Science,
+  Spa
+} from '@mui/icons-material';
+import { motion } from 'framer-motion';
+
+// Giả lập các thành phần từ thư viện animation
+const MotionBox = motion(Box);
+const MotionTypography = motion(Typography);
+const MotionCard = motion(Card);
+const MotionGrid = motion(Grid);
+const MotionPaper = motion(Paper);
+
+const NewsAndTechPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [activeTab, setActiveTab] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [savedArticles, setSavedArticles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hoveredArticle, setHoveredArticle] = useState(null);
+
+  // Danh mục tin tức
+  const newsCategories = [
+    { id: 'all', label: 'Tất cả', icon: <Spa /> },
+    { id: 'technology', label: 'Công nghệ mới', icon: <Science /> },
+    { id: 'trends', label: 'Xu hướng làm đẹp', icon: <TrendingUp /> },
+    { id: 'events', label: 'Sự kiện', icon: <EventNote /> },
+    { id: 'promotions', label: 'Khuyến mãi', icon: <NewReleases /> }
+  ];
+
+  // Dữ liệu tin tức
+  const newsArticles = [
+    {
+      id: 1,
+      title: 'Tấm Ơi Spa giới thiệu công nghệ trẻ hóa da mới nhất từ Hàn Quốc',
+      summary: 'Công nghệ Hydra Facial Pro+ sử dụng kết hợp tinh chất đặc biệt và thiết bị hiện đại giúp làm sạch sâu, tái tạo và trẻ hóa da hiệu quả.',
+      content: `Tấm Ơi Spa vừa chính thức giới thiệu công nghệ trẻ hóa da mới nhất từ Hàn Quốc - Hydra Facial Pro+. Đây là bước đột phá trong lĩnh vực chăm sóc da, kết hợp giữa khoa học tiên tiến và các thành phần tự nhiên.
+
+      Công nghệ Hydra Facial Pro+ hoạt động theo 5 bước chính:
+      1. Làm sạch sâu và tẩy tế bào chết
+      2. Chiết xuất mụn đầu đen và bã nhờn
+      3. Cấp ẩm và dưỡng chất
+      4. Kích thích tái tạo collagen
+      5. Bảo vệ và duy trì kết quả
+
+      Theo nghiên cứu lâm sàng, sau 3 lần điều trị, 95% khách hàng ghi nhận làn da săn chắc và trẻ trung hơn đáng kể. Công nghệ này đặc biệt phù hợp với làn da châu Á và điều kiện khí hậu Việt Nam.
+
+      Để kỷ niệm sự ra mắt công nghệ mới, Tấm Ơi Spa đang có chương trình ưu đãi đặc biệt cho 50 khách hàng đầu tiên trải nghiệm liệu trình này.`,
+      image: '/images/news/hydra-facial-tech.jpg',
+      date: '20/03/2025',
+      author: 'Nguyễn Thị Minh',
+      authorAvatar: '/images/authors/author1.jpg',
+      category: 'technology',
+      tags: ['công nghệ mới', 'trẻ hóa da', 'Hàn Quốc'],
+      featured: true,
+      viewCount: 1245
+    },
+    {
+      id: 2,
+      title: 'Xu hướng chăm sóc da "Skin Minimalism" đang thống trị 2025',
+      summary: 'Phong cách tối giản trong chăm sóc da đang được ưa chuộng với việc sử dụng ít sản phẩm nhưng hiệu quả cao, tập trung vào thành phần tự nhiên.',
+      content: `Xu hướng "Skin Minimalism" (Chăm sóc da tối giản) đang dần thay thế cho routine 10 bước phức tạp từng thịnh hành trước đây. Phong cách này nhấn mạnh việc sử dụng ít sản phẩm nhưng chất lượng cao và phù hợp với từng loại da.
+
+      Các chuyên gia da liễu trên thế giới đang khuyến khích mọi người áp dụng phương pháp này vì nhiều lợi ích:
+      - Giảm kích ứng và mẫn cảm da do sử dụng quá nhiều sản phẩm
+      - Tiết kiệm thời gian và chi phí
+      - Hiểu rõ làn da và nhu cầu thực sự của nó
+      - Thân thiện với môi trường hơn
+
+      Tại Tấm Ơi Spa, chúng tôi đã cập nhật các liệu trình theo xu hướng này, tập trung vào việc sử dụng các sản phẩm đa chức năng, thành phần tự nhiên và có hiệu quả cao. Các chuyên viên của chúng tôi sẽ tư vấn routine chăm sóc da phù hợp, tối ưu nhất cho từng khách hàng.`,
+      image: '/images/news/skin-minimalism.jpg',
+      date: '15/03/2025',
+      author: 'Trần Thị Hương',
+      authorAvatar: '/images/authors/author2.jpg',
+      category: 'trends',
+      tags: ['xu hướng', 'chăm sóc da', 'tối giản'],
+      featured: true,
+      viewCount: 982
+    },
+    {
+      id: 3,
+      title: 'Sự kiện ra mắt dòng sản phẩm thảo dược hữu cơ Tấm Ơi',
+      summary: 'Tấm Ơi Spa chính thức ra mắt dòng sản phẩm thảo dược hữu cơ độc quyền, kết hợp giữa y học cổ truyền và công nghệ hiện đại.',
+      content: `Vào ngày 10/04/2025 tới đây, Tấm Ơi Spa sẽ tổ chức sự kiện ra mắt dòng sản phẩm thảo dược hữu cơ độc quyền mang thương hiệu Tấm Ơi. Đây là kết quả của 3 năm nghiên cứu và phát triển, kết hợp giữa tinh hoa y học cổ truyền Việt Nam và công nghệ chiết xuất hiện đại từ Pháp.
+
+      Dòng sản phẩm bao gồm:
+      - Serum dưỡng da từ nghệ và mật ong rừng
+      - Mặt nạ thải độc từ thảo mộc Tây Bắc
+      - Dầu massage thư giãn từ tinh dầu thiên nhiên
+      - Sữa tắm thảo dược giúp làm mềm và sáng da
+
+      Sự kiện sẽ diễn ra tại Tấm Ơi Spa chi nhánh Quận 1, TP.HCM từ 9:00 - 12:00. Khách mời sẽ được:
+      - Tham gia workshop về cách chăm sóc da với thảo dược
+      - Trải nghiệm miễn phí các sản phẩm mới
+      - Gặp gỡ chuyên gia da liễu tư vấn
+      - Nhận quà tặng và ưu đãi đặc biệt khi mua sản phẩm
+
+      Đăng ký tham dự sự kiện tại đây hoặc liên hệ hotline: 1900 6789`,
+      image: '/images/news/product-launch.jpg',
+      date: '12/03/2025',
+      author: 'Lê Văn Nam',
+      authorAvatar: '/images/authors/author3.jpg',
+      category: 'events',
+      tags: ['sự kiện', 'sản phẩm mới', 'thảo dược'],
+      featured: false,
+      viewCount: 756
+    },
+    {
+      id: 4,
+      title: 'Công nghệ Cryo-Therapy: Phương pháp làm đẹp bằng liệu pháp lạnh',
+      summary: 'Tìm hiểu về công nghệ Cryo-Therapy - phương pháp sử dụng nhiệt độ thấp để trẻ hóa da, giảm viêm và cải thiện sức khỏe làn da.',
+      content: `Công nghệ Cryo-Therapy (liệu pháp lạnh) đang trở thành một trong những phương pháp làm đẹp được ưa chuộng nhất hiện nay. Phương pháp này sử dụng nhiệt độ cực thấp (từ -110°C đến -160°C) tác động lên da trong thời gian ngắn, mang lại nhiều lợi ích cho sức khỏe và sắc đẹp.
+
+      Cơ chế hoạt động:
+      Khi tiếp xúc với nhiệt độ cực thấp, cơ thể sẽ phản ứng bằng cách co mạch máu, sau đó giãn mạch, tăng cường tuần hoàn máu và trao đổi chất. Quá trình này giúp:
+      - Giảm viêm và đỏ da
+      - Thúc đẩy sản sinh collagen
+      - Se khít lỗ chân lông
+      - Làm săn chắc da
+      - Giảm quầng thâm mắt
+
+      Tấm Ơi Spa vừa đầu tư hệ thống Cryo-Therapy hiện đại nhất từ Đức, với khả năng điều chỉnh nhiệt độ chính xác theo từng vùng da và tình trạng da của khách hàng. Liệu trình này đặc biệt phù hợp với người có làn da nhạy cảm, dễ kích ứng với các phương pháp truyền thống.
+
+      Để biết thêm chi tiết và đặt lịch tư vấn miễn phí, quý khách vui lòng liên hệ với chúng tôi.`,
+      image: '/images/news/cryo-therapy.jpg',
+      date: '08/03/2025',
+      author: 'Phạm Thị Lan',
+      authorAvatar: '/images/authors/author4.jpg',
+      category: 'technology',
+      tags: ['công nghệ mới', 'liệu pháp lạnh', 'trẻ hóa da'],
+      featured: false,
+      viewCount: 845
+    },
+    {
+      id: 5,
+      title: 'Khuyến mãi đặc biệt nhân dịp khai trương chi nhánh mới tại Hà Nội',
+      summary: 'Tấm Ơi Spa khai trương chi nhánh mới tại Hà Nội với nhiều ưu đãi hấp dẫn lên đến 50% cho khách hàng.',
+      content: `Tấm Ơi Spa hân hạnh thông báo về việc khai trương chi nhánh mới tại số 25 Phố Huế, Hai Bà Trưng, Hà Nội vào ngày 01/04/2025. Đây là chi nhánh thứ 5 của chúng tôi trên toàn quốc, được thiết kế theo concept "Urban Oasis" - Ốc đảo giữa lòng phố thị.
+
+      Nhân dịp khai trương, Tấm Ơi Spa dành tặng khách hàng chương trình khuyến mãi đặc biệt:
+
+      1. Giảm 50% tất cả các dịch vụ cho 100 khách hàng đầu tiên
+      2. Tặng voucher 500.000đ cho khách hàng đăng ký thẻ thành viên
+      3. Mua 3 liệu trình tặng 1 liệu trình cùng loại
+      4. Quà tặng đặc biệt cho khách hàng sinh nhật trong tháng 4
+      5. Tặng gói chăm sóc da mặt cơ bản khi giới thiệu bạn bè
+
+      Thời gian áp dụng: 01/04 - 30/04/2025
+
+      Chi nhánh mới được trang bị đầy đủ các thiết bị và công nghệ hiện đại nhất, cùng đội ngũ chuyên viên được đào tạo bài bản tại Hàn Quốc và Thái Lan. Chúng tôi cam kết mang đến trải nghiệm thư giãn và làm đẹp tuyệt vời nhất cho quý khách hàng.
+
+      Đặt lịch ngay hôm nay để được ưu tiên slot đẹp!`,
+      image: '/images/news/new-branch.jpg',
+      date: '05/03/2025',
+      author: 'Hoàng Minh Tuấn',
+      authorAvatar: '/images/authors/author5.jpg',
+      category: 'promotions',
+      tags: ['khuyến mãi', 'chi nhánh mới', 'Hà Nội'],
+      featured: true,
+      viewCount: 1320
+    },
+    {
+      id: 6,
+      title: 'Xu hướng "Gua Sha" - Phương pháp massage cổ truyền đang thịnh hành',
+      summary: 'Kỹ thuật massage Gua Sha từ Đông y đang được các ngôi sao Hollywood và chuyên gia làm đẹp trên toàn thế giới ưa chuộng.',
+      content: `Gua Sha - kỹ thuật massage cổ truyền có nguồn gốc từ Đông y đang trở thành xu hướng làm đẹp được ưa chuộng trên toàn thế giới. Phương pháp này sử dụng dụng cụ làm từ đá thạch anh, ngọc bích hoặc thạch anh hồng để massage và cạo nhẹ trên da, giúp kích thích tuần hoàn máu và hệ bạch huyết.
+
+      Lợi ích của Gua Sha:
+      - Giảm phù nề, làm thon gọn khuôn mặt
+      - Tăng cường tuần hoàn máu, giúp da sáng hơn
+      - Giảm nếp nhăn và tăng độ đàn hồi
+      - Giảm căng thẳng ở cơ mặt
+      - Hỗ trợ thẩm thấu dưỡng chất tốt hơn
+
+      Tại Tấm Ơi Spa, chúng tôi đã phát triển liệu trình Gua Sha cao cấp kết hợp với tinh dầu thiên nhiên và các kỹ thuật massage hiện đại. Liệu trình này đặc biệt phù hợp với những người thường xuyên căng thẳng, làm việc với máy tính nhiều giờ hoặc muốn cải thiện đường nét khuôn mặt một cách tự nhiên.
+
+      Để đạt hiệu quả tốt nhất, chúng tôi khuyến nghị thực hiện liệu trình 1-2 lần/tuần, kết hợp với hướng dẫn tự thực hiện tại nhà.`,
+      image: '/images/news/gua-sha.jpg',
+      date: '01/03/2025',
+      author: 'Trần Thị Hương',
+      authorAvatar: '/images/authors/author2.jpg',
+      category: 'trends',
+      tags: ['xu hướng', 'massage', 'đông y'],
+      featured: false,
+      viewCount: 932
+    },
+    {
+      id: 7,
+      title: 'Workshop "Bí quyết chăm sóc da mùa hè" tại Tấm Ơi Spa',
+      summary: 'Tham gia workshop để học hỏi các bí quyết chăm sóc da trong mùa hè từ các chuyên gia hàng đầu.',
+      content: `Tấm Ơi Spa trân trọng kính mời quý khách hàng tham dự workshop "Bí quyết chăm sóc da mùa hè" sẽ diễn ra vào ngày 25/03/2025 tại chi nhánh Quận 3, TP.HCM.
+
+      Nội dung workshop:
+      - Những thách thức của làn da trong mùa hè
+      - Cách bảo vệ da khỏi tác hại của tia UV
+      - Routine chăm sóc da mùa hè phù hợp với từng loại da
+      - Cách khắc phục các vấn đề da thường gặp: cháy nắng, thâm nám, mụn...
+      - Demo các sản phẩm và liệu trình chăm sóc da mùa hè
+
+      Diễn giả:
+      - TS.BS Nguyễn Thị Mai - Chuyên gia da liễu với hơn 15 năm kinh nghiệm
+      - Chuyên viên cao cấp Trần Minh Tuấn - Giám đốc đào tạo Tấm Ơi Spa
+
+      Thời gian: 14:00 - 17:00, ngày 25/03/2025
+      Địa điểm: Tấm Ơi Spa - 45 Võ Văn Tần, Quận 3, TP.HCM
+      Phí tham dự: 200.000đ/người (được hoàn lại 100% khi sử dụng dịch vụ sau workshop)
+
+      Số lượng giới hạn chỉ 30 người. Đăng ký ngay hôm nay để đảm bảo có chỗ!`,
+      image: '/images/news/workshop.jpg',
+      date: '28/02/2025',
+      author: 'Lê Văn Nam',
+      authorAvatar: '/images/authors/author3.jpg',
+      category: 'events',
+      tags: ['workshop', 'chăm sóc da', 'mùa hè'],
+      featured: false,
+      viewCount: 645
+    },
+    {
+      id: 8,
+      title: 'Công nghệ RF Microneedling: Giải pháp trẻ hóa da không xâm lấn',
+      summary: 'Tìm hiểu về công nghệ RF Microneedling - phương pháp kết hợp vi kim và sóng radio giúp trẻ hóa da hiệu quả.',
+      content: `RF Microneedling là công nghệ kết hợp giữa vi kim và sóng radio tần số, tạo nên giải pháp trẻ hóa da không xâm lấn hiệu quả cao. Công nghệ này đang được các chuyên gia thẩm mỹ trên thế giới đánh giá là một trong những phương pháp an toàn và hiệu quả nhất hiện nay.
+
+      Cơ chế hoạt động:
+      - Kim siêu nhỏ tạo các kênh vi mô trên da
+      - Sóng RF được truyền qua các kênh này vào lớp hạ bì
+      - Nhiệt từ sóng RF kích thích sản sinh collagen và elastin
+      - Quá trình tự làm lành của da được kích hoạt
+
+      Lợi ích của RF Microneedling:
+      - Làm mờ nếp nhăn và vết chân chim
+      - Cải thiện kết cấu và độ đàn hồi của da
+      - Giảm sẹo rỗ và lỗ chân lông to
+      - Thu nhỏ tuyến bã nhờn, giảm dầu
+      - Làm mờ thâm nám và đốm nâu
+
+      Tấm Ơi Spa tự hào là một trong những spa đầu tiên tại Việt Nam trang bị hệ thống RF Microneedling Morpheus8 - thế hệ mới nhất từ Hoa Kỳ. Thiết bị này cho phép điều chỉnh độ sâu kim và cường độ sóng RF phù hợp với từng vùng da và tình trạng da của khách hàng.
+
+      Liệu trình thường bao gồm 3-4 buổi, cách nhau 4-6 tuần để đạt hiệu quả tối ưu. Thời gian phục hồi ngắn, khách hàng có thể quay lại sinh hoạt bình thường sau 24-48 giờ.`,
+      image: '/images/news/rf-microneedling.jpg',
+      date: '25/02/2025',
+      author: 'Phạm Thị Lan',
+      authorAvatar: '/images/authors/author4.jpg',
+      category: 'technology',
+      tags: ['công nghệ mới', 'trẻ hóa da', 'không xâm lấn'],
+      featured: false,
+      viewCount: 789
+    },
+    {
+      id: 9,
+      title: 'Ưu đãi đặc biệt nhân dịp 8/3 - Tôn vinh vẻ đẹp phụ nữ Việt',
+      summary: 'Tấm Ơi Spa triển khai chương trình ưu đãi đặc biệt nhân ngày Quốc tế Phụ nữ 8/3 với nhiều gói dịch vụ hấp dẫn.',
+      content: `Nhân dịp Quốc tế Phụ nữ 8/3, Tấm Ơi Spa ra mắt chương trình ưu đãi đặc biệt "Tôn vinh vẻ đẹp phụ nữ Việt" với nhiều gói dịch vụ và quà tặng hấp dẫn.
+
+      Chương trình ưu đãi:
+      1. Giảm 30% tất cả các dịch vụ spa và chăm sóc da
+      2. Tặng thêm 15 phút massage cho mọi liệu trình từ 60 phút
+      3. Mua 2 liệu trình tặng 1 liệu trình chăm sóc da cơ bản
+      4. Tặng bộ sản phẩm dưỡng da mini cho hóa đơn từ 2 triệu đồng
+      5. Đặc biệt: Giảm 40% cho nhóm từ 3 người trở lên
+
+      Thời gian áp dụng: 01/03 - 15/03/2025
+
+      Ngoài ra, khi đến Tấm Ơi Spa trong dịp này, quý khách sẽ được:
+      - Chụp ảnh lưu niệm tại góc check-in đặc biệt
+      - Thưởng thức trà hoa hồng và bánh ngọt
+      - Tham gia mini-game với cơ hội nhận voucher và quà tặng
+
+      Đặt lịch sớm để được ưu tiên slot đẹp và nhận thêm quà bất ngờ!`,
+      image: '/images/news/womens-day.jpg',
+      date: '20/02/2025',
+      author: 'Hoàng Minh Tuấn',
+      authorAvatar: '/images/authors/author5.jpg',
+      category: 'promotions',
+      tags: ['khuyến mãi', '8/3', 'quà tặng'],
+      featured: false,
+      viewCount: 1105
+    }
+  ];
+
+  // Xử lý thay đổi tab
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+    setCurrentPage(1);
+  };
+
+  // Xử lý thay đổi trang
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Xử lý tìm kiếm
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1);
+  };
+
+  // Xử lý lưu bài viết
+  const toggleSaveArticle = (id) => {
+    setSavedArticles(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id) 
+        : [...prev, id]
+    );
+  };
+
+  // Lọc bài viết theo danh mục
+  const getFilteredArticles = () => {
+    const categoryId = newsCategories[activeTab].id;
+    let filtered = newsArticles;
+    
+    if (categoryId !== 'all') {
+      filtered = filtered.filter(article => article.category === categoryId);
+    }
+    
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(article => 
+        article.title.toLowerCase().includes(query) || 
+        article.summary.toLowerCase().includes(query) ||
+        article.tags.some(tag => tag.toLowerCase().includes(query))
+      );
+    }
+    
+    return filtered;
+  };
+
+  // Phân trang
+  const articlesPerPage = 6;
+  const filteredArticles = getFilteredArticles();
+  const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
+  const displayedArticles = filteredArticles.slice(
+    (currentPage - 1) * articlesPerPage, 
+    currentPage * articlesPerPage
+  );
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 
