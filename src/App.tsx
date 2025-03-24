@@ -33,6 +33,7 @@ import ProductsPage from "./pages/Clients/Products";
 import NewsPage from "./pages/Clients/News";
 import { ContactPage } from "@mui/icons-material";
 import GalleryPage from "./pages/Clients/Gallery";
+import ThemeClientLayout from "./components/layouts/ThemeClientLayout";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Your backend URL
@@ -155,13 +156,15 @@ function App() {
               }}
             >
               <Routes>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/gallery" element={<GalleryPage />} />
-                <Route path="/news" element={<NewsPage />} />
-                <Route path="/contact" element={<ContactPage />} />
+                <Route element={<ThemeClientLayout />}>
+                  <Route path="/home" element={<HomePage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/products" element={<ProductsPage />} />
+                  <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/news" element={<NewsPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                </Route>
 
                 <Route
                   element={
