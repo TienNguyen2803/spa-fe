@@ -69,11 +69,27 @@ const Header = () => {
                 <SpaIcon sx={{ mr: 1, verticalAlign: "middle" }} />
                 Tấm Ơi Spa
               </Typography>
-              <Button color="inherit">Trang chủ</Button>
-              <Button color="inherit">Dịch vụ</Button>
-              <Button color="inherit">Tin tức</Button>
-              <Button color="inherit">Về chúng tôi</Button>
-              <Button color="inherit">Liên hệ</Button>
+              <Button color="inherit" component={Link} to="/home" startIcon={<HomeIcon />}>
+                Trang chủ
+              </Button>
+              <Button color="inherit" component={Link} to="/about" startIcon={<InfoIcon />}>
+                Giới thiệu
+              </Button>
+              <Button color="inherit" component={Link} to="/services" startIcon={<SpaIcon />}>
+                Dịch vụ
+              </Button>
+              <Button color="inherit" component={Link} to="/products" startIcon={<ShoppingBasketIcon />}>
+                Sản phẩm
+              </Button>
+              <Button color="inherit" component={Link} to="/gallery" startIcon={<PhotoLibraryIcon />}>
+                Hình ảnh
+              </Button>
+              <Button color="inherit" component={Link} to="/news" startIcon={<NewspaperIcon />}>
+                Tin tức
+              </Button>
+              <Button color="inherit" component={Link} to="/contact" startIcon={<LocationOnIcon />}>
+                Liên hệ
+              </Button>
               <Button
                 color="inherit"
                 variant="outlined"
