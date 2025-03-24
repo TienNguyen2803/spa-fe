@@ -1,50 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
   Container, 
   Grid, 
   Card, 
   CardMedia, 
   CardContent, 
   Box, 
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Divider,
-  TextField,
-  Paper,
-  useMediaQuery,
-  useTheme
+  Typography,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 
-// Import icons
-import MenuIcon from '@mui/icons-material/Menu';
-import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import SpaIcon from '@mui/icons-material/Spa';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import InfoIcon from '@mui/icons-material/Info';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-import { Header, Footer } from '../components';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    setDrawerOpen(open);
-  };
 
   const services = [
     {
@@ -67,19 +39,10 @@ const HomePage = () => {
     }
   ];
 
-  const branches = [
-    {
-      id: 1,
-      name: 'Chi nhánh 1',
-      address: '141 Tân Hương, Tân Quý, Tân Phú, Hồ Chí Minh',
-      phone: '0907 616 866'
-    }
-  ];
-
   return (
     <Box sx={{ flexGrow: 1, bgcolor: '#FFFAF0' }}>
       <Header />
-      <Box sx={{ mt: 8 }}> {/* Add margin top to account for fixed header */}
+      <Box sx={{ mt: 8 }}>
         <Container maxWidth="lg" sx={{ py: 4 }}>
           <Typography variant="h4" align="center" gutterBottom>
             Dịch vụ của chúng tôi
