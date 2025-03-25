@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Buttons with Material UI</title>
+  
+  <!-- Material UI CDN -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+    
+    .content {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      min-height: 200vh; /* Để có thể cuộn trang */
+    }
+    
+    /* Container cho các nút */
+    .floating-buttons {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 1000;
+    }
+    
+    /* Style chung cho các nút */
+    .floating-button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(180, 180, 180, 0.8); /* Box shadow mềm mại như ảnh mẫu */
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      outline: none;
+      position: relative;
+      background-color: #f5f5f5;
+    }
+    
+    .floating-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(160, 160, 160, 0.9);
+    }
+    
+    /* Outer circle style */
+    .outer-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #ece6cf; /* Màu nền nhạt giống ảnh mẫu */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Inner circle style */
+    .inner-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      z-index: 2;
+      background-color: #d4af37; /* Màu vàng đậm */
+    }
+    
+    /* Specific button styles */
+    .calendar-btn .inner-circle,
+    .zalo-btn .inner-circle,
+    .phone-btn .inner-circle,
+    .messenger-btn .inner-circle {
+      background-color: #d4af37; /* Màu vàng đậm */
+    }
+    
+    .top-btn {
+      background-color: #808080;
+      color: white;
+      box-shadow: 0 0 15px rgba(180, 180, 180, 0.8);
+    }
+    
+    .top-btn:hover {
+      box-shadow: 0 0 20px rgba(160, 160, 160, 0.9);
+    }
+    
+    /* Custom Zalo icon */
+    .zalo-icon {
+      font-weight: bold;
+      font-style: normal;
+      font-size: 18px;
+    }
+    
+    /* Animation gợn sóng có viền đen - chậm hơn */
+    .ripple {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background-color: transparent;
+      border: 2px solid #000; /* Viền đen rõ */
+      opacity: 0;
+      transform: scale(0);
+      animation: ripple 4s infinite; /* Tăng thời gian từ 2s lên 4s */
+    }
+    
+    .ripple-2 {
+      animation-delay: 1s; /* Tăng delay từ 0.5s lên 1s */
+    }
+    
+    .ripple-3 {
+      animation-delay: 2s; /* Tăng delay từ 1s lên 2s */
+    }
+    
+    @keyframes ripple {
+      0% {
+        transform: scale(0);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .floating-buttons {
+        right: 15px;
+      }
+      
+      .floating-button, .outer-circle {
+        width: 65px;
+        height: 65px;
+      }
+      
+      .inner-circle {
+        width: 45px;
+        height: 45px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Nội dung trang web -->
+  <div class="content">
+    <h1>Nội dung trang web</h1>
+    <p>Cuộn xuống để thấy các nút hoạt động...</p>
+    <!-- Thêm nội dung trang web ở đây -->
+  </div>
+  
+  <!-- Dàn nút nổi -->
+  <div class="floating-buttons">
+    <!-- Nút lịch -->
+    <div class="floating-button calendar-btn">
+      <div class="outer-circle">
+        <div class="inner-circle">
+          <span class="material-icons">event</span>
+        </div>
+        <div class="ripple"></div>
+        <div class="ripple ripple-2"></div>
+        <div class="ripple ripple-3"></div>
+      </div>
+    </div>
+    
+    <!-- Nút Zalo -->
+    <div class="floating-button zalo-btn">
+      <div class="outer-circle">
+        <div class="inner-circle">
+          <span class="zalo-icon">Zalo</span>
+        </div>
+        <div class="ripple"></div>
+        <div class="ripple ripple-2"></div>
+        <div class="ripple ripple-3"></div>
+      </div>
+    </div>
+    
+    <!-- Nút điện thoại -->
+    <div class="floating-button phone-btn">
+      <div class="outer-circle">
+        <div class="inner-circle">
+          <span class="material-icons">call</span>
+        </div>
+        <div class="ripple"></div>
+        <div class="ripple ripple-2"></div>
+        <div class="ripple ripple-3"></div>
+      </div>
+    </div>
+    
+    <!-- Nút Messenger -->
+    <div class="floating-button messenger-btn">
+      <div class="outer-circle">
+        <div class="inner-circle">
+          <span class="material-icons">message</span>
+        </div>
+        <div class="ripple"></div>
+        <div class="ripple ripple-2"></div>
+        <div class="ripple ripple-3"></div>
+      </div>
+    </div>
+    
+    <!-- Nút lên đầu trang -->
+    <div class="floating-button top-btn" onclick="scrollToTop()">
+      <span class="material-icons">arrow_upward</span>
+    </div>
+  </div>
+  
+  <script>
+    // Hàm cuộn lên đầu trang
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+    
+    // Thêm sự kiện cho các nút
+    document.addEventListener('DOMContentLoaded', function() {
+      // Nút lịch
+      document.querySelector('.calendar-btn').addEventListener('click', function() {
+        alert('Đặt lịch');
+      });
+      
+      // Nút Zalo
+      document.querySelector('.zalo-btn').addEventListener('click', function() {
+        window.open('https://zalo.me/your-zalo-id', '_blank');
+      });
+      
+      // Nút điện thoại
+      document.querySelector('.phone-btn').addEventListener('click', function() {
+        window.location.href = 'tel:+84xxxxxxxxx';
+      });
+      
+      // Nút Messenger
+      document.querySelector('.messenger-btn').addEventListener('click', function() {
+        window.open('https://m.me/your-facebook-page', '_blank');
+      });
+    });
+  </script>
+</body>
+</html>
