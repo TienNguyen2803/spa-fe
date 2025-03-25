@@ -1,5 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
+import StatsCounter from './StatsCounter';
+import BookingSection from './BookingSection';
+import SocialButtons from './SocialButtons';
 import { 
   AppBar, 
   Box, 
@@ -380,6 +383,8 @@ const HomePage = () => {
         </Container>
       </Box>
 
+      <StatsCounter />
+      <BookingSection />
       <ScrollToTop />
     </Box>
   );
