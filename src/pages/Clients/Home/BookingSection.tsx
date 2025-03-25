@@ -5,19 +5,25 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 const BookingCard = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
-  backgroundColor: '#8B5A2B',
-  borderRadius: '15px',
-  width: '200px',
-  height: '200px',
+  backgroundColor: '#B08D3C',
+  borderRadius: '50%',
+  width: '180px',
+  height: '180px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   transition: 'all 0.3s ease',
   cursor: 'pointer',
+  boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+  '& .MuiSvgIcon-root': {
+    transition: 'transform 0.3s ease',
+  },
   '&:hover': {
-    transform: 'translateY(-5px)',
     boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
+    '& .MuiSvgIcon-root': {
+      transform: 'rotate(180deg)',
+    },
   },
 }));
 
@@ -117,14 +123,14 @@ const BookingSection = () => {
               <Grid item>
                 <BookingCard>
                   <PhoneInTalkIcon sx={{ fontSize: 40, color: 'white', mb: 2 }} />
-                  <Typography variant="h6" sx={{ color: 'white', mb: 1, textAlign: 'center' }}>
+                  <Typography variant="body2" sx={{ color: 'white', mb: 1, textAlign: 'center', fontSize: '12px', fontWeight: 500 }}>
                     LIÊN HỆ HOTLINE
                   </Typography>
-                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>
+                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontSize: '20px' }}>
                     0982279135
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'white', mt: 1, textAlign: 'center' }}>
-                    Hãy liên hệ để được tư vấn mọi thắc mắc
+                  <Typography variant="body2" sx={{ color: 'white', mt: 1, textAlign: 'center', fontSize: '11px', maxWidth: '140px' }}>
+                    Hãy liên hệ ngay để được tư vấn miễn phí
                   </Typography>
                 </BookingCard>
               </Grid>
@@ -132,13 +138,13 @@ const BookingSection = () => {
               <Grid item>
                 <BookingCard>
                   <CalendarTodayIcon sx={{ fontSize: 40, color: 'white', mb: 2 }} />
-                  <Typography variant="h6" sx={{ color: 'white', mb: 1, textAlign: 'center' }}>
+                  <Typography variant="body2" sx={{ color: 'white', mb: 1, textAlign: 'center', fontSize: '12px', fontWeight: 500 }}>
                     GIỜ MỞ CỬA
                   </Typography>
-                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>
+                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 700, fontSize: '20px' }}>
                     9h - 19h
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'white', mt: 1, textAlign: 'center' }}>
+                  <Typography variant="body2" sx={{ color: 'white', mt: 1, textAlign: 'center', fontSize: '11px', maxWidth: '140px' }}>
                     Đặt lịch ngay hôm nay để nhận hàng ngàn ưu đãi
                   </Typography>
                 </BookingCard>
