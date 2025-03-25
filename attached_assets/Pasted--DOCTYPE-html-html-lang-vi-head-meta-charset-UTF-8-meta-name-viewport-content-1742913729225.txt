@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surgen Royal Spa - Đặt Lịch</title>
+  <!-- Material UI CDN -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.production.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    body {
+      background-color: #fdf6d5;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyIiBoZWlnaHQ9IjIiIGZpbGw9IiNmNWU5YmEiIC8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBvcGFjaXR5PSIwLjMiLz48L3N2Zz4=');
+      overflow-x: hidden;
+    }
+    
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .content-container {
+      display: flex;
+      width: 100%;
+      max-width: 1000px;
+      position: relative;
+    }
+    
+    /* Left Section - Booking Form */
+    .left-section {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    
+    .circle-container {
+      width: 300px;
+      height: 300px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+      padding: 20px;
+    }
+    
+    .spa-title {
+      font-size: 16px;
+      color: #b08d3c;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+    
+    .booking-title {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+    
+    .decorative-line {
+      width: 80px;
+      height: 2px;
+      background-image: linear-gradient(to right, transparent, #b08d3c, transparent);
+      margin: 10px 0;
+    }
+    
+    .promo-badge {
+      background-color: #b08d3c;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    
+    .form-message {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .booking-form {
+      width: 100%;
+      max-width: 350px;
+    }
+    
+    .form-field {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 14px;
+      background-color: white;
+    }
+    
+    .submit-button {
+      width: 100%;
+      background-color: #b08d3c;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 5px;
+      transition: background-color 0.3s;
+    }
+    
+    .submit-button:hover {
+      background-color: #8a6d2b;
+    }
+    
+    /* Right Section - Contact Info */
+    .right-section {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .info-circle {
+      width: 180px;
+      height: 180px;
+      background-color: #b08d3c;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      margin: 20px;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .circle-top {
+      margin-left: 60px;
+    }
+    
+    .circle-bottom {
+      margin-top: -20px;
+    }
+    
+    .info-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .info-title {
+      font-size: 12px;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .info-value {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .info-desc {
+      font-size: 11px;
+      max-width: 140px;
+    }
+    
+    .connector {
+      position: absolute;
+      width: 60px;
+      height: 1px;
+      background-color: #b08d3c;
+    }
+    
+    .connector-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #b08d3c;
+      border-radius: 50%;
+    }
+    
+    /* Float buttons */
+    .float-buttons {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    
+    .float-button {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: #b08d3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .content-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .left-section, .right-section {
+        width: 100%;
+        align-items: center;
+      }
+      
+      .circle-container {
+        width: 250px;
+        height: 250px;
+      }
+      
+      .info-circle {
+        width: 150px;
+        height: 150px;
+        margin: 10px auto;
+      }
+      
+      .circle-top, .circle-bottom {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="content-container">
+      <!-- Left Section - Booking Form -->
+      <div class="left-section">
+        <div class="circle-container">
+          <div class="spa-title">Surgen Royal Spa</div>
+          <h1 class="booking-title">Đặt Lịch</h1>
+          <div class="decorative-line"></div>
+        </div>
+        
+        <div class="promo-badge">Hàng Ngàn Ưu Đãi</div>
+        <p class="form-message">Để lại thông tin để chúng tôi liên hệ với bạn!</p>
+        
+        <form class="booking-form">
+          <div class="form-field">
+            <input class="form-input" type="text" placeholder="Họ tên" required>
+          </div>
+          <div class="form-field">
+            <input class="form-input" type="tel" placeholder="Điện thoại" required>
+          </div>
+          <div class="form-field">
+            <select class="form-input" required>
+              <option value="" disabled selected>Chọn dịch vụ</option>
+              <option value="massage">Massage</option>
+              <option value="facial">Chăm sóc da mặt</option>
+              <option value="body">Chăm sóc cơ thể</option>
+              <option value="nail">Chăm sóc móng</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <input class="form-input" type="text" placeholder="Nội dung">
+          </div>
+          <button class="submit-button" type="submit">ĐĂNG KÝ NGAY</button>
+        </form>
+      </div>
+      
+      <!-- Right Section - Contact Info -->
+      <div class="right-section">
+        <div class="info-circle circle-top">
+          <span class="info-icon material-icons">phone</span>
+          <div class="info-title">LIÊN HỆ HOTLINE</div>
+          <div class="info-value">0982279135</div>
+          <div class="info-desc">Hãy liên hệ ngay để được tư vấn miễn phí</div>
+          
+          <!-- Connectors -->
+          <div class="connector" style="left: -60px; top: 50%;"></div>
+          <div class="connector-dot" style="left: -5px; top: 50%; transform: translateY(-50%);"></div>
+        </div>
+        
+        <div class="info-circle circle-bottom">
+          <span class="info-icon material-icons">schedule</span>
+          <div class="info-title">GIỜ MỞ CỬA</div>
+          <div class="info-value">9h - 19h</div>
+          <div class="info-desc">Đặt lịch ngày hôm nay để nhận hàng ngàn ưu đãi</div>
+          
+          <!-- Connectors -->
+          <div class="connector" style="right: -60px; top: 50%;"></div>
+          <div class="connector-dot" style="right: -5px; top: 50%; transform: translateY(-50%);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Float buttons -->
+  <div class="float-buttons">
+    <div class="float-button">
+      <span class="material-icons">chat</span>
+    </div>
+    <div class="float-button">
+      <span class="material-icons">event</span>
+    </div>
+    <div class="float-button">
+      <span class="material-icons">forum</span>
+    </div>
+    <div class="float-button">
+      <span class="material-icons">call</span>
+    </div>
+  </div>
+
+  <script>
+    // Sử dụng Material UI cho các thành phần
+    document.addEventListener('DOMContentLoaded', function() {
+      // Nếu bạn muốn thêm các hiệu ứng Material UI nâng cao
+      // Có thể thêm code JavaScript ở đây
+    });
+  </script>
+</body>
+</html>
