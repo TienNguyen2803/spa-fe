@@ -46,6 +46,13 @@ const BookingForm = styled(Box)({
   textAlign: "center",
   WebkitAppearance: "none",
   WebkitBorderRadius: "15px",
+  position: "relative",
+  zIndex: 1,
+  margin: "1rem",
+  "@media (max-width: 600px)": {
+    margin: "0.5rem",
+    padding: "1.5rem",
+  }
 });
 
 const StyledButton = styled(Button)({
@@ -62,7 +69,23 @@ const StyledButton = styled(Button)({
 
 const BookingSection = () => {
   return (
-    <Box sx={{ py: 8, bgcolor: "#FFF8DC", overflow: "hidden", WebkitOverflowScrolling: "touch" }}>
+    <Box sx={{ 
+  py: 8, 
+  bgcolor: "#FFF8DC", 
+  overflow: "hidden", 
+  WebkitOverflowScrolling: "touch",
+  position: "relative",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#FFF8DC",
+    zIndex: 0
+  }
+}}>
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
