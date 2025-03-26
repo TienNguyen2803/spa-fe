@@ -223,11 +223,12 @@ const ServicesSection = () => {
                   </Box>
 
                   <Typography
-                    variant="h6"
                     component="span"
                     sx={{
-                      mb: 1.5,
-                      fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                      color: "#8D6E63",
+                      fontWeight: 600,
+                      letterSpacing: 2,
+                      textTransform: "uppercase",
                     }}
                   >
                     {service.title}
@@ -262,14 +263,14 @@ const ServicesSection = () => {
                       component="span"
                       endIcon={<ArrowForward />}
                       sx={{
-                        color: '#795548',
+                        color: "#8D6E63",
                         fontWeight: 600,
-                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
                         "&:hover": {
                           bgcolor: "rgba(139, 90, 43, 0.12)",
                           color: "#4E342E",
                         },
-                        transition: 'all 0.3s ease',
+                        transition: "all 0.3s ease",
                       }}
                     >
                       Chi tiết

@@ -1,0 +1,173 @@
+// Enhanced ServicesSection.jsx
+import React from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Button,
+  useTheme,
+  useMediaQuery,
+  styled,
+} from "@mui/material";
+import { AccessTime, ArrowForward, Star } from "@mui/icons-material";
+import { motion } from "framer-motion";
+
+// Enhanced styling with natural colors and modern elements
+const StyledCard = styled(motion(Card))(({ theme }) => ({
+  height: "100%",
+  borderRadius: 24, // Increased border radius for modern look
+  overflow: "hidden",
+  transition: "all 0.4s ease",
+  backgroundColor: "#fff",
+  boxShadow: "0 8px 32px rgba(139, 90, 43, 0.08)",
+  "&:hover": {
+    transform: "translateY(-12px) scale(1.02)", // Enhanced hover effect
+    boxShadow: "0 16px 48px rgba(139, 90, 43, 0.12)",
+  },
+}));
+
+// Enhanced image container with gradient overlay
+const ServiceImage = styled(CardMedia)(({ theme }) => ({
+  height: 320, // Increased height for better visual impact
+  position: "relative",
+  overflow: "hidden",
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "50%",
+    background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+    transition: "all 0.3s ease",
+  },
+  "&:hover::after": {
+    height: "60%",
+    background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+  },
+}));
+
+// New component for service features
+const FeatureTag = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: theme.spacing(1),
+  padding: theme.spacing(0.5, 1.5),
+  borderRadius: 20,
+  backgroundColor: "rgba(139, 90, 43, 0.08)",
+  color: theme.palette.primary.main,
+  margin: theme.spacing(0.5),
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: "rgba(139, 90, 43, 0.15)",
+  },
+}));
+
+// Enhanced services data with additional features
+const services = [
+  {
+    title: "Massage Thư Giãn Cao Cấp",
+    description:
+      "Trải nghiệm liệu pháp massage độc quyền kết hợp các kỹ thuật từ Đông y và tinh dầu thiên nhiên.",
+    image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35",
+    duration: "90 phút",
+    price: "Từ 550.000đ",
+    rating: 4.9,
+    features: ["Tinh dầu organic", "Đá nóng", "Thảo dược"],
+  },
+  // ... other services
+];
+
+const ServicesSection = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  return (
+    <Box 
+      sx={{ 
+        py: { xs: 10, md: 15 }, 
+        background: "linear-gradient(180deg, #FFF8E1 0%, #FFFFFF 100%)",
+      }}
+    >
+      <Container maxWidth="lg">
+        {/* Enhanced header section */}
+        <Box 
+          sx={{ 
+            textAlign: "center", 
+            mb: { xs: 8, md: 10 },
+            maxWidth: 900,
+            mx: "auto"
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Header content */}
+          </motion.div>
+        </Box>
+
+        {/* Enhanced services grid */}
+        <Grid container spacing={{ xs: 3, md: 4 }}>
+          {services.map((service, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <StyledCard
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                {/* Enhanced card content */}
+                <Box sx={{ position: "relative" }}>
+                  <ServiceImage
+                    image={service.image}
+                    title={service.title}
+                  />
+                  {/* Enhanced price tag */}
+                </Box>
+                
+                <CardContent sx={{ p: 4 }}>
+                  {/* Enhanced service details */}
+                  <Box sx={{ mb: 3 }}>
+                    {service.features.map((feature, idx) => (
+                      <FeatureTag key={idx}>
+                        {feature}
+                      </FeatureTag>
+                    ))}
+                  </Box>
+                  
+                  {/* Enhanced action button */}
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    endIcon={<ArrowForward />}
+                    sx={{
+                      mt: 3,
+                      py: 1.5,
+                      borderRadius: 3,
+                      background: "linear-gradient(45deg, #8B5A2B, #A67C52)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 8px 16px rgba(139, 90, 43, 0.2)",
+                      },
+                    }}
+                  >
+                    Đặt Lịch Ngay
+                  </Button>
+                </CardContent>
+              </StyledCard>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
+
+export default ServicesSection;
