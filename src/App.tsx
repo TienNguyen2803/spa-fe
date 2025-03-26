@@ -30,9 +30,9 @@ import GalleryPage from "./pages/Clients/Gallery";
 import HomePage from "./pages/Clients/Home";
 import NewsPage from "./pages/Clients/News";
 import ServicesPage from "./pages/Clients/Services";
-import { Login } from "./pages/login";
 import { UsersCreate, UsersEdit, UsersList, UsersShow } from "./pages/users";
 import { IUserResponse } from "./types/auth";
+import { LoginPage } from "./pages/Admin/Login";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Your backend URL
@@ -56,7 +56,7 @@ function App() {
           "user",
           JSON.stringify({
             ...user,
-          })
+          }),
         );
 
         localStorage.setItem("token", `${user.token}`);
@@ -205,7 +205,7 @@ function App() {
                     </Authenticated>
                   }
                 >
-                  <Route path="/login" element={<Login />} />
+                  <Route path="/login" element={<LoginPage />} />
                 </Route>
               </Routes>
 

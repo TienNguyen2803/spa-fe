@@ -5,14 +5,13 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { ThemedTitleV2 } from "@refinedev/mui";
-
-import { CredentialResponse } from "../interfaces/google";
-import { IUserResponse } from "../types/auth";
+import { CredentialResponse } from "../../../interfaces/google";
+import { IUserResponse } from "../../../types/auth";
 
 // Todo: Update your Google Client ID here
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-export const Login: React.FC = () => {
+export const LoginPage: React.FC = () => {
   const { mutate: login } = useLogin<IUserResponse>();
   const { mutateAsync } = useCustomMutation<IUserResponse>();
 
