@@ -177,6 +177,7 @@ const ServicesSection = () => {
                     height: "100%",
                     position: "relative",
                     minHeight: { xs: "200px", sm: "250px" },
+                    gap: 2,
                   }}
                 >
                   <Box
@@ -184,6 +185,9 @@ const ServicesSection = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      bgcolor: "rgba(141, 110, 99, 0.08)",
+                      borderRadius: 1,
+                      p: 1,
                       mb: 2,
                     }}
                   >
@@ -230,9 +234,16 @@ const ServicesSection = () => {
                   </Typography>
 
                   <Typography
-                    component="span"
+                    variant="body1"
                     sx={{
-                      color: "#8D6E63",
+                      color: "text.secondary",
+                      flexGrow: 1,
+                      lineHeight: 1.6,
+                      fontSize: { xs: '0.875rem', sm: '1rem' },
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
                     }}
                   >
                     {service.description}
