@@ -262,11 +262,14 @@ const ServicesSection = () => {
                       component="span"
                       endIcon={<ArrowForward />}
                       sx={{
-                        color: "#000000",
+                        color: '#795548',
+                        fontWeight: 600,
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
                         "&:hover": {
-                          bgcolor: "rgba(139, 90, 43, 0.08)",
-                          color: "#6E4A22",
+                          bgcolor: "rgba(139, 90, 43, 0.12)",
+                          color: "#4E342E",
                         },
+                        transition: 'all 0.3s ease',
                       }}
                     >
                       Chi tiết
