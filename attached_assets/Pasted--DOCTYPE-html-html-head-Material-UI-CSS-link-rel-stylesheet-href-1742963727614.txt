@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Material UI CSS -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <!-- Emotion CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emotion/react@11.11.3/dist/emotion-react.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emotion/styled@11.11.0/dist/emotion-styled.umd.min.js"></script>
+  <!-- Material UI -->
+  <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"></script>
+  <!-- AOS for animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+    .spa-section {
+      background-color: #f8f5f1;
+      padding: 64px 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+    }
+    .benefit-card {
+      transition: transform 0.3s ease;
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .benefit-card:hover {
+      transform: translateY(-10px);
+    }
+    .gradient-text {
+      background: linear-gradient(45deg, #2E7D32 30%, #81C784 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @media (max-width: 960px) {
+      .grid {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="spa-section">
+      <!-- Introduction Section -->
+      <div class="container">
+        <div class="grid" data-aos="fade-up">
+          <div style="grid-column: span 6;">
+            <img 
+              src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=2070"
+              alt="Spa Atmosphere"
+              style="width: 100%; border-radius: 8px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);"
+            />
+          </div>
+          <div style="grid-column: span 6; display: flex; flex-direction: column; justify-content: center;">
+            <span style="color: #2E7D32; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+              CHÀO MỪNG ĐẾN VỚI
+            </span>
+            <h1 class="gradient-text" style="font-size: 2.5rem; margin: 16px 0;">
+              Oasis Spa & Wellness
+            </h1>
+            <p style="color: #666; line-height: 1.8;">
+              Chúng tôi là điểm đến hàng đầu cho sự thư giãn và làm đẹp tại Việt Nam với hơn 10 năm kinh nghiệm. 
+              Oasis Spa kết hợp giữa phương pháp truyền thống và công nghệ hiện đại, mang đến trải nghiệm 
+              chăm sóc toàn diện cho cơ thể và tinh thần của bạn.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits Section -->
+      <div class="container" style="margin-top: 64px;">
+        <div style="text-align: center; margin-bottom: 48px;" data-aos="fade-up">
+          <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 16px;">
+            Tại sao chọn chúng tôi
+          </h2>
+          <p style="color: #666; max-width: 700px; margin: 0 auto;">
+            Chúng tôi cam kết mang đến trải nghiệm spa cao cấp và hiệu quả, giúp bạn tìm lại sự cân bằng và 
+            năng lượng tích cực trong cuộc sống bận rộn.
+          </p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+          <!-- Benefit Cards -->
+          <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+            <span class="material-icons" style="color: #2E7D32; font-size: 36px;">spa</span>
+            <h3 style="margin: 16px 0;">Liệu pháp tự nhiên</h3>
+            <p style="color: #666;">Sử dụng các sản phẩm hữu cơ và kỹ thuật truyền thống kết hợp công nghệ hiện đại.</p>
+          </div>
+
+          <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="material-icons" style="color: #2E7D32; font-size: 36px;">schedule</span>
+            <h3 style="margin: 16px 0;">Thời gian linh hoạt</h3>
+            <p style="color: #666;">Đội ngũ chuyên nghiệp sẵn sàng phục vụ với lịch hẹn linh hoạt phù hợp với bạn.</p>
+          </div>
+
+          <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+            <span class="material-icons" style="color: #2E7D32; font-size: 36px;">diamond</span>
+            <h3 style="margin: 16px 0;">Không gian sang trọng</h3>
+            <p style="color: #666;">Thiết kế nội thất cao cấp tạo không gian thư giãn tuyệt đối cho mọi giác quan.</p>
+          </div>
+
+          <div class="benefit-card" data-aos="fade-up" data-aos-delay="400">
+            <span class="material-icons" style="color: #2E7D32; font-size: 36px;">favorite</span>
+            <h3 style="margin: 16px 0;">Chăm sóc cá nhân hóa</h3>
+            <p style="color: #666;">Mỗi liệu trình được thiết kế riêng biệt cho từng khách hàng dựa trên nhu cầu cụ thể.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atmosphere Section -->
+      <div class="container" style="margin-top: 64px;">
+        <div class="grid">
+          <div style="grid-column: span 6;" data-aos="fade-right">
+            <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 24px;">
+              Không gian thư giãn tuyệt đối
+            </h2>
+            <p style="color: #666; line-height: 1.8;">
+              Bước vào Oasis Spa là bạn đã bước vào một thế giới khác - nơi mọi giác quan đều được 
+              chăm sóc và nuông chiều. Âm nhạc nhẹ nhàng, hương thơm tinh dầu tự nhiên và không gian 
+              được thiết kế tỉ mỉ sẽ đưa bạn vào trạng thái thư giãn sâu ngay từ giây phút đầu tiên.
+            </p>
+            <div style="display: flex; gap: 16px; margin-top: 24px;">
+              <span style="background: #E8F5E9; color: #2E7D32; padding: 8px 16px; border-radius: 20px; display: flex; align-items: center;">
+                <span class="material-icons" style="font-size: 18px; margin-right: 8px;">spa</span>
+                Liệu pháp tự nhiên
+              </span>
+              <span style="background: #E8F5E9; color: #2E7D32; padding: 8px 16px; border-radius: 20px; display: flex; align-items: center;">
+                <span class="material-icons" style="font-size: 18px; margin-right: 8px;">diamond</span>
+                Dịch vụ cao cấp
+              </span>
+            </div>
+          </div>
+          <div style="grid-column: span 6;" data-aos="fade-left">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <img 
+                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=2070"
+                alt="Spa Interior"
+                style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 16px;"
+              />
+              <img 
+                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=2070"
+                alt="Spa Treatment"
+                style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;"
+              />
+              <img 
+                src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1974"
+                alt="Spa Products"
+                style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;"
+              />
+              <img 
+                src="https://images.unsplash.com/photo-1596178060671-7a58c7f4bdd2?q=80&w=1780"
+                alt="Spa Ambience"
+                style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: false,
+      mirror: true
+    });
+  </script>
+</body>
+</html>
