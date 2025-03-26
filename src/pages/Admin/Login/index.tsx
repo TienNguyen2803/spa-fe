@@ -13,10 +13,35 @@ export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: emailLogin } = useCreate({
+    resource: "auth/email/login",
+    meta: {
+      operation: "login",
+    },
+  });
+
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement your email login logic here
-    console.log("Email login:", email, password);
+    emailLogin(
+      {
+        resource: "auth/email/login",
+        values: {
+          email,
+          password,
+        },
+      },
+      {
+        onSuccess: (response) => {
+          const { token } = response.data;
+          localStorage.setItem("token", token);
+          // Handle successful login
+        },
+        onError: (error) => {
+          // Handle login error
+          console.error("Login failed:", error);
+        },
+      }
+    );
   };
 
   const GoogleButton = (): JSX.Element => {
