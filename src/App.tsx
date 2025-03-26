@@ -35,7 +35,8 @@ import { IUserResponse } from "./types/auth";
 import { LoginPage } from "./pages/Admin/Login";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Your backend URL
+  baseURL:
+    "https://630feb56-a4db-450b-855a-72e24a12336d-00-t2xqh6jdz5p8.pike.replit.dev/api/v1", // Your backend URL
 });
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
@@ -47,7 +48,9 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 function App() {
-  const dataProvider = nestjsxCrudDataProvider(import.meta.env.VITE_API_URL);
+  const dataProvider = nestjsxCrudDataProvider(
+    "https://630feb56-a4db-450b-855a-72e24a12336d-00-t2xqh6jdz5p8.pike.replit.dev/api/v1",
+  );
 
   const authProvider: AuthBindings = {
     login: async (user: IUserResponse) => {
