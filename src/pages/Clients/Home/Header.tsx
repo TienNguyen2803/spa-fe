@@ -129,58 +129,206 @@ const Header = () => {
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: 280,
+            background: '#FBF7F4',
+          },
+        }}
+      >
         <Box
-          sx={{ width: 250 }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <Box sx={{ p: 2, backgroundColor: "#8D6E63", color: "white" }}>
-            <Typography variant="h6">Tấm Ơi Spa</Typography>
-            <Typography variant="subtitle2">Nâng niu mái tóc Việt</Typography>
+          <Box
+            sx={{
+              p: 3,
+              background: 'linear-gradient(135deg, #8D6E63 0%, #6D4C41 100%)',
+              color: 'white',
+              textAlign: 'center',
+            }}
+          >
+            <SpaIcon sx={{ fontSize: 40, mb: 1 }} />
+            <Typography variant="h5" sx={{ fontWeight: 600, mb: 0.5 }}>
+              Tấm Ơi Spa
+            </Typography>
+            <Typography variant="subtitle2" sx={{ opacity: 0.9 }}>
+              Nâng niu mái tóc Việt
+            </Typography>
           </Box>
-          <List>
-            <ListItem component={Link} to="/home">
+
+          <List sx={{ p: 2 }}>
+            <ListItem
+              component={Link}
+              to="/home"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <HomeIcon />
+                <HomeIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Trang chủ" />
+              <ListItemText 
+                primary="Trang chủ"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
-            <ListItem component={Link} to="/about">
+
+            <ListItem
+              component={Link}
+              to="/about"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <InfoIcon />
+                <InfoIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Giới thiệu" />
+              <ListItemText 
+                primary="Giới thiệu"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
-            <ListItem component={Link} to="/services">
+
+            <ListItem
+              component={Link}
+              to="/services"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <SpaIcon />
+                <SpaIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Dịch vụ" />
+              <ListItemText 
+                primary="Dịch vụ"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
-            <ListItem component={Link} to="/gallery">
+
+            <ListItem
+              component={Link}
+              to="/gallery"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <PhotoLibraryIcon />
+                <PhotoLibraryIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Hình ảnh" />
+              <ListItemText 
+                primary="Hình ảnh"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
-            <ListItem component={Link} to="/news">
+
+            <ListItem
+              component={Link}
+              to="/news"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <NewspaperIcon />
+                <NewspaperIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Tin tức" />
+              <ListItemText 
+                primary="Tin tức"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
-            <ListItem component={Link} to="/contact">
+
+            <ListItem
+              component={Link}
+              to="/contact"
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                '&:hover': {
+                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                },
+              }}
+            >
               <ListItemIcon>
-                <LocationOnIcon />
+                <LocationOnIcon sx={{ color: '#8D6E63' }} />
               </ListItemIcon>
-              <ListItemText primary="Liên hệ" />
+              <ListItemText 
+                primary="Liên hệ"
+                primaryTypographyProps={{
+                  fontWeight: 500,
+                }}
+              />
             </ListItem>
           </List>
-          <Divider />
-          <Box sx={{ p: 2 }}>
-            <Typography variant="subtitle2">Hotline: 0907 616 866</Typography>
+
+          <Divider sx={{ mx: 2, bgcolor: 'rgba(141, 110, 99, 0.12)' }} />
+          
+          <Box sx={{ p: 3, textAlign: 'center' }}>
+            <Button
+              variant="contained"
+              fullWidth
+              startIcon={<EventNote />}
+              sx={{
+                bgcolor: '#8D6E63',
+                '&:hover': {
+                  bgcolor: '#6D4C41',
+                },
+                borderRadius: 2,
+                py: 1,
+                mb: 2,
+              }}
+            >
+              Đặt lịch ngay
+            </Button>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: '#8D6E63',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1,
+              }}
+            >
+              <PhoneIcon fontSize="small" />
+              0907 616 866
+            </Typography>
           </Box>
         </Box>
       </Drawer>
