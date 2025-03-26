@@ -1,19 +1,23 @@
-import { useCustomMutation, useLogin } from "@refinedev/core";
-import { useEffect, useRef } from "react";
 
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import { ThemedTitleV2 } from "@refinedev/mui";
+import React, { useEffect, useRef, useState } from "react";
+import { Box, Container, TextField, Button, Typography, Paper, Divider } from "@mui/material";
+import { useCustomMutation, useLogin } from "@refinedev/core";
 import { CredentialResponse } from "../../../interfaces/google";
 import { IUserResponse } from "../../../types/auth";
 
-// Todo: Update your Google Client ID here
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 export const LoginPage: React.FC = () => {
   const { mutate: login } = useLogin<IUserResponse>();
   const { mutateAsync } = useCustomMutation<IUserResponse>();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Implement your email login logic here
+    console.log("Email login:", email, password);
+  };
 
   const GoogleButton = (): JSX.Element => {
     const divRef = useRef<HTMLDivElement>(null);
@@ -52,8 +56,6 @@ export const LoginPage: React.FC = () => {
             idToken: res.credential,
           },
           successNotification: () => {
-            console.log("Login success");
-
             return {
               key: "4-users-notification",
               message: "Đăng nhập Google thành công",
@@ -64,8 +66,7 @@ export const LoginPage: React.FC = () => {
           errorNotification: (error, values) => {
             return {
               message: "Đăng nhập Google thất bại",
-              description:
-                error?.message || "Đã xảy ra lỗi khi đăng nhập bằng Google",
+              description: error?.message || "Đã xảy ra lỗi khi đăng nhập bằng Google",
               type: "error",
             };
           },
@@ -78,40 +79,61 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container
-      style={{
+    <Container 
+      maxWidth="sm" 
+      sx={{ 
         height: "100vh",
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <Box
-        display="flex"
-        gap="36px"
-        justifyContent="center"
-        flexDirection="column"
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          width: "100%",
+          borderRadius: 2,
+        }}
       >
-        <ThemedTitleV2
-          collapsed={false}
-          wrapperStyles={{
-            fontSize: "22px",
-            justifyContent: "center",
-          }}
-        />
-
-        <GoogleButton />
-
-        <Typography align="center" color={"text.secondary"} fontSize="12px">
-          Powered by
-          <img
-            style={{ padding: "0 5px" }}
-            alt="Google"
-            src="https://refine.ams3.cdn.digitaloceanspaces.com/superplate-auth-icons%2Fgoogle.svg"
-          />
-          Google
+        <Typography variant="h5" component="h1" align="center" gutterBottom>
+          Đăng nhập Admin
         </Typography>
-      </Box>
+        
+        <form onSubmit={handleEmailLogin}>
+          <TextField
+            fullWidth
+            label="Email"
+            variant="outlined"
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            label="Mật khẩu"
+            type="password"
+            variant="outlined"
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Đăng nhập
+          </Button>
+        </form>
+
+        <Divider sx={{ my: 3 }}>hoặc</Divider>
+        
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <GoogleButton />
+        </Box>
+      </Paper>
     </Container>
   );
 };
