@@ -1,32 +1,31 @@
-import React, { useState } from "react";
 import {
   AppBar,
-  Toolbar,
-  Typography,
-  Button,
   Box,
-  IconButton,
+  Button,
+  Divider,
   Drawer,
+  IconButton,
   List,
   ListItem,
-  ListItemText,
   ListItemIcon,
-  Divider,
+  ListItemText,
+  Toolbar,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import React, { useState } from "react";
 
-import MenuIcon from "@mui/icons-material/Menu";
+import { EventNote } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
-import PhoneIcon from "@mui/icons-material/Phone";
-import SpaIcon from "@mui/icons-material/Spa";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
 import InfoIcon from "@mui/icons-material/Info";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import MenuIcon from "@mui/icons-material/Menu";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import PhoneIcon from "@mui/icons-material/Phone";
 import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import SpaIcon from "@mui/icons-material/Spa";
 import { Link } from "react-router";
-import { EventNote } from "@mui/icons-material";
 
 const Header = () => {
   const theme = useTheme();
@@ -134,9 +133,9 @@ const Header = () => {
         open={drawerOpen}
         onClose={toggleDrawer(false)}
         sx={{
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: 280,
-            background: '#FBF7F4',
+            background: "#FBF7F4",
           },
         }}
       >
@@ -148,9 +147,9 @@ const Header = () => {
           <Box
             sx={{
               p: 3,
-              background: 'linear-gradient(135deg, #8D6E63 0%, #6D4C41 100%)',
-              color: 'white',
-              textAlign: 'center',
+              background: "linear-gradient(135deg, #8D6E63 0%, #6D4C41 100%)",
+              color: "white",
+              textAlign: "center",
             }}
           >
             <SpaIcon sx={{ fontSize: 40, mb: 1 }} />
@@ -169,15 +168,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <HomeIcon sx={{ color: '#8D6E63' }} />
+                <HomeIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Trang chủ"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -191,15 +190,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <InfoIcon sx={{ color: '#8D6E63' }} />
+                <InfoIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Giới thiệu"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -213,15 +212,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <SpaIcon sx={{ color: '#8D6E63' }} />
+                <SpaIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Dịch vụ"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -235,15 +234,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <PhotoLibraryIcon sx={{ color: '#8D6E63' }} />
+                <PhotoLibraryIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Hình ảnh"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -257,15 +256,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <NewspaperIcon sx={{ color: '#8D6E63' }} />
+                <NewspaperIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Tin tức"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -279,15 +278,15 @@ const Header = () => {
               sx={{
                 borderRadius: 2,
                 mb: 1,
-                '&:hover': {
-                  bgcolor: 'rgba(141, 110, 99, 0.08)',
+                "&:hover": {
+                  bgcolor: "rgba(141, 110, 99, 0.08)",
                 },
               }}
             >
               <ListItemIcon>
-                <LocationOnIcon sx={{ color: '#8D6E63' }} />
+                <LocationOnIcon sx={{ color: "#8D6E63" }} />
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary="Liên hệ"
                 primaryTypographyProps={{
                   fontWeight: 500,
@@ -296,17 +295,17 @@ const Header = () => {
             </ListItem>
           </List>
 
-          <Divider sx={{ mx: 2, bgcolor: 'rgba(141, 110, 99, 0.12)' }} />
-          
-          <Box sx={{ p: 3, textAlign: 'center' }}>
+          <Divider sx={{ mx: 2, bgcolor: "rgba(141, 110, 99, 0.12)" }} />
+
+          <Box sx={{ p: 3, textAlign: "center" }}>
             <Button
               variant="contained"
               fullWidth
               startIcon={<EventNote />}
               sx={{
-                bgcolor: '#8D6E63',
-                '&:hover': {
-                  bgcolor: '#6D4C41',
+                bgcolor: "#8D6E63",
+                "&:hover": {
+                  bgcolor: "#6D4C41",
                 },
                 borderRadius: 2,
                 py: 1,
@@ -318,11 +317,11 @@ const Header = () => {
             <Typography
               variant="subtitle1"
               sx={{
-                color: '#8D6E63',
+                color: "#8D6E63",
                 fontWeight: 600,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 gap: 1,
               }}
             >

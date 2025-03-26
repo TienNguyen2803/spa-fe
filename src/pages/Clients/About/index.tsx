@@ -1,24 +1,23 @@
-
-import React, { useEffect } from 'react';
-import { 
-  Container, 
-  Grid, 
-  Typography, 
-  Box, 
-  Card, 
-  CardContent, 
-  CardMedia,
-  Button,
-  Avatar
-} from '@mui/material';
-import { 
-  Spa, 
-  EmojiNature, 
-  Favorite, 
+import {
+  EmojiNature,
+  Favorite,
+  Spa,
   Star,
-  Timeline
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+  Timeline,
+} from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const MotionBox = motion(Box);
 const MotionTypography = motion(Typography);
@@ -31,26 +30,30 @@ const AboutPage = () => {
   }, []);
 
   const coreValues = [
-    { 
-      icon: <Spa fontSize="large" />, 
-      title: "Chất Lượng", 
-      description: "Cam kết sử dụng các sản phẩm tự nhiên và liệu pháp chất lượng cao nhất" 
+    {
+      icon: <Spa fontSize="large" />,
+      title: "Chất Lượng",
+      description:
+        "Cam kết sử dụng các sản phẩm tự nhiên và liệu pháp chất lượng cao nhất",
     },
-    { 
-      icon: <EmojiNature fontSize="large" />, 
-      title: "Tự Nhiên", 
-      description: "Ưu tiên các thành phần hữu cơ và phương pháp truyền thống Việt Nam" 
+    {
+      icon: <EmojiNature fontSize="large" />,
+      title: "Tự Nhiên",
+      description:
+        "Ưu tiên các thành phần hữu cơ và phương pháp truyền thống Việt Nam",
     },
-    { 
-      icon: <Favorite fontSize="large" />, 
-      title: "Tận Tâm", 
-      description: "Đội ngũ chuyên gia luôn lắng nghe và chăm sóc khách hàng với tất cả tâm huyết" 
+    {
+      icon: <Favorite fontSize="large" />,
+      title: "Tận Tâm",
+      description:
+        "Đội ngũ chuyên gia luôn lắng nghe và chăm sóc khách hàng với tất cả tâm huyết",
     },
-    { 
-      icon: <Star fontSize="large" />, 
-      title: "Chuyên Nghiệp", 
-      description: "Đội ngũ được đào tạo bài bản với kinh nghiệm phục vụ hàng ngàn khách hàng" 
-    }
+    {
+      icon: <Star fontSize="large" />,
+      title: "Chuyên Nghiệp",
+      description:
+        "Đội ngũ được đào tạo bài bản với kinh nghiệm phục vụ hàng ngàn khách hàng",
+    },
   ];
 
   const experts = [
@@ -58,43 +61,47 @@ const AboutPage = () => {
       name: "Nguyễn Thị Minh",
       position: "Chuyên Gia Trị Liệu Cao Cấp",
       experience: "15+ năm kinh nghiệm",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600"
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600",
     },
     {
       name: "Trần Văn Nam",
       position: "Chuyên Gia Massage & Thư Giãn",
-      experience: "12+ năm kinh nghiệm", 
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600"
+      experience: "12+ năm kinh nghiệm",
+      image:
+        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600",
     },
     {
       name: "Lê Thị Hương",
       position: "Chuyên Gia Chăm Sóc Da",
       experience: "10+ năm kinh nghiệm",
-      image: "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=600"
-    }
+      image: "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=600",
+    },
   ];
 
   const milestones = [
     {
       year: "2015",
       title: "Thành Lập Tấm Ơi Spa",
-      description: "Khai trương cơ sở đầu tiên tại Hà Nội với diện tích 150m²"
+      description: "Khai trương cơ sở đầu tiên tại Hà Nội với diện tích 150m²",
     },
     {
       year: "2018",
       title: "Mở Rộng Chi Nhánh",
-      description: "Khai trương chi nhánh thứ hai tại Quận 2, TP.HCM"
+      description: "Khai trương chi nhánh thứ hai tại Quận 2, TP.HCM",
     },
     {
       year: "2020",
       title: "Phát Triển Dòng Sản Phẩm Riêng",
-      description: "Ra mắt dòng sản phẩm dưỡng da và chăm sóc cơ thể từ thảo mộc Việt Nam"
+      description:
+        "Ra mắt dòng sản phẩm dưỡng da và chăm sóc cơ thể từ thảo mộc Việt Nam",
     },
     {
       year: "2023",
       title: "Đạt Chứng Nhận Quốc Tế",
-      description: "Nhận chứng nhận chất lượng dịch vụ spa từ Hiệp hội Spa Quốc tế"
-    }
+      description:
+        "Nhận chứng nhận chất lượng dịch vụ spa từ Hiệp hội Spa Quốc tế",
+    },
   ];
 
   return (
@@ -104,16 +111,16 @@ const AboutPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        sx={{ mb: 8, textAlign: 'center' }}
+        sx={{ mb: 8, textAlign: "center" }}
       >
-        <MotionTypography 
-          variant="h2" 
-          component="h1" 
+        <MotionTypography
+          variant="h2"
+          component="h1"
           gutterBottom
-          sx={{ 
-            fontWeight: 'bold',
-            color: '#8D6E63',
-            mb: 2
+          sx={{
+            fontWeight: "bold",
+            color: "#8D6E63",
+            mb: 2,
           }}
           initial={{ y: -50 }}
           animate={{ y: 0 }}
@@ -121,28 +128,28 @@ const AboutPage = () => {
         >
           Câu Chuyện Tấm Ơi Spa
         </MotionTypography>
-        
-        <MotionTypography 
-          variant="h5" 
+
+        <MotionTypography
+          variant="h5"
           color="textSecondary"
-          sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}
+          sx={{ mb: 4, maxWidth: "800px", mx: "auto" }}
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           Nơi nâng niu mái tóc Việt và chăm sóc tâm hồn Việt
         </MotionTypography>
-        
+
         <MotionBox
           component="img"
           src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200"
           alt="Tấm Ơi Spa"
-          sx={{ 
-            width: '100%', 
-            height: '500px',
-            objectFit: 'cover',
+          sx={{
+            width: "100%",
+            height: "500px",
+            objectFit: "cover",
             borderRadius: 4,
-            boxShadow: 3
+            boxShadow: 3,
           }}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -159,17 +166,30 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Typography variant="h4" component="h2" gutterBottom sx={{ color: '#8D6E63', fontWeight: 'bold' }}>
+            <Typography
+              variant="h4"
+              component="h2"
+              gutterBottom
+              sx={{ color: "#8D6E63", fontWeight: "bold" }}
+            >
               Về Chúng Tôi
             </Typography>
             <Typography variant="body1" paragraph>
-              Tấm Ơi Spa được thành lập với sứ mệnh mang đến những trải nghiệm thư giãn và chăm sóc sức khỏe đỉnh cao, kết hợp giữa tinh hoa của y học cổ truyền Việt Nam và công nghệ hiện đại.
+              Tấm Ơi Spa được thành lập với sứ mệnh mang đến những trải nghiệm
+              thư giãn và chăm sóc sức khỏe đỉnh cao, kết hợp giữa tinh hoa của
+              y học cổ truyền Việt Nam và công nghệ hiện đại.
             </Typography>
             <Typography variant="body1" paragraph>
-              Chúng tôi tự hào là điểm đến lý tưởng cho những ai muốn tìm kiếm sự cân bằng giữa cơ thể và tâm hồn. Với không gian thiết kế sang trọng, ấm cúng và đội ngũ nhân viên chuyên nghiệp, Tấm Ơi Spa cam kết mang đến cho khách hàng những phút giây thư giãn tuyệt vời nhất.
+              Chúng tôi tự hào là điểm đến lý tưởng cho những ai muốn tìm kiếm
+              sự cân bằng giữa cơ thể và tâm hồn. Với không gian thiết kế sang
+              trọng, ấm cúng và đội ngũ nhân viên chuyên nghiệp, Tấm Ơi Spa cam
+              kết mang đến cho khách hàng những phút giây thư giãn tuyệt vời
+              nhất.
             </Typography>
             <Typography variant="body1">
-              Mỗi liệu trình tại Tấm Ơi Spa đều được thiết kế riêng biệt, phù hợp với nhu cầu và tình trạng của từng khách hàng, đảm bảo hiệu quả tối ưu và an toàn tuyệt đối.
+              Mỗi liệu trình tại Tấm Ơi Spa đều được thiết kế riêng biệt, phù
+              hợp với nhu cầu và tình trạng của từng khách hàng, đảm bảo hiệu
+              quả tối ưu và an toàn tuyệt đối.
             </Typography>
           </MotionBox>
         </Grid>
@@ -179,23 +199,23 @@ const AboutPage = () => {
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            sx={{ 
-              height: '100%', 
-              display: 'flex', 
-              alignItems: 'center',
-              justifyContent: 'center'
+            sx={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Box
               component="img"
               src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200"
               alt="Không gian Tấm Ơi Spa"
-              sx={{ 
-                width: '100%',
-                height: '400px',
-                objectFit: 'cover',
+              sx={{
+                width: "100%",
+                height: "400px",
+                objectFit: "cover",
                 borderRadius: 4,
-                boxShadow: 3
+                boxShadow: 3,
               }}
             />
           </MotionBox>
@@ -203,12 +223,12 @@ const AboutPage = () => {
       </Grid>
 
       {/* Giá trị cốt lõi */}
-      <Box sx={{ mb: 10, textAlign: 'center' }}>
-        <MotionTypography 
-          variant="h4" 
-          component="h2" 
-          gutterBottom 
-          sx={{ color: '#8D6E63', fontWeight: 'bold', mb: 6 }}
+      <Box sx={{ mb: 10, textAlign: "center" }}>
+        <MotionTypography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{ color: "#8D6E63", fontWeight: "bold", mb: 6 }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -216,30 +236,32 @@ const AboutPage = () => {
         >
           Giá Trị Cốt Lõi
         </MotionTypography>
-        
+
         <Grid container spacing={4}>
           {coreValues.map((value, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
-              <MotionCard 
+              <MotionCard
                 elevation={3}
-                sx={{ height: '100%', borderRadius: 4, overflow: 'hidden' }}
+                sx={{ height: "100%", borderRadius: 4, overflow: "hidden" }}
                 initial={{ y: 50, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
-                  boxShadow: '0 12px 20px rgba(0,0,0,0.1)',
-                  transition: { duration: 0.3 }
+                  boxShadow: "0 12px 20px rgba(0,0,0,0.1)",
+                  transition: { duration: 0.3 },
                 }}
               >
                 <CardContent>
-                  <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    mb: 2,
-                    color: '#8D6E63' 
-                  }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mb: 2,
+                      color: "#8D6E63",
+                    }}
+                  >
                     {value.icon}
                   </Box>
                   <Typography variant="h6" component="h3" gutterBottom>
@@ -257,11 +279,16 @@ const AboutPage = () => {
 
       {/* Đội ngũ chuyên gia */}
       <Box sx={{ mb: 10 }}>
-        <MotionTypography 
-          variant="h4" 
-          component="h2" 
-          gutterBottom 
-          sx={{ color: '#8D6E63', fontWeight: 'bold', mb: 6, textAlign: 'center' }}
+        <MotionTypography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{
+            color: "#8D6E63",
+            fontWeight: "bold",
+            mb: 6,
+            textAlign: "center",
+          }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -269,21 +296,21 @@ const AboutPage = () => {
         >
           Đội Ngũ Chuyên Gia
         </MotionTypography>
-        
+
         <Grid container spacing={4}>
           {experts.map((expert, index) => (
             <Grid item xs={12} md={4} key={index}>
-              <MotionCard 
+              <MotionCard
                 elevation={3}
-                sx={{ borderRadius: 4, overflow: 'hidden' }}
+                sx={{ borderRadius: 4, overflow: "hidden" }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
-                  boxShadow: '0 12px 20px rgba(0,0,0,0.1)',
-                  transition: { duration: 0.3 }
+                  boxShadow: "0 12px 20px rgba(0,0,0,0.1)",
+                  transition: { duration: 0.3 },
                 }}
               >
                 <CardMedia
@@ -292,7 +319,7 @@ const AboutPage = () => {
                   image={expert.image}
                   alt={expert.name}
                 />
-                <CardContent sx={{ textAlign: 'center' }}>
+                <CardContent sx={{ textAlign: "center" }}>
                   <Typography variant="h6" component="h3" gutterBottom>
                     {expert.name}
                   </Typography>
@@ -311,11 +338,16 @@ const AboutPage = () => {
 
       {/* Cột mốc phát triển */}
       <Box sx={{ mb: 10 }}>
-        <MotionTypography 
-          variant="h4" 
-          component="h2" 
-          gutterBottom 
-          sx={{ color: '#8D6E63', fontWeight: 'bold', mb: 6, textAlign: 'center' }}
+        <MotionTypography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{
+            color: "#8D6E63",
+            fontWeight: "bold",
+            mb: 6,
+            textAlign: "center",
+          }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -323,46 +355,50 @@ const AboutPage = () => {
         >
           Hành Trình Phát Triển
         </MotionTypography>
-        
-        <Box sx={{ position: 'relative' }}>
-          <Box sx={{ 
-            position: 'absolute', 
-            left: '50%', 
-            transform: 'translateX(-50%)',
-            width: '4px',
-            height: '100%',
-            backgroundColor: '#8D6E63',
-            zIndex: -1
-          }} />
-          
+
+        <Box sx={{ position: "relative" }}>
+          <Box
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "4px",
+              height: "100%",
+              backgroundColor: "#8D6E63",
+              zIndex: -1,
+            }}
+          />
+
           {milestones.map((milestone, index) => (
             <MotionBox
               key={index}
-              sx={{ 
-                display: 'flex',
+              sx={{
+                display: "flex",
                 mb: 6,
-                justifyContent: index % 2 === 0 ? 'flex-start' : 'flex-end'
+                justifyContent: index % 2 === 0 ? "flex-start" : "flex-end",
               }}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
             >
-              <Box sx={{ 
-                width: '45%',
-                position: 'relative',
-                backgroundColor: 'white',
-                p: 3,
-                borderRadius: 2,
-                boxShadow: 3
-              }}>
+              <Box
+                sx={{
+                  width: "45%",
+                  position: "relative",
+                  backgroundColor: "white",
+                  p: 3,
+                  borderRadius: 2,
+                  boxShadow: 3,
+                }}
+              >
                 <MotionAvatar
-                  sx={{ 
-                    bgcolor: '#8D6E63',
-                    position: 'absolute',
-                    top: '50%',
-                    [index % 2 === 0 ? 'right' : 'left']: -20,
-                    transform: 'translateY(-50%) translateX(50%)'
+                  sx={{
+                    bgcolor: "#8D6E63",
+                    position: "absolute",
+                    top: "50%",
+                    [index % 2 === 0 ? "right" : "left"]: -20,
+                    transform: "translateY(-50%) translateX(50%)",
                   }}
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
@@ -371,7 +407,7 @@ const AboutPage = () => {
                 >
                   <Timeline />
                 </MotionAvatar>
-                
+
                 <Typography variant="h6" color="primary" gutterBottom>
                   {milestone.year}
                 </Typography>
@@ -389,35 +425,46 @@ const AboutPage = () => {
 
       {/* Call to Action */}
       <MotionBox
-        sx={{ 
-          textAlign: 'center',
+        sx={{
+          textAlign: "center",
           py: 8,
           px: 4,
-          backgroundColor: '#f5f0ec',
-          borderRadius: 4
+          backgroundColor: "#f5f0ec",
+          borderRadius: 4,
         }}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <Typography variant="h4" component="h2" gutterBottom sx={{ color: '#8D6E63', fontWeight: 'bold' }}>
+        <Typography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          sx={{ color: "#8D6E63", fontWeight: "bold" }}
+        >
           Trải Nghiệm Dịch Vụ Tấm Ơi Spa
         </Typography>
-        <Typography variant="body1" paragraph sx={{ maxWidth: '800px', mx: 'auto', mb: 4 }}>
-          Hãy để Tấm Ơi Spa mang đến cho bạn những trải nghiệm thư giãn và làm đẹp tuyệt vời nhất. Đội ngũ chuyên gia của chúng tôi sẵn sàng tư vấn và phục vụ bạn với tất cả tâm huyết.
+        <Typography
+          variant="body1"
+          paragraph
+          sx={{ maxWidth: "800px", mx: "auto", mb: 4 }}
+        >
+          Hãy để Tấm Ơi Spa mang đến cho bạn những trải nghiệm thư giãn và làm
+          đẹp tuyệt vời nhất. Đội ngũ chuyên gia của chúng tôi sẵn sàng tư vấn
+          và phục vụ bạn với tất cả tâm huyết.
         </Typography>
-        <Button 
-          variant="contained" 
+        <Button
+          variant="contained"
           size="large"
-          sx={{ 
-            backgroundColor: '#8D6E63',
-            '&:hover': {
-              backgroundColor: '#6D4C41'
+          sx={{
+            backgroundColor: "#8D6E63",
+            "&:hover": {
+              backgroundColor: "#6D4C41",
             },
             px: 4,
             py: 1.5,
-            borderRadius: 2
+            borderRadius: 2,
           }}
         >
           Đặt Lịch Ngay

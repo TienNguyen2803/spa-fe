@@ -1,20 +1,17 @@
-
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import {
   Box,
+  Button,
   Container,
   Grid,
-  Typography,
-  TextField,
-  Button,
-  styled,
   Paper,
-  IconButton,
-  useTheme,
+  styled,
+  TextField,
+  Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { motion } from "framer-motion";
 
 const BookingCard = styled(Paper)(({ theme }) => ({
@@ -40,7 +37,8 @@ const BookingCard = styled(Paper)(({ theme }) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)",
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)",
     zIndex: 1,
   },
   "&:hover": {
@@ -112,9 +110,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const BookingSection = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
   return (
     <Box
       sx={{
@@ -156,7 +151,7 @@ const BookingSection = () => {
               >
                 Trải nghiệm dịch vụ cao cấp cùng những ưu đãi đặc biệt
               </Typography>
-              
+
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <StyledTextField

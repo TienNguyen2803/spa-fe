@@ -1,41 +1,23 @@
-import React, { useState, useEffect } from "react";
-import StatsCounter from "./StatsCounter";
-import BookingSection from "./BookingSection";
-import SocialButtons from "./SocialButtons";
+import { ArrowUpward, KeyboardArrowDown, PlayArrow } from "@mui/icons-material";
 import {
-  AppBar,
   Box,
   Button,
-  Card,
-  CardContent,
-  CardMedia,
   Container,
   Grid,
   IconButton,
-  Slide,
-  Toolbar,
   Typography,
   useMediaQuery,
   useScrollTrigger,
   useTheme,
   Zoom,
 } from "@mui/material";
-import {
-  AccessTime,
-  ArrowForward,
-  ArrowUpward,
-  Check,
-  Facebook,
-  Instagram,
-  KeyboardArrowDown,
-  Menu as MenuIcon,
-  PlayArrow,
-  Spa as SpaIcon,
-} from "@mui/icons-material";
-import IntroductionSection from "./sections/IntroductionSection";
-import BenefitsSection from "./sections/BenefitsSection";
+import { useEffect, useState } from "react";
+import BookingSection from "./BookingSection";
 import AtmosphereSection from "./sections/AtmosphereSection";
-import ServicesSection from './sections/ServicesSection';
+import BenefitsSection from "./sections/BenefitsSection";
+import IntroductionSection from "./sections/IntroductionSection";
+import ServicesSection from "./sections/ServicesSection";
+import StatsCounter from "./StatsCounter";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -93,7 +75,6 @@ const HomePage = () => {
       </Zoom>
     );
   };
-
 
   return (
     <Box>

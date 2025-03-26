@@ -1,42 +1,39 @@
-
-import React, { useState, useEffect } from 'react';
-import { 
-  Container, 
-  Grid, 
-  Typography, 
-  Box, 
-  Card, 
-  CardContent, 
-  CardMedia,
-  CardActions,
-  Button,
-  Chip,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Tabs,
-  Tab,
-  Pagination,
-  useMediaQuery,
-  useTheme,
-  Avatar,
-  Divider
-} from '@mui/material';
-import { 
-  Search, 
-  AccessTime, 
-  LocalOffer, 
+import {
+  AccessTime,
   Bookmark,
   BookmarkBorder,
-  Share,
-  Visibility,
-  TrendingUp,
-  NewReleases,
   EventNote,
+  NewReleases,
   Science,
-  Spa
-} from '@mui/icons-material';
-import { motion } from 'framer-motion';
+  Search,
+  Share,
+  Spa,
+  TrendingUp,
+  Visibility,
+} from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Pagination,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const MotionBox = motion(Box);
 const MotionCard = motion(Card);
@@ -44,54 +41,56 @@ const MotionGrid = motion(Grid);
 
 const NewsPage = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [activeTab, setActiveTab] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [savedArticles, setSavedArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   const newsCategories = [
-    { id: 'all', label: 'Tất cả', icon: <Spa /> },
-    { id: 'technology', label: 'Công nghệ', icon: <Science /> },
-    { id: 'trends', label: 'Xu hướng', icon: <TrendingUp /> },
-    { id: 'events', label: 'Sự kiện', icon: <EventNote /> },
-    { id: 'promotions', label: 'Khuyến mãi', icon: <NewReleases /> }
+    { id: "all", label: "Tất cả", icon: <Spa /> },
+    { id: "technology", label: "Công nghệ", icon: <Science /> },
+    { id: "trends", label: "Xu hướng", icon: <TrendingUp /> },
+    { id: "events", label: "Sự kiện", icon: <EventNote /> },
+    { id: "promotions", label: "Khuyến mãi", icon: <NewReleases /> },
   ];
 
   const newsArticles = [
     {
       id: 1,
-      title: 'Tấm Ơi Spa giới thiệu công nghệ trẻ hóa da mới',
-      summary: 'Công nghệ Hydra Facial Pro+ với tinh chất đặc biệt giúp làm sạch sâu và trẻ hóa da.',
-      image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881',
-      date: '20/03/2024',
-      author: 'Ngọc Anh',
-      category: 'technology',
-      tags: ['công nghệ', 'trẻ hóa da'],
-      viewCount: 1245
+      title: "Tấm Ơi Spa giới thiệu công nghệ trẻ hóa da mới",
+      summary:
+        "Công nghệ Hydra Facial Pro+ với tinh chất đặc biệt giúp làm sạch sâu và trẻ hóa da.",
+      image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881",
+      date: "20/03/2024",
+      author: "Ngọc Anh",
+      category: "technology",
+      tags: ["công nghệ", "trẻ hóa da"],
+      viewCount: 1245,
     },
     {
       id: 2,
       title: 'Xu hướng chăm sóc da "Skin Minimalism" 2024',
-      summary: 'Phong cách tối giản trong chăm sóc da đang được ưa chuộng.',
-      image: 'https://images.unsplash.com/photo-1511447333015-45b65e60f6d5',
-      date: '18/03/2024', 
-      author: 'Minh Tú',
-      category: 'trends',
-      tags: ['xu hướng', 'chăm sóc da'],
-      viewCount: 982
+      summary: "Phong cách tối giản trong chăm sóc da đang được ưa chuộng.",
+      image: "https://images.unsplash.com/photo-1511447333015-45b65e60f6d5",
+      date: "18/03/2024",
+      author: "Minh Tú",
+      category: "trends",
+      tags: ["xu hướng", "chăm sóc da"],
+      viewCount: 982,
     },
     {
       id: 3,
-      title: 'Sự kiện ra mắt dòng sản phẩm thảo dược',
-      summary: 'Tấm Ơi Spa chính thức ra mắt dòng sản phẩm thảo dược độc quyền.',
-      image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef',
-      date: '15/03/2024',
-      author: 'Thu Hà',
-      category: 'events',
-      tags: ['sự kiện', 'thảo dược'],
-      viewCount: 756
-    }
+      title: "Sự kiện ra mắt dòng sản phẩm thảo dược",
+      summary:
+        "Tấm Ơi Spa chính thức ra mắt dòng sản phẩm thảo dược độc quyền.",
+      image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
+      date: "15/03/2024",
+      author: "Thu Hà",
+      category: "events",
+      tags: ["sự kiện", "thảo dược"],
+      viewCount: 756,
+    },
   ];
 
   const handleTabChange = (event, newValue) => {
@@ -101,7 +100,7 @@ const NewsPage = () => {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSearch = (event) => {
@@ -110,30 +109,29 @@ const NewsPage = () => {
   };
 
   const toggleSaveArticle = (id) => {
-    setSavedArticles(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setSavedArticles((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
   const getFilteredArticles = () => {
     const categoryId = newsCategories[activeTab].id;
     let filtered = newsArticles;
-    
-    if (categoryId !== 'all') {
-      filtered = filtered.filter(article => article.category === categoryId);
+
+    if (categoryId !== "all") {
+      filtered = filtered.filter((article) => article.category === categoryId);
     }
-    
+
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(article => 
-        article.title.toLowerCase().includes(query) || 
-        article.summary.toLowerCase().includes(query) ||
-        article.tags.some(tag => tag.toLowerCase().includes(query))
+      filtered = filtered.filter(
+        (article) =>
+          article.title.toLowerCase().includes(query) ||
+          article.summary.toLowerCase().includes(query) ||
+          article.tags.some((tag) => tag.toLowerCase().includes(query))
       );
     }
-    
+
     return filtered;
   };
 
@@ -141,7 +139,7 @@ const NewsPage = () => {
   const filteredArticles = getFilteredArticles();
   const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
   const displayedArticles = filteredArticles.slice(
-    (currentPage - 1) * articlesPerPage, 
+    (currentPage - 1) * articlesPerPage,
     currentPage * articlesPerPage
   );
 
@@ -151,9 +149,12 @@ const NewsPage = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        sx={{ mb: 6, textAlign: 'center' }}
+        sx={{ mb: 6, textAlign: "center" }}
       >
-        <Typography variant="h2" sx={{ color: '#8D6E63', fontWeight: 'bold', mb: 2 }}>
+        <Typography
+          variant="h2"
+          sx={{ color: "#8D6E63", fontWeight: "bold", mb: 2 }}
+        >
           Tin Tức & Cập Nhật
         </Typography>
         <Typography variant="h5" color="textSecondary">
@@ -183,12 +184,12 @@ const NewsPage = () => {
           onChange={handleTabChange}
           variant={isMobile ? "scrollable" : "standard"}
           scrollButtons="auto"
-          sx={{ 
+          sx={{
             mb: 4,
-            '& .MuiTab-root': { 
-              minWidth: 'auto',
-              px: 3
-            }
+            "& .MuiTab-root": {
+              minWidth: "auto",
+              px: 3,
+            },
           }}
         >
           {newsCategories.map((category, index) => (
@@ -208,7 +209,7 @@ const NewsPage = () => {
         initial="hidden"
         animate="visible"
         variants={{
-          visible: { transition: { staggerChildren: 0.1 } }
+          visible: { transition: { staggerChildren: 0.1 } },
         }}
       >
         {displayedArticles.map((article) => (
@@ -216,10 +217,10 @@ const NewsPage = () => {
             <MotionCard
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 }
+                visible: { opacity: 1, y: 0 },
               }}
               whileHover={{ y: -10 }}
-              sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
             >
               <CardMedia
                 component="img"
@@ -244,10 +245,10 @@ const NewsPage = () => {
                 <Typography variant="body2" color="text.secondary" paragraph>
                   {article.summary}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <AccessTime sx={{ fontSize: 'small', mr: 1 }} />
+                <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                  <AccessTime sx={{ fontSize: "small", mr: 1 }} />
                   <Typography variant="caption">{article.date}</Typography>
-                  <Visibility sx={{ fontSize: 'small', ml: 2, mr: 1 }} />
+                  <Visibility sx={{ fontSize: "small", ml: 2, mr: 1 }} />
                   <Typography variant="caption">{article.viewCount}</Typography>
                 </Box>
               </CardContent>
@@ -261,7 +262,11 @@ const NewsPage = () => {
                   size="small"
                   onClick={() => toggleSaveArticle(article.id)}
                 >
-                  {savedArticles.includes(article.id) ? <Bookmark /> : <BookmarkBorder />}
+                  {savedArticles.includes(article.id) ? (
+                    <Bookmark />
+                  ) : (
+                    <BookmarkBorder />
+                  )}
                 </IconButton>
                 <IconButton size="small">
                   <Share />
@@ -273,7 +278,7 @@ const NewsPage = () => {
       </MotionGrid>
 
       {totalPages > 1 && (
-        <Box sx={{ mt: 6, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ mt: 6, display: "flex", justifyContent: "center" }}>
           <Pagination
             count={totalPages}
             page={currentPage}
