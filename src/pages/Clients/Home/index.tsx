@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import StatsCounter from './StatsCounter';
 import BookingSection from './BookingSection';
@@ -33,12 +32,15 @@ import {
   PlayArrow, 
   Spa as SpaIcon,
 } from '@mui/icons-material';
+import IntroductionSection from './sections/IntroductionSection';
+import BenefitsSection from './sections/BenefitsSection';
+import AtmosphereSection from './sections/AtmosphereSection';
 
 const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isScrolled, setIsScrolled] = useState(false);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -47,7 +49,7 @@ const HomePage = () => {
         setIsScrolled(false);
       }
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -58,11 +60,11 @@ const HomePage = () => {
       disableHysteresis: true,
       threshold: 100,
     });
-    
+
     const handleClick = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-    
+
     return (
       <Zoom in={trigger}>
         <Box
@@ -124,6 +126,9 @@ const HomePage = () => {
 
   return (
     <Box>
+      <IntroductionSection />
+      <BenefitsSection />
+      <AtmosphereSection />
       {/* Hero Section */}
       <Box 
         sx={{ 
@@ -163,7 +168,7 @@ const HomePage = () => {
                 >
                   CHÀO MỪNG ĐẾN VỚI TẤM ƠI SPA
                 </Typography>
-                
+
                 <Typography 
                   variant={isMobile ? 'h3' : 'h1'} 
                   component="h2" 
@@ -176,7 +181,7 @@ const HomePage = () => {
                 >
                   Trải Nghiệm Thư Giãn Đích Thực
                 </Typography>
-                
+
                 <Typography 
                   variant="h6" 
                   sx={{ 
@@ -188,7 +193,7 @@ const HomePage = () => {
                 >
                   Khám phá không gian thư giãn tuyệt vời với các liệu pháp chăm sóc sức khỏe và sắc đẹp độc đáo
                 </Typography>
-                
+
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
                   <Button 
                     variant="contained" 
@@ -205,7 +210,7 @@ const HomePage = () => {
                   >
                     Đặt lịch ngay
                   </Button>
-                  
+
                   <Button 
                     variant="outlined" 
                     size="large"
@@ -229,7 +234,7 @@ const HomePage = () => {
             </Grid>
           </Grid>
         </Container>
-        
+
         {/* Scroll down indicator */}
         <Box
           sx={{
@@ -277,7 +282,7 @@ const HomePage = () => {
             >
               Dịch vụ của chúng tôi
             </Typography>
-            
+
             <Typography 
               variant="h3" 
               component="h2" 
@@ -288,7 +293,7 @@ const HomePage = () => {
             >
               Trải Nghiệm Dịch Vụ Đẳng Cấp
             </Typography>
-            
+
             <Typography 
               variant="body1" 
               sx={{ 
@@ -302,7 +307,7 @@ const HomePage = () => {
               để đáp ứng nhu cầu của từng khách hàng
             </Typography>
           </Box>
-          
+
           <Grid container spacing={4}>
             {services.map((service, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
@@ -391,3 +396,8 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+// Placeholder components - REPLACE THESE WITH YOUR ACTUAL IMPLEMENTATIONS
+const IntroductionSection = () => <Box>Introduction Section Placeholder</Box>;
+const BenefitsSection = () => <Box>Benefits Section Placeholder</Box>;
+const AtmosphereSection = () => <Box>Atmosphere Section Placeholder</Box>;
