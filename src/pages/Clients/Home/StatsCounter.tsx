@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Container, Grid, Typography, styled } from '@mui/material';
 import SpaIcon from '@mui/icons-material/Spa';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
@@ -28,6 +28,9 @@ const StatsCounter = () => {
     experience: 0,
     staff: 0,
   });
+  
+  const countingRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const targets = {
     satisfaction: 100,
@@ -35,39 +38,60 @@ const StatsCounter = () => {
     staff: 10,
   };
 
+  const startCounting = () => {
+    setCounts({
+      satisfaction: 0,
+      experience: 0,
+      staff: 0,
+    });
+
+    const interval = setInterval(() => {
+      setCounts((prev) => ({
+        satisfaction: prev.satisfaction < targets.satisfaction ? prev.satisfaction + 1 : prev.satisfaction,
+        experience: prev.experience < targets.experience ? prev.experience + 1 : prev.experience,
+        staff: prev.staff < targets.staff ? prev.staff + 1 : prev.staff,
+      }));
+    }, 50);
+
+    return interval;
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          const interval = setInterval(() => {
-            setCounts((prev) => ({
-              satisfaction:
-                prev.satisfaction < targets.satisfaction
-                  ? prev.satisfaction + 1
-                  : prev.satisfaction,
-              experience:
-                prev.experience < targets.experience
-                  ? prev.experience + 1
-                  : prev.experience,
-              staff: prev.staff < targets.staff ? prev.staff + 1 : prev.staff,
-            }));
-          }, 50);
-
-          return () => clearInterval(interval);
-        }
+        const entry = entries[0];
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.5 },
+      { threshold: 0.5 }
     );
 
-    const element = document.getElementById("stats-section");
-    if (element) observer.observe(element);
+    const element = countingRef.current;
+    if (element) {
+      observer.observe(element);
+    }
 
-    return () => observer.disconnect();
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    let interval;
+    if (isVisible) {
+      interval = startCounting();
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isVisible]);
 
   return (
     <Box 
-      id="stats-section" 
+      ref={countingRef}
       sx={{ 
         py: 8, 
         background: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)',
