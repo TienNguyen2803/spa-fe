@@ -161,7 +161,11 @@ const BookingSection = () => {
                   </Typography>
                   <Typography
                     variant="h5"
-                    sx={{ color: "white", fontWeight: 700, fontSize: "20px" }}
+                    sx={{ 
+                      color: "white", 
+                      fontWeight: 700, 
+                      fontSize: { xs: "16px", md: "20px" }
+                    }}
                   >
                     0982279135
                   </Typography>
@@ -199,7 +203,11 @@ const BookingSection = () => {
                   </Typography>
                   <Typography
                     variant="h5"
-                    sx={{ color: "white", fontWeight: 700, fontSize: "20px" }}
+                    sx={{ 
+                      color: "white", 
+                      fontWeight: 700, 
+                      fontSize: { xs: "16px", md: "20px" }
+                    }}
                   >
                     9h - 19h
                   </Typography>
