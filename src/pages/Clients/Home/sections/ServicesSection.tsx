@@ -142,9 +142,9 @@ const ServicesSection = () => {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, md: 4 }}>
           {services.map((service, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid item xs={12} sm={6} md={3} key={index} sx={{ minHeight: { xs: '450px', sm: 'auto' } }}>
               <StyledCard
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -158,7 +158,16 @@ const ServicesSection = () => {
                   />
                   <PriceTag>{service.price}</PriceTag>
                 </Box>
-                <CardContent sx={{ p: 3 }}>
+                <CardContent sx={{ 
+  p: 3,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 1,
+  height: '100%',
+  overflowY: 'auto',
+  WebkitOverflowScrolling: 'touch', // Enable smooth scrolling on iOS
+  maxHeight: { xs: '250px', sm: 'auto' }, // Set max height on mobile
+}}>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                     <AccessTime
                       fontSize="small"
