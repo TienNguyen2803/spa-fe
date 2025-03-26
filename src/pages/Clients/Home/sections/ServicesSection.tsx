@@ -158,60 +158,84 @@ const ServicesSection = () => {
                   />
                   <PriceTag>{service.price}</PriceTag>
                 </Box>
-                <CardContent sx={{ 
-  p: 3,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 1,
-  height: '100%',
-  overflowY: 'auto',
-  WebkitOverflowScrolling: 'touch', // Enable smooth scrolling on iOS
-  maxHeight: { xs: '250px', sm: 'auto' }, // Set max height on mobile
-}}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    <AccessTime
-                      fontSize="small"
-                      sx={{ color: '#8B5A2B', mr: 1 }}
-                    />
-                    <Typography variant="body2" color="text.secondary">
-                      {service.duration}
-                    </Typography>
-                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+                <CardContent 
+                  sx={{ 
+                    p: 3,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    position: 'relative',
+                    minHeight: { xs: '200px', sm: '250px' }
+                  }}
+                >
+                  <Box 
+                    sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'space-between',
+                      mb: 2 
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <AccessTime fontSize="small" sx={{ color: '#8B5A2B' }} />
+                      <Typography 
+                        variant="subtitle2" 
+                        sx={{ 
+                          color: 'text.secondary',
+                          fontWeight: 500
+                        }}
+                      >
+                        {service.duration}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       <Star sx={{ color: '#FFB300', fontSize: 20 }} />
-                      <Typography variant="body2" sx={{ ml: 0.5 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                         {service.rating}
                       </Typography>
                     </Box>
                   </Box>
+
                   <Typography
                     variant="h6"
                     component="h3"
-                    gutterBottom
-                    sx={{ fontWeight: 600 }}
+                    sx={{ 
+                      fontWeight: 700,
+                      mb: 1.5,
+                      fontSize: { xs: '1.1rem', sm: '1.25rem' }
+                    }}
                   >
                     {service.title}
                   </Typography>
+
                   <Typography
                     variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 2 }}
+                    sx={{ 
+                      color: 'text.secondary',
+                      mb: 'auto',
+                      lineHeight: 1.6,
+                      fontSize: { xs: '0.875rem', sm: '0.9rem' }
+                    }}
                   >
                     {service.description}
                   </Typography>
-                  <Button
-                    variant="text"
-                    endIcon={<ArrowForward />}
-                    sx={{
-                      color: '#8B5A2B',
-                      p: 0,
-                      '&:hover': {
-                        bgcolor: 'transparent',
-                        color: '#6E4A22',
-                      },
-                    }}
-                  >
-                    Chi tiết
-                  </Button>
+
+                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Button
+                      variant="text"
+                      endIcon={<ArrowForward />}
+                      sx={{
+                        color: '#8B5A2B',
+                        fontWeight: 600,
+                        '&:hover': {
+                          bgcolor: 'rgba(139, 90, 43, 0.08)',
+                          color: '#6E4A22',
+                        },
+                      }}
+                    >
+                      Chi tiết
+                    </Button>
+                  </Box>
                 </CardContent>
               </StyledCard>
             </Grid>
