@@ -235,15 +235,16 @@ const ServicesSection = () => {
 
                   <Typography
                     variant="body1"
+                    component="span"
                     sx={{
-                      color: "text.secondary",
+                      color: "#000000",
                       flexGrow: 1,
                       lineHeight: 1.6,
-                      fontSize: { xs: '0.875rem', sm: '1rem' },
-                      overflow: 'hidden',
-                      display: '-webkit-box',
+                      fontSize: { xs: "0.875rem", sm: "1rem" },
+                      overflow: "hidden",
+                      display: "-webkit-box",
                       WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
+                      WebkitBoxOrient: "vertical",
                     }}
                   >
                     {service.description}
@@ -258,11 +259,10 @@ const ServicesSection = () => {
                     }}
                   >
                     <Button
-                      variant="text"
+                      component="span"
                       endIcon={<ArrowForward />}
                       sx={{
-                        color: "#8B5A2B",
-                        fontWeight: 600,
+                        color: "#000000",
                         "&:hover": {
                           bgcolor: "rgba(139, 90, 43, 0.08)",
                           color: "#6E4A22",
