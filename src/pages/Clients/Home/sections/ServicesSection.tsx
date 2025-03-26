@@ -17,19 +17,19 @@ import { motion } from "framer-motion";
 
 const StyledCard = styled(motion(Card))(({ theme }) => ({
   height: "100%",
-  borderRadius: 16,
+  borderRadius: 24,
   overflow: "hidden",
-  transition: "all 0.3s ease",
+  transition: "all 0.4s ease",
   backgroundColor: "#fff",
-  boxShadow: "0 8px 24px rgba(139, 90, 43, 0.12)",
+  boxShadow: "0 8px 32px rgba(139, 90, 43, 0.08)",
   "&:hover": {
-    transform: "translateY(-8px)",
-    boxShadow: "0 16px 32px rgba(139, 90, 43, 0.16)",
+    transform: "translateY(-12px) scale(1.02)",
+    boxShadow: "0 16px 48px rgba(139, 90, 43, 0.12)",
   },
 }));
 
 const ServiceImage = styled(CardMedia)({
-  height: 280,
+  height: 320,
   position: "relative",
   overflow: "hidden",
   "&::after": {
@@ -38,8 +38,13 @@ const ServiceImage = styled(CardMedia)({
     bottom: 0,
     left: 0,
     right: 0,
-    height: "30%",
-    background: "linear-gradient(to top, rgba(0,0,0,0.5), transparent)",
+    height: "50%",
+    background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+    transition: "all 0.3s ease",
+  },
+  "&:hover::after": {
+    height: "60%",
+    background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
   },
 });
 
@@ -56,47 +61,49 @@ const PriceTag = styled(Box)(({ theme }) => ({
   backdropFilter: "blur(4px)",
 }));
 
+const FeatureTag = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: theme.spacing(1),
+  padding: theme.spacing(0.5, 1.5),
+  borderRadius: 20,
+  backgroundColor: "rgba(139, 90, 43, 0.08)",
+  color: "#8B5A2B",
+  margin: theme.spacing(0.5),
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: "rgba(139, 90, 43, 0.15)",
+  },
+}));
+
 const services = [
   {
-    title: "Massage Thư Giãn",
-    description:
-      "Trải nghiệm liệu pháp massage độc quyền giúp giải tỏa căng thẳng và phục hồi năng lượng.",
-    image:
-      "https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    duration: "60-90 phút",
-    price: "Từ 350.000đ",
-    rating: 4.9,
-  },
-  {
-    title: "Chăm Sóc Da Mặt",
-    description:
-      "Liệu trình chăm sóc da chuyên sâu với các sản phẩm từ thiên nhiên giúp làn da tươi trẻ và rạng rỡ.",
-    image:
-      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    duration: "75-90 phút",
-    price: "Từ 450.000đ",
-    rating: 4.8,
-  },
-  {
-    title: "Tắm Thảo Dược",
-    description:
-      "Đắm mình trong hương thơm của các loại thảo dược quý giúp thanh lọc cơ thể và thư giãn tinh thần.",
-    image:
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    duration: "90-120 phút",
-    price: "Từ 500.000đ",
-    rating: 4.9,
-  },
-  {
-    title: "Liệu Pháp Đá Nóng",
-    description:
-      "Kết hợp giữa massage và đá nóng giúp thư giãn cơ bắp, cải thiện tuần hoàn và giảm đau nhức.",
-    image:
-      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    title: "Massage Thư Giãn Cao Cấp",
+    description: "Trải nghiệm liệu pháp massage độc quyền kết hợp các kỹ thuật từ Đông y và tinh dầu thiên nhiên.",
+    image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35",
     duration: "90 phút",
     price: "Từ 550.000đ",
-    rating: 4.7,
+    rating: 4.9,
+    features: ["Tinh dầu organic", "Đá nóng", "Thảo dược"],
   },
+  {
+    title: "Chăm Sóc Da Chuyên Sâu",
+    description: "Liệu trình điều trị da mặt chuyên sâu với công nghệ hiện đại và mỹ phẩm cao cấp.",
+    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881",
+    duration: "75 phút",
+    price: "Từ 450.000đ",
+    rating: 4.8,
+    features: ["Công nghệ hiện đại", "Mỹ phẩm cao cấp", "Massage mặt"],
+  },
+  {
+    title: "Tắm Trắng Thảo Dược",
+    description: "Tắm trắng từ thảo dược thiên nhiên giúp làn da trắng sáng, mịn màng.",
+    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
+    duration: "120 phút",
+    price: "Từ 650.000đ",
+    rating: 4.9,
+    features: ["Thảo dược tự nhiên", "Dưỡng trắng", "Tẩy tế bào chết"],
+  }
 ];
 
 const ServicesSection = () => {
@@ -104,178 +111,134 @@ const ServicesSection = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#FFF8E1" }}>
+    <Box sx={{ 
+      py: { xs: 10, md: 15 }, 
+      background: "linear-gradient(180deg, #FFF8E1 0%, #FFFFFF 100%)"
+    }}>
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: "#8B5A2B",
-              fontWeight: 600,
-              mb: 1,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-            }}
+        <Box sx={{ 
+          textAlign: "center", 
+          mb: { xs: 8, md: 10 },
+          maxWidth: 900,
+          mx: "auto"
+        }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            Dịch vụ của chúng tôi
-          </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: "#8B5A2B",
+                fontWeight: 600,
+                mb: 1,
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
+              Dịch vụ của chúng tôi
+            </Typography>
 
-          <Typography
-            variant="h3"
-            component="h2"
-            sx={{
-              fontWeight: 700,
-              mb: 2,
-              background: "linear-gradient(45deg, #8B5A2B, #A67C52)",
-              backgroundClip: "text",
-              WebkitBackgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Trải Nghiệm Dịch Vụ Đẳng Cấp
-          </Typography>
+            <Typography
+              variant="h3"
+              component="h2"
+              sx={{
+                fontWeight: 700,
+                mb: 2,
+                background: "linear-gradient(45deg, #8B5A2B, #A67C52)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              Trải Nghiệm Dịch Vụ Đẳng Cấp
+            </Typography>
 
-          <Typography
-            variant="body1"
-            sx={{
-              color: "text.secondary",
-              maxWidth: 700,
-              mx: "auto",
-              mb: 2,
-            }}
-          >
-            Khám phá các dịch vụ chăm sóc sức khỏe và sắc đẹp được thiết kế
-            riêng biệt để đáp ứng nhu cầu của từng khách hàng
-          </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "text.secondary",
+                maxWidth: 700,
+                mx: "auto",
+                mb: 2,
+              }}
+            >
+              Khám phá các dịch vụ chăm sóc sức khỏe và sắc đẹp được thiết kế
+              riêng biệt để đáp ứng nhu cầu của từng khách hàng
+            </Typography>
+          </motion.div>
         </Box>
 
-        <Grid container spacing={{ xs: 2, md: 4 }}>
+        <Grid container spacing={{ xs: 3, md: 4 }}>
           {services.map((service, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={3}
-              key={index}
-              sx={{ minHeight: { xs: "450px", sm: "auto" } }}
-            >
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <StyledCard
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
                 <Box sx={{ position: "relative" }}>
-                  <ServiceImage image={service.image} title={service.title} />
+                  <ServiceImage
+                    image={service.image}
+                    title={service.title}
+                  />
                   <PriceTag>{service.price}</PriceTag>
                 </Box>
-                <CardContent
-                  sx={{
-                    p: 3,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    position: "relative",
-                    minHeight: { xs: "200px", sm: "250px" },
-                    gap: 2,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      bgcolor: "rgba(141, 110, 99, 0.08)",
-                      borderRadius: 1,
-                      p: 1,
-                      mb: 2,
-                    }}
-                  >
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <AccessTime fontSize="small" sx={{ color: "#8B5A2B" }} />
-                      <Typography
-                        component="span"
-                        sx={{
-                          color: "#8D6E63",
-                          letterSpacing: 2,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {service.duration}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
-                    >
-                      <Star sx={{ color: "#FFB300", fontSize: 20 }} />
-                      <Typography
-                        component="span"
-                        sx={{
-                          color: "#8D6E63",
-                          fontWeight: 600,
-                          letterSpacing: 2,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {service.rating}
-                      </Typography>
-                    </Box>
-                  </Box>
 
-                  <Typography
-                    component="span"
-                    sx={{
-                      color: "#8D6E63",
-                      fontWeight: 600,
-                      letterSpacing: 2,
-                      textTransform: "uppercase",
-                    }}
-                  >
+                <CardContent sx={{ p: 4 }}>
+                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 600, color: "#2D3748" }}>
                     {service.title}
                   </Typography>
 
-                  <Typography
-                    variant="body1"
-                    component="span"
-                    sx={{
-                      color: "#000000",
-                      flexGrow: 1,
-                      lineHeight: 1.6,
-                      fontSize: { xs: "0.875rem", sm: "1rem" },
-                      overflow: "hidden",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
+                  <Typography variant="body2" sx={{ mb: 3, color: "#4A5568", lineHeight: 1.6 }}>
                     {service.description}
                   </Typography>
 
-                  <Box
+                  <Box sx={{ mb: 3 }}>
+                    {service.features.map((feature, idx) => (
+                      <FeatureTag key={idx}>
+                        {feature}
+                      </FeatureTag>
+                    ))}
+                  </Box>
+
+                  <Box sx={{ 
+                    display: "flex", 
+                    alignItems: "center", 
+                    mb: 3,
+                    gap: 2,
+                    color: "#4A5568"
+                  }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                      <AccessTime fontSize="small" />
+                      <Typography variant="body2">{service.duration}</Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                      <Star fontSize="small" sx={{ color: "#F6AD55" }} />
+                      <Typography variant="body2">{service.rating}</Typography>
+                    </Box>
+                  </Box>
+
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    endIcon={<ArrowForward />}
                     sx={{
                       mt: 2,
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
+                      py: 1.5,
+                      borderRadius: 3,
+                      background: "linear-gradient(45deg, #8B5A2B, #A67C52)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 8px 16px rgba(139, 90, 43, 0.2)",
+                      },
                     }}
                   >
-                    <Button
-                      component="span"
-                      endIcon={<ArrowForward />}
-                      sx={{
-                        color: "#8D6E63",
-                        fontWeight: 600,
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                        "&:hover": {
-                          bgcolor: "rgba(139, 90, 43, 0.12)",
-                          color: "#4E342E",
-                        },
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      Chi tiết
-                    </Button>
-                  </Box>
+                    Đặt Lịch Ngay
+                  </Button>
                 </CardContent>
               </StyledCard>
             </Grid>
