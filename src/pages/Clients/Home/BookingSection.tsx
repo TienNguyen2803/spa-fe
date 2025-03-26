@@ -7,74 +7,32 @@ import {
   TextField,
   Button,
   styled,
+  Paper,
+  IconButton,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { motion } from "framer-motion";
 
-const BookingCard = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(3),
+const BookingCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
   backgroundColor: "#B08D3C",
-  borderRadius: "25px",
+  borderRadius: "30px",
   width: "100%",
-  maxWidth: "250px",
+  maxWidth: "280px",
   aspectRatio: "1",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  transition: "all 0.3s ease",
+  transition: "all 0.4s ease",
   cursor: "pointer",
-  boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-  WebkitAppearance: "none",
-  WebkitBorderRadius: "25px",
-  "& .MuiSvgIcon-root": {
-    transition: "transform 0.3s ease",
-  },
-  "&:hover": {
-    boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
-    "& .MuiSvgIcon-root": {
-      transform: "rotate(180deg)",
-    },
-  },
-}));
-
-const BookingForm = styled(Box)({
-  backgroundColor: "white",
-  padding: "2rem",
-  borderRadius: "15px",
-  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-  textAlign: "center",
-  WebkitAppearance: "none",
-  WebkitBorderRadius: "15px",
   position: "relative",
-  zIndex: 1,
-  margin: "1rem",
-  "@media (max-width: 600px)": {
-    margin: "0.5rem",
-    padding: "1.5rem",
-  }
-});
-
-const StyledButton = styled(Button)({
-  backgroundColor: "#8B5A2B",
-  color: "white",
-  padding: "12px 30px",
-  borderRadius: "25px",
-  WebkitAppearance: "none",
-  WebkitBorderRadius: "25px",
-  "&:hover": {
-    backgroundColor: "#6E4A22",
-  },
-});
-
-const BookingSection = () => {
-  return (
-    <Box sx={{ 
-  py: 8, 
-  bgcolor: "#FFF8DC", 
-  overflow: "hidden", 
-  WebkitOverflowScrolling: "touch",
-  position: "relative",
+  overflow: "hidden",
+  boxShadow: "0 10px 30px rgba(176, 141, 60, 0.3)",
   "&::before": {
     content: '""',
     position: "absolute",
@@ -82,85 +40,172 @@ const BookingSection = () => {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "#FFF8DC",
-    zIndex: 0
-  }
-}}>
+    background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)",
+    zIndex: 1,
+  },
+  "&:hover": {
+    transform: "translateY(-10px)",
+    boxShadow: "0 20px 40px rgba(176, 141, 60, 0.4)",
+    "& .MuiSvgIcon-root": {
+      transform: "scale(1.2) rotate(10deg)",
+    },
+  },
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "15px",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    },
+    "&.Mui-focused": {
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      boxShadow: "0 4px 15px rgba(176, 141, 60, 0.2)",
+    },
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(176, 141, 60, 0.3)",
+  },
+  "& .MuiInputLabel-root": {
+    color: "#666",
+  },
+}));
+
+const BookingForm = styled(Paper)(({ theme }) => ({
+  backgroundColor: "rgba(255, 255, 255, 0.95)",
+  padding: theme.spacing(4),
+  borderRadius: "30px",
+  boxShadow: "0 20px 60px rgba(0,0,0,0.1)",
+  backdropFilter: "blur(10px)",
+  position: "relative",
+  overflow: "hidden",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: "5px",
+    background: "linear-gradient(90deg, #B08D3C 0%, #8B5A2B 100%)",
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "#B08D3C",
+  color: "white",
+  padding: "12px 30px",
+  borderRadius: "15px",
+  fontSize: "1rem",
+  fontWeight: 600,
+  letterSpacing: "1px",
+  transition: "all 0.3s ease",
+  textTransform: "none",
+  boxShadow: "0 4px 15px rgba(176, 141, 60, 0.3)",
+  "&:hover": {
+    backgroundColor: "#8B5A2B",
+    boxShadow: "0 8px 25px rgba(176, 141, 60, 0.4)",
+    transform: "translateY(-2px)",
+  },
+}));
+
+const BookingSection = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  return (
+    <Box
+      sx={{
+        py: { xs: 8, md: 12 },
+        background: "linear-gradient(135deg, #FFF8DC 0%, #FFF5E6 100%)",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <Container maxWidth="lg">
-        <Grid container spacing={4} alignItems="center">
+        <Grid container spacing={6} alignItems="center">
           <Grid item xs={12} md={6}>
-            <BookingForm>
+            <BookingForm
+              component={motion.div}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
               <Typography
                 variant="h4"
                 gutterBottom
-                sx={{ color: "#8B5A2B", fontFamily: "'Saigon Royal Spa'" }}
+                sx={{
+                  color: "#8B5A2B",
+                  fontWeight: 700,
+                  textAlign: "center",
+                  mb: 1,
+                }}
               >
-                Đặt Lịch
+                Đặt Lịch Ngay
               </Typography>
               <Typography
                 variant="subtitle1"
-                gutterBottom
-                sx={{ color: "#8B5A2B", mb: 4 }}
+                sx={{
+                  color: "#666",
+                  textAlign: "center",
+                  mb: 4,
+                }}
               >
-                Hàng Ngàn Ưu Đãi
+                Trải nghiệm dịch vụ cao cấp cùng những ưu đãi đặc biệt
               </Typography>
+              
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <TextField
+                  <StyledTextField
                     fullWidth
-                    label="Họ tên"
+                    label="Họ và tên"
                     variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "25px",
-                        WebkitAppearance: "none",
-                      },
-                    }}
+                    placeholder="Nhập họ tên của bạn"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <StyledTextField
                     fullWidth
-                    label="Điện thoại"
+                    label="Số điện thoại"
                     variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "25px",
-                        WebkitAppearance: "none",
-                      },
-                    }}
+                    placeholder="Nhập số điện thoại của bạn"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <StyledTextField
                     fullWidth
                     label="Chọn dịch vụ"
                     variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "25px",
-                        WebkitAppearance: "none",
-                      },
+                    placeholder="Chọn dịch vụ bạn quan tâm"
+                    select
+                    SelectProps={{
+                      native: true,
                     }}
-                  />
+                  >
+                    <option value="">Chọn dịch vụ</option>
+                    <option value="massage">Massage Thư Giãn</option>
+                    <option value="facial">Chăm Sóc Da Mặt</option>
+                    <option value="spa">Tắm Thảo Dược</option>
+                    <option value="stone">Liệu Pháp Đá Nóng</option>
+                  </StyledTextField>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  <StyledTextField
                     fullWidth
-                    label="Nội dung"
+                    label="Ghi chú"
                     variant="outlined"
                     multiline
                     rows={4}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: "15px",
-                        WebkitAppearance: "none",
-                      },
-                    }}
+                    placeholder="Nhập yêu cầu đặc biệt của bạn (nếu có)"
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <StyledButton fullWidth>ĐĂNG KÝ NGAY</StyledButton>
+                  <StyledButton fullWidth size="large">
+                    Đặt Lịch Ngay
+                  </StyledButton>
                 </Grid>
               </Grid>
             </BookingForm>
@@ -178,26 +223,38 @@ const BookingSection = () => {
               gap: 4,
             }}
           >
-            <BookingCard>
-              <PhoneInTalkIcon sx={{ fontSize: 40, color: "white", mb: 2 }} />
+            <BookingCard
+              component={motion.div}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <PhoneInTalkIcon
+                sx={{
+                  fontSize: 48,
+                  color: "white",
+                  mb: 2,
+                  transition: "all 0.3s ease",
+                }}
+              />
               <Typography
-                variant="body2"
+                variant="subtitle2"
                 sx={{
                   color: "white",
                   mb: 1,
-                  textAlign: "center",
-                  fontSize: "12px",
-                  fontWeight: 500,
+                  letterSpacing: 1,
+                  fontWeight: 600,
                 }}
               >
                 LIÊN HỆ HOTLINE
               </Typography>
               <Typography
-                variant="h5"
+                variant="h4"
                 sx={{
                   color: "white",
                   fontWeight: 700,
-                  fontSize: { xs: "16px", md: "20px" },
+                  mb: 2,
                 }}
               >
                 0982279135
@@ -205,37 +262,47 @@ const BookingSection = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: "white",
-                  mt: 1,
+                  color: "rgba(255,255,255,0.9)",
                   textAlign: "center",
-                  fontSize: "11px",
-                  maxWidth: "140px",
+                  maxWidth: 200,
                 }}
               >
-                Hãy liên hệ ngay để được tư vấn miễn phí
+                Tư vấn miễn phí 24/7
               </Typography>
             </BookingCard>
 
-            <BookingCard>
-              <CalendarTodayIcon sx={{ fontSize: 40, color: "white", mb: 2 }} />
+            <BookingCard
+              component={motion.div}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <AccessTimeIcon
+                sx={{
+                  fontSize: 48,
+                  color: "white",
+                  mb: 2,
+                  transition: "all 0.3s ease",
+                }}
+              />
               <Typography
-                variant="body2"
+                variant="subtitle2"
                 sx={{
                   color: "white",
                   mb: 1,
-                  textAlign: "center",
-                  fontSize: "12px",
-                  fontWeight: 500,
+                  letterSpacing: 1,
+                  fontWeight: 600,
                 }}
               >
                 GIỜ MỞ CỬA
               </Typography>
               <Typography
-                variant="h5"
+                variant="h4"
                 sx={{
                   color: "white",
                   fontWeight: 700,
-                  fontSize: { xs: "16px", md: "20px" },
+                  mb: 2,
                 }}
               >
                 9h - 19h
@@ -243,14 +310,12 @@ const BookingSection = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: "white",
-                  mt: 1,
+                  color: "rgba(255,255,255,0.9)",
                   textAlign: "center",
-                  fontSize: "11px",
-                  maxWidth: "140px",
+                  maxWidth: 200,
                 }}
               >
-                Đặt lịch ngay hôm nay để nhận hàng ngàn ưu đãi
+                Tất cả các ngày trong tuần
               </Typography>
             </BookingCard>
           </Grid>
