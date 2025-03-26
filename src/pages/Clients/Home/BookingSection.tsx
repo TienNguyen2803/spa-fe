@@ -1,3 +1,4 @@
+
 import {
   Box,
   Container,
@@ -13,9 +14,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 const BookingCard = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   backgroundColor: "#B08D3C",
-  borderRadius: "50%",
-  width: "250px",
-  height: "250px",
+  borderRadius: "25px",
+  width: "100%",
+  maxWidth: "250px",
+  aspectRatio: "1",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -23,6 +25,8 @@ const BookingCard = styled(Box)(({ theme }) => ({
   transition: "all 0.3s ease",
   cursor: "pointer",
   boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+  WebkitAppearance: "none",
+  WebkitBorderRadius: "25px",
   "& .MuiSvgIcon-root": {
     transition: "transform 0.3s ease",
   },
@@ -40,6 +44,8 @@ const BookingForm = styled(Box)({
   borderRadius: "15px",
   boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
   textAlign: "center",
+  WebkitAppearance: "none",
+  WebkitBorderRadius: "15px",
 });
 
 const StyledButton = styled(Button)({
@@ -47,6 +53,8 @@ const StyledButton = styled(Button)({
   color: "white",
   padding: "12px 30px",
   borderRadius: "25px",
+  WebkitAppearance: "none",
+  WebkitBorderRadius: "25px",
   "&:hover": {
     backgroundColor: "#6E4A22",
   },
@@ -54,9 +62,9 @@ const StyledButton = styled(Button)({
 
 const BookingSection = () => {
   return (
-    <Box sx={{ py: 8, bgcolor: "#FFF8DC" }}>
+    <Box sx={{ py: 8, bgcolor: "#FFF8DC", overflow: "hidden", WebkitOverflowScrolling: "touch" }}>
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <BookingForm>
               <Typography
@@ -82,6 +90,7 @@ const BookingSection = () => {
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "25px",
+                        WebkitAppearance: "none",
                       },
                     }}
                   />
@@ -94,6 +103,7 @@ const BookingSection = () => {
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "25px",
+                        WebkitAppearance: "none",
                       },
                     }}
                   />
@@ -106,6 +116,7 @@ const BookingSection = () => {
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "25px",
+                        WebkitAppearance: "none",
                       },
                     }}
                   />
@@ -120,6 +131,7 @@ const BookingSection = () => {
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         borderRadius: "15px",
+                        WebkitAppearance: "none",
                       },
                     }}
                   />
@@ -139,93 +151,85 @@ const BookingSection = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              flexWrap: "wrap",
+              gap: 4,
             }}
           >
-            <Grid container spacing={4} justifyContent="center">
-              <Grid item>
-                <BookingCard>
-                  <PhoneInTalkIcon
-                    sx={{ fontSize: 40, color: "white", mb: 2 }}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "white",
-                      mb: 1,
-                      textAlign: "center",
-                      fontSize: "12px",
-                      fontWeight: 500,
-                    }}
-                  >
-                    LIÊN HỆ HOTLINE
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    sx={{ 
-                      color: "white", 
-                      fontWeight: 700, 
-                      fontSize: { xs: "16px", md: "20px" }
-                    }}
-                  >
-                    0982279135
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "white",
-                      mt: 1,
-                      textAlign: "center",
-                      fontSize: "11px",
-                      maxWidth: "140px",
-                    }}
-                  >
-                    Hãy liên hệ ngay để được tư vấn miễn phí
-                  </Typography>
-                </BookingCard>
-              </Grid>
+            <BookingCard>
+              <PhoneInTalkIcon sx={{ fontSize: 40, color: "white", mb: 2 }} />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "white",
+                  mb: 1,
+                  textAlign: "center",
+                  fontSize: "12px",
+                  fontWeight: 500,
+                }}
+              >
+                LIÊN HỆ HOTLINE
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "white",
+                  fontWeight: 700,
+                  fontSize: { xs: "16px", md: "20px" },
+                }}
+              >
+                0982279135
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "white",
+                  mt: 1,
+                  textAlign: "center",
+                  fontSize: "11px",
+                  maxWidth: "140px",
+                }}
+              >
+                Hãy liên hệ ngay để được tư vấn miễn phí
+              </Typography>
+            </BookingCard>
 
-              <Grid item>
-                <BookingCard>
-                  <CalendarTodayIcon
-                    sx={{ fontSize: 40, color: "white", mb: 2 }}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "white",
-                      mb: 1,
-                      textAlign: "center",
-                      fontSize: "12px",
-                      fontWeight: 500,
-                    }}
-                  >
-                    GIỜ MỞ CỬA
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    sx={{ 
-                      color: "white", 
-                      fontWeight: 700, 
-                      fontSize: { xs: "16px", md: "20px" }
-                    }}
-                  >
-                    9h - 19h
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "white",
-                      mt: 1,
-                      textAlign: "center",
-                      fontSize: "11px",
-                      maxWidth: "140px",
-                    }}
-                  >
-                    Đặt lịch ngay hôm nay để nhận hàng ngàn ưu đãi
-                  </Typography>
-                </BookingCard>
-              </Grid>
-            </Grid>
+            <BookingCard>
+              <CalendarTodayIcon sx={{ fontSize: 40, color: "white", mb: 2 }} />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "white",
+                  mb: 1,
+                  textAlign: "center",
+                  fontSize: "12px",
+                  fontWeight: 500,
+                }}
+              >
+                GIỜ MỞ CỬA
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  color: "white",
+                  fontWeight: 700,
+                  fontSize: { xs: "16px", md: "20px" },
+                }}
+              >
+                9h - 19h
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "white",
+                  mt: 1,
+                  textAlign: "center",
+                  fontSize: "11px",
+                  maxWidth: "140px",
+                }}
+              >
+                Đặt lịch ngay hôm nay để nhận hàng ngàn ưu đãi
+              </Typography>
+            </BookingCard>
           </Grid>
         </Grid>
       </Container>
