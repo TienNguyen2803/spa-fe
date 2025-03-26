@@ -35,6 +35,7 @@ import {
 import IntroductionSection from "./sections/IntroductionSection";
 import BenefitsSection from "./sections/BenefitsSection";
 import AtmosphereSection from "./sections/AtmosphereSection";
+import ServicesSection from './sections/ServicesSection';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -93,44 +94,6 @@ const HomePage = () => {
     );
   };
 
-  const services = [
-    {
-      title: "Massage Thư Giãn",
-      description:
-        "Trải nghiệm liệu pháp massage độc quyền giúp giải tỏa căng thẳng và phục hồi năng lượng.",
-      image:
-        "https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      duration: "60-90 phút",
-      price: "Từ 350.000đ",
-    },
-    {
-      title: "Chăm Sóc Da Mặt",
-      description:
-        "Liệu trình chăm sóc da chuyên sâu với các sản phẩm từ thiên nhiên giúp làn da tươi trẻ và rạng rỡ.",
-      image:
-        "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      duration: "75-90 phút",
-      price: "Từ 450.000đ",
-    },
-    {
-      title: "Tắm Thảo Dược",
-      description:
-        "Đắm mình trong hương thơm của các loại thảo dược quý giúp thanh lọc cơ thể và thư giãn tinh thần.",
-      image:
-        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      duration: "90-120 phút",
-      price: "Từ 500.000đ",
-    },
-    {
-      title: "Liệu Pháp Đá Nóng",
-      description:
-        "Kết hợp giữa massage và đá nóng giúp thư giãn cơ bắp, cải thiện tuần hoàn và giảm đau nhức.",
-      image:
-        "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      duration: "90 phút",
-      price: "Từ 550.000đ",
-    },
-  ];
 
   return (
     <Box>
@@ -279,138 +242,7 @@ const HomePage = () => {
       <IntroductionSection />
 
       {/* Services Section */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#F8F5F1" }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                color: "#8B5A2B",
-                fontWeight: 600,
-                mb: 1,
-                textTransform: "uppercase",
-                letterSpacing: 1,
-              }}
-            >
-              Dịch vụ của chúng tôi
-            </Typography>
-
-            <Typography
-              variant="h3"
-              component="h2"
-              sx={{
-                fontWeight: 700,
-                mb: 2,
-              }}
-            >
-              Trải Nghiệm Dịch Vụ Đẳng Cấp
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{
-                color: "text.secondary",
-                maxWidth: 700,
-                mx: "auto",
-                mb: 2,
-              }}
-            >
-              Khám phá các dịch vụ chăm sóc sức khỏe và sắc đẹp được thiết kế
-              riêng biệt để đáp ứng nhu cầu của từng khách hàng
-            </Typography>
-          </Box>
-
-          <Grid container spacing={4}>
-            {services.map((service, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <Card
-                  elevation={0}
-                  sx={{
-                    height: "100%",
-                    borderRadius: 4,
-                    overflow: "hidden",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-10px)",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-                    },
-                  }}
-                >
-                  <Box sx={{ position: "relative", overflow: "hidden" }}>
-                    <CardMedia
-                      component="img"
-                      image={service.image}
-                      alt={service.title}
-                      sx={{
-                        height: 240,
-                        transition: "transform 0.5s ease",
-                        "&:hover": {
-                          transform: "scale(1.1)",
-                        },
-                      }}
-                    />
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: 16,
-                        right: 16,
-                        bgcolor: "rgba(139, 90, 43, 0.9)",
-                        color: "white",
-                        py: 0.5,
-                        px: 1.5,
-                        borderRadius: 5,
-                        fontSize: "0.875rem",
-                      }}
-                    >
-                      {service.price}
-                    </Box>
-                  </Box>
-                  <CardContent sx={{ p: 3 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                      <AccessTime
-                        fontSize="small"
-                        sx={{ color: "#8B5A2B", mr: 1 }}
-                      />
-                      <Typography variant="body2" color="text.secondary">
-                        {service.duration}
-                      </Typography>
-                    </Box>
-                    <Typography
-                      variant="h5"
-                      component="h3"
-                      gutterBottom
-                      sx={{ fontWeight: 600 }}
-                    >
-                      {service.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ mb: 2 }}
-                    >
-                      {service.description}
-                    </Typography>
-                    <Button
-                      variant="text"
-                      endIcon={<ArrowForward />}
-                      sx={{
-                        color: "#8B5A2B",
-                        p: 0,
-                        "&:hover": {
-                          bgcolor: "transparent",
-                          color: "#6E4A22",
-                        },
-                      }}
-                    >
-                      Chi tiết
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
+      <ServicesSection />
 
       <BenefitsSection />
       <AtmosphereSection />
