@@ -1,10 +1,19 @@
 import React, { useState, useMemo } from "react";
-import { useTable, useNavigate } from "@refinedev/core";
+import { useTable, useNavigation } from "@refinedev/core";
 import { List } from "@refinedev/mui";
-import { Box, Button, TextField, IconButton, InputAdornment } from "@mui/material";
-import { Add as AddIcon, Search as SearchIcon, Clear as ClearIcon } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import {
+  Add as AddIcon,
+  Search as SearchIcon,
+  Clear as ClearIcon,
+} from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
 
 interface Spa {
   id: number;
@@ -23,9 +32,11 @@ interface Spa {
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
+  const { push } = useNavigation();
 
-  const { tableQueryResult: { data: tableData } } = useTable({
+  const {
+    tableQueryResult: { data: tableData },
+  } = useTable({
     resource: "spas",
     syncWithLocation: true,
   });
@@ -43,26 +54,34 @@ export default function ListSpaPage() {
   ];
 
   const filteredData = useMemo(() => {
-    return (tableData?.data || []).filter((spa: Spa) =>
-      spa.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      spa.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      spa.email.toLowerCase().includes(searchQuery.toLowerCase())
+    return (tableData?.data || []).filter(
+      (spa: Spa) =>
+        spa.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spa.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        spa.email.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [searchQuery, tableData]);
 
   return (
     <List>
-      <Box sx={{ p: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <TextField
             label="Tìm kiếm"
             variant="outlined"
             size="small"
-            sx={{ width: '500px' }}
+            sx={{ width: "500px" }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSearch();
               }
             }}
@@ -77,7 +96,7 @@ export default function ListSpaPage() {
                   <IconButton
                     size="small"
                     onClick={() => setSearchTerm("")}
-                    sx={{ visibility: searchTerm ? 'visible' : 'hidden' }}
+                    sx={{ visibility: searchTerm ? "visible" : "hidden" }}
                   >
                     <ClearIcon fontSize="small" />
                   </IconButton>
@@ -89,10 +108,10 @@ export default function ListSpaPage() {
             variant="contained"
             onClick={handleSearch}
             sx={{
-              backgroundColor: '#1976d2',
-              '&:hover': {
-                backgroundColor: '#1565c0',
-              }
+              backgroundColor: "#1976d2",
+              "&:hover": {
+                backgroundColor: "#1565c0",
+              },
             }}
           >
             Tìm kiếm
@@ -101,7 +120,7 @@ export default function ListSpaPage() {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => navigate("/spas/create")}
+          onClick={() => push("/spas/create")}
         >
           Tạo Spa
         </Button>
@@ -127,7 +146,7 @@ export default function ListSpaPage() {
           },
           "& .MuiDataGrid-columnHeader": {
             borderRight: "1px solid #e0e0e0",
-          }
+          },
         }}
       />
     </List>
