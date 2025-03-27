@@ -186,13 +186,53 @@ export default function ListSpaPage() {
           disableDensitySelector
           hideFooterSelectedRowCount
           sx={{
-            border: '1px solid rgba(0, 0, 0, 0.12)',
+            border: 'none',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+            borderRadius: 2,
+            '& .MuiDataGrid-root': {
+              border: 'none',
+            },
             '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              fontWeight: 'bold',
+              backgroundColor: '#f5f5f5',
+              borderBottom: '2px solid #e0e0e0',
+              color: '#1a1a1a',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 600,
+              },
             },
             '& .MuiDataGrid-cell': {
-              borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+              borderBottom: '1px solid #f0f0f0',
+              color: '#333',
+              fontSize: '0.875rem',
+              '&:hover': {
+                backgroundColor: '#f8f8f8',
+              },
+            },
+            '& .MuiDataGrid-row': {
+              '&:hover': {
+                backgroundColor: '#f8f8f8',
+              },
+              '&:nth-of-type(even)': {
+                backgroundColor: '#fafafa',
+              },
+            },
+            '& .MuiDataGrid-footer': {
+              borderTop: '2px solid #e0e0e0',
+              backgroundColor: '#fff',
+            },
+            '& .MuiIconButton-root': {
+              color: '#666',
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              },
+            },
+            '& .MuiDataGrid-toolbarContainer': {
+              gap: 2,
+              padding: 2,
+              backgroundColor: '#fff',
+              borderBottom: '1px solid #e0e0e0',
             },
           }}
         />
