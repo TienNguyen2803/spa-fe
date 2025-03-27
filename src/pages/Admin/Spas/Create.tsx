@@ -88,8 +88,12 @@ export default function CreateSpaPage() {
     setBanners(updatedBanners);
   };
 
+  const onSubmit = (data) => {
+    console.log('Form Data:', data);
+  };
+
   return (
-    <Create>
+    <Create saveButtonProps={{ onClick: handleSubmit(onSubmit) }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
