@@ -40,19 +40,32 @@ export default function CreateSpaPage() {
     name: "banners"
   });
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
-      // TODO: Implement file upload to imgs directory
-      const fakePath = `/imgs/${file.name}`;
-      setPreviewImage(URL.createObjectURL(file));
-      // Update form value
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewImage(previewUrl);
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // TODO: Handle form submission
+  const onSubmit = async (data: any) => {
+    try {
+      // Log form data
+      console.log('Form Data:', {
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        email: data.email,
+        banners: data.banners,
+        workingHours: data.workingHours,
+        seo_title: data.seo_title,
+        seo_description: data.seo_description,
+        facebook_url: data.facebook_url,
+        instagram_url: data.instagram_url
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   return (
