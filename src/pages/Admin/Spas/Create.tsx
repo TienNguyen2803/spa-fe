@@ -287,6 +287,7 @@ export default function CreateSpaPage() {
                 <Grid item xs={12} sx={{ display: 'flex', gap: 2 }}>
                   <TextField
                     {...register(`workingHours.0.day`)}
+                    label="Ngày làm việc"
                     defaultValue="Monday"
                     size="small"
                     sx={{ width: 120 }}
