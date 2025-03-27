@@ -1,9 +1,17 @@
-
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Container, TextField, Button, Typography, Paper, Divider } from "@mui/material";
-import { useCustomMutation, useLogin } from "@refinedev/core";
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Divider,
+} from "@mui/material";
+import { useCreate, useCustomMutation, useLogin } from "@refinedev/core";
 import { CredentialResponse } from "../../../interfaces/google";
 import { IUserResponse } from "../../../types/auth";
+import { useNavigation } from "@refinedev/core";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -12,6 +20,8 @@ export const LoginPage: React.FC = () => {
   const { mutateAsync } = useCustomMutation<IUserResponse>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { push } = useNavigation();
 
   const { mutate: emailLogin } = useCreate({
     resource: "auth/email/login",
@@ -34,13 +44,20 @@ export const LoginPage: React.FC = () => {
         onSuccess: (response) => {
           const { token } = response.data;
           localStorage.setItem("token", token);
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              ...response.data,
+            }),
+          );
+          push("/");
           // Handle successful login
         },
         onError: (error) => {
           // Handle login error
           console.error("Login failed:", error);
         },
-      }
+      },
     );
   };
 
@@ -91,7 +108,8 @@ export const LoginPage: React.FC = () => {
           errorNotification: (error, values) => {
             return {
               message: "Đăng nhập Google thất bại",
-              description: error?.message || "Đã xảy ra lỗi khi đăng nhập bằng Google",
+              description:
+                error?.message || "Đã xảy ra lỗi khi đăng nhập bằng Google",
               type: "error",
             };
           },
@@ -104,9 +122,9 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <Container 
-      maxWidth="sm" 
-      sx={{ 
+    <Container
+      maxWidth="sm"
+      sx={{
         height: "100vh",
         display: "flex",
         alignItems: "center",
@@ -124,7 +142,7 @@ export const LoginPage: React.FC = () => {
         <Typography variant="h5" component="h1" align="center" gutterBottom>
           Đăng nhập Admin
         </Typography>
-        
+
         <form onSubmit={handleEmailLogin}>
           <TextField
             fullWidth
@@ -154,7 +172,7 @@ export const LoginPage: React.FC = () => {
         </form>
 
         <Divider sx={{ my: 3 }}>hoặc</Divider>
-        
+
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <GoogleButton />
         </Box>
