@@ -243,22 +243,28 @@ export default function CreateSpaPage() {
               </Box>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Controller
-                    name="banners.0.image_url"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        type="file"
-                        fullWidth
-                        label="Banner URL"
-                        size="small"
-                        onChange={e => {
-                          field.onChange(e.target.files[0])
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      startIcon={<CloudUpload />}
+                      size="small"
+                    >
+                      Upload Banner
+                      <input 
+                        type="file" 
+                        hidden 
+                        accept="image/*"
+                        onChange={(e) => {
+                          handleImageUpload(e);
+                          register('banners.0.image_url').onChange(e);
                         }}
                       />
+                    </Button>
+                    {previewImage && (
+                      <Box component="img" src={previewImage} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
                     )}
-                  />
+                  </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Controller
