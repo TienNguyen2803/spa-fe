@@ -186,11 +186,11 @@ export default function ListSpaPage() {
           disableDensitySelector
           hideFooterSelectedRowCount
           sx={{
-            border: 'none',
+            border: '1px solid #e0e0e0',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             borderRadius: 2,
             '& .MuiDataGrid-root': {
-              border: 'none',
+              border: '1px solid #e0e0e0',
             },
             '& .MuiDataGrid-columnHeaders': {
               backgroundColor: '#f5f5f5',
@@ -201,21 +201,35 @@ export default function ListSpaPage() {
               '& .MuiDataGrid-columnHeaderTitle': {
                 fontWeight: 600,
               },
+              '& .MuiDataGrid-columnHeader': {
+                borderRight: '1px solid #e0e0e0',
+                '&:last-child': {
+                  borderRight: 'none',
+                },
+              },
             },
             '& .MuiDataGrid-cell': {
-              borderBottom: '1px solid #f0f0f0',
+              borderRight: '1px solid #e0e0e0',
+              borderBottom: '1px solid #e0e0e0',
               color: '#333',
               fontSize: '0.875rem',
               '&:hover': {
                 backgroundColor: '#f8f8f8',
               },
+              '&:last-child': {
+                borderRight: 'none',
+              },
             },
             '& .MuiDataGrid-row': {
+              borderBottom: '1px solid #e0e0e0',
               '&:hover': {
                 backgroundColor: '#f8f8f8',
               },
               '&:nth-of-type(even)': {
                 backgroundColor: '#fafafa',
+              },
+              '&:last-child': {
+                borderBottom: 'none',
               },
             },
             '& .MuiDataGrid-footer': {
