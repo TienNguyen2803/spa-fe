@@ -1,3 +1,4 @@
+
 import { Create } from "@refinedev/mui";
 import { Box, Card, Grid, TextField, Typography, Button, Checkbox, FormControlLabel, MenuItem, IconButton } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
@@ -21,16 +22,8 @@ const DAYS_OF_WEEK = [
 
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
-  const [banners, setBanners] = useState([{
-    image_url: "",
-    title: "",
-    subtitle: "",
-    order: 0,
-    is_active: true,
-    type: 0
-  }]);
-
-  const { register, control, handleSubmit, getValues } = useForm({
+  
+  const { register, control, handleSubmit } = useForm({
     defaultValues: {
       name: "",
       logo_url: "",
@@ -62,38 +55,16 @@ export default function CreateSpaPage() {
     console.log(data);
   };
 
-  const handleImageUpload = async (index, event) => {
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const fakePath = `/imgs/${file.name}`;
-      const updatedBanners = [...banners];
-      updatedBanners[index].image_url = fakePath;
-      setBanners(updatedBanners);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
-  const addBanner = () => {
-    setBanners([...banners, {
-      image_url: "",
-      title: "",
-      subtitle: "",
-      order: banners.length,
-      is_active: true,
-      type: 0
-    }]);
-  };
-
-  const removeBanner = (index) => {
-    const updatedBanners = banners.filter((_, i) => i !== index);
-    setBanners(updatedBanners);
-  };
-
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-  };
-
   return (
-    <Create saveButtonProps={{ onClick: handleSubmit(onSubmit) }}>
+    <Create>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -270,117 +241,104 @@ export default function CreateSpaPage() {
             <Card sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6">Banners</Typography>
-                <Button onClick={addBanner} variant="contained" startIcon={<Add />} size="small">Add Banner</Button>
               </Box>
-              {banners.map((banner, index) => (
-                <Grid container spacing={2} key={index}>
-                  <Grid item xs={12}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <Button
-                        variant="outlined"
-                        component="label"
-                        startIcon={<CloudUpload />}
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Controller
+                    name="banners.0.image_url"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Banner URL"
+                        size="small"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name="banners.0.title"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Tiêu đề"
+                        size="small"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name="banners.0.subtitle"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Phụ đề"
+                        size="small"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Controller
+                    name="banners.0.order"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Thứ tự"
+                        type="number"
+                        size="small"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Controller
+                    name="banners.0.type"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        select
+                        fullWidth
+                        label="Loại"
                         size="small"
                       >
-                        Upload Banner
-                        <input 
-                          type="file" 
-                          hidden 
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(index, e)}
-                        />
-                      </Button>
-                      {banner.image_url && (
-                        <Box component="img" src={banner.image_url} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
-                      )}
-                      <IconButton onClick={() => removeBanner(index)} aria-label="delete" size="small">
-                        <Delete />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Controller
-                      name={`banners.${index}.title`}
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          label="Tiêu đề"
-                          size="small"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Controller
-                      name={`banners.${index}.subtitle`}
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          label="Phụ đề"
-                          size="small"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <Controller
-                      name={`banners.${index}.order`}
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          fullWidth
-                          label="Thứ tự"
-                          type="number"
-                          size="small"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <Controller
-                      name={`banners.${index}.type`}
-                      control={control}
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          select
-                          fullWidth
-                          label="Loại"
-                          size="small"
-                        >
-                          {BANNER_TYPES.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <Controller
-                      name={`banners.${index}.is_active`}
-                      control={control}
-                      render={({ field }) => (
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              {...field}
-                              checked={field.value}
-                            />
-                          }
-                          label="Kích hoạt"
-                        />
-                      )}
-                    />
-                  </Grid>
+                        {BANNER_TYPES.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
                 </Grid>
-              ))}
+                <Grid item xs={12} md={4}>
+                  <Controller
+                    name="banners.0.is_active"
+                    control={control}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            {...field}
+                            checked={field.value}
+                          />
+                        }
+                        label="Kích hoạt"
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
             </Card>
           </Grid>
 
@@ -395,10 +353,17 @@ export default function CreateSpaPage() {
                     render={({ field }) => (
                       <TextField
                         {...field}
+                        select
                         fullWidth
-                        label="Ngày làm việc"
+                        label="Ngày"
                         size="small"
-                      />
+                      >
+                        {DAYS_OF_WEEK.map(day => (
+                          <MenuItem key={day} value={day}>
+                            {day}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     )}
                   />
                 </Grid>
