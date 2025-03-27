@@ -1,5 +1,5 @@
 
-import { Create } from "@refinedev/mui";
+import { List } from "@refinedev/mui";
 import { Box, Card, Grid, TextField, Typography, Button, Checkbox, FormControlLabel, MenuItem, IconButton } from "@mui/material";
 import { useForm, useFieldArray } from "react-hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers";
@@ -49,28 +49,34 @@ export default function CreateSpaPage() {
   };
 
   const onSubmit = async (data: any) => {
-    try {
-      // Log form data
-      console.log('Form Data:', {
-        name: data.name,
-        address: data.address,
-        phone: data.phone,
-        email: data.email,
-        banners: data.banners,
-        workingHours: data.workingHours,
-        seo_title: data.seo_title,
-        seo_description: data.seo_description,
-        facebook_url: data.facebook_url,
-        instagram_url: data.instagram_url
-      });
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+    console.log('Form Data:', {
+      name: data.name,
+      address: data.address,
+      phone: data.phone,
+      email: data.email,
+      banners: data.banners,
+      workingHours: data.workingHours,
+      seo_title: data.seo_title,
+      seo_description: data.seo_description,
+      facebook_url: data.facebook_url,
+      instagram_url: data.instagram_url
+    });
   };
 
   return (
-    <Create>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <List
+      headerButtons={[
+        <Button 
+          key="save"
+          onClick={handleSubmit(onSubmit)}
+          variant="contained"
+          color="primary"
+        >
+          Save
+        </Button>
+      ]}
+    >
+      <form>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Card sx={{ p: 2, height: '100%' }}>
@@ -209,9 +215,7 @@ export default function CreateSpaPage() {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                // TODO: Implement actual file upload
                                 const previewUrl = URL.createObjectURL(file);
-                                // Update form value with temporary preview URL
                                 register(`banners.${index}.image_url`).onChange({
                                   target: { value: previewUrl }
                                 });
@@ -324,6 +328,6 @@ export default function CreateSpaPage() {
           </Grid>
         </Grid>
       </form>
-    </Create>
+    </List>
   );
 }
