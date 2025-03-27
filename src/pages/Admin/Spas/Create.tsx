@@ -43,8 +43,27 @@ export default function CreateSpaPage() {
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreviewImage(previewUrl);
+      try {
+        // Create FormData object
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Generate unique filename
+        const filename = `${Date.now()}-${file.name}`;
+        const filepath = `/imgs/${filename}`;
+        
+        // For preview
+        const previewUrl = URL.createObjectURL(file);
+        setPreviewImage(previewUrl);
+
+        // Update form data with file path
+        register('logo').onChange({
+          target: { value: filepath }
+        });
+
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
     }
   };
 
