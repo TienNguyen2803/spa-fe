@@ -58,14 +58,19 @@ const spas: Spa[] = [
 
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    setSearchQuery(searchTerm);
+  };
 
   const filteredData = useMemo(() => {
     return spas.filter((spa) => 
-      spa.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      spa.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      spa.email.toLowerCase().includes(searchTerm.toLowerCase())
+      spa.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      spa.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      spa.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [searchTerm]);
+  }, [searchQuery]);
 
   const columns: GridColDef[] = [
     {
@@ -150,9 +155,14 @@ export default function ListSpaPage() {
             label="Tìm kiếm"
             variant="outlined"
             size="small"
-            sx={{ width: '300px' }}
+            sx={{ width: '500px' }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -172,6 +182,18 @@ export default function ListSpaPage() {
               ),
             }}
           />
+          <Button 
+            variant="contained" 
+            onClick={handleSearch}
+            sx={{
+              backgroundColor: '#1976d2',
+              '&:hover': {
+                backgroundColor: '#1565c0',
+              }
+            }}
+          >
+            Tìm kiếm
+          </Button>
         </Stack>
       </Paper>
 
