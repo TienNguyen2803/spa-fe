@@ -1,0 +1,338 @@
+import React, { useState, useMemo } from 'react';
+import { 
+  Box, 
+  Button, 
+  Container, 
+  Paper, 
+  Typography, 
+  TextField, 
+  FormControl, 
+  InputLabel, 
+  Select, 
+  MenuItem, 
+  Stack, 
+  Chip, 
+  IconButton, 
+  InputAdornment, 
+  Tooltip
+} from '@mui/material';
+import { 
+  DataGrid, 
+  GridColDef, 
+  GridRenderCellParams, 
+  GridToolbar, 
+  GridValueGetterParams 
+} from '@mui/x-data-grid';
+import {
+  Add as AddIcon,
+  Search as SearchIcon,
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  FilterList as FilterListIcon,
+  Clear as ClearIcon,
+  Visibility as VisibilityIcon
+} from '@mui/icons-material';
+
+// Định nghĩa kiểu dữ liệu
+interface SpaService {
+  id: number;
+  name: string;
+  category: string;
+  duration: number;
+  price: number;
+  status: 'active' | 'inactive';
+  createdAt: string;
+}
+
+// Dữ liệu mẫu
+const spaServices: SpaService[] = [
+  { id: 1, name: 'Massage Toàn Thân', category: 'Massage', duration: 60, price: 500000, status: 'active', createdAt: '2025-03-15' },
+  { id: 2, name: 'Facial Cao Cấp', category: 'Chăm sóc da', duration: 90, price: 750000, status: 'active', createdAt: '2025-03-20' },
+  { id: 3, name: 'Tẩy Da Chết', category: 'Chăm sóc da', duration: 45, price: 350000, status: 'inactive', createdAt: '2025-03-10' },
+  { id: 4, name: 'Gói Tắm Thảo Dược', category: 'Tắm', duration: 75, price: 650000, status: 'active', createdAt: '2025-03-25' },
+  { id: 5, name: 'Chăm Sóc Tóc Chuyên Sâu', category: 'Tóc', duration: 60, price: 450000, status: 'active', createdAt: '2025-03-18' },
+  { id: 6, name: 'Chăm Sóc Móng', category: 'Nail', duration: 50, price: 300000, status: 'active', createdAt: '2025-03-22' },
+  { id: 7, name: 'Điều Trị Mụn', category: 'Chăm sóc da', duration: 60, price: 550000, status: 'active', createdAt: '2025-03-12' },
+  { id: 8, name: 'Phục Hồi Da Hư Tổn', category: 'Chăm sóc da', duration: 120, price: 1200000, status: 'active', createdAt: '2025-03-05' },
+  { id: 9, name: 'Triệt Lông', category: 'Trị liệu', duration: 90, price: 900000, status: 'inactive', createdAt: '2025-03-08' },
+  { id: 10, name: 'Liệu Trình Detox', category: 'Trị liệu', duration: 150, price: 1500000, status: 'active', createdAt: '2025-03-24' },
+];
+
+const SpaDataGridScreen: React.FC = () => {
+  // State cho bộ lọc
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  
+  // Danh sách các danh mục duy nhất
+  const categories = Array.from(new Set(spaServices.map(item => item.category)));
+
+  // Xử lý bộ lọc
+  const filteredData = useMemo(() => {
+    return spaServices.filter((service) => {
+      const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = categoryFilter ? service.category === categoryFilter : true;
+      const matchesStatus = statusFilter ? service.status === statusFilter : true;
+      
+      return matchesSearch && matchesCategory && matchesStatus;
+    });
+  }, [searchTerm, categoryFilter, statusFilter]);
+
+  // Xử lý xóa tất cả bộ lọc
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setCategoryFilter('');
+    setStatusFilter('');
+  };
+
+  // Định nghĩa cột
+  const columns: GridColDef[] = [
+    { 
+      field: 'id', 
+      headerName: 'ID', 
+      width: 70, 
+      align: 'center', 
+      headerAlign: 'center' 
+    },
+    { 
+      field: 'name', 
+      headerName: 'Tên dịch vụ', 
+      flex: 1, 
+      minWidth: 200 
+    },
+    { 
+      field: 'category', 
+      headerName: 'Danh mục', 
+      width: 150 
+    },
+    { 
+      field: 'duration', 
+      headerName: 'Thời gian (phút)', 
+      type: 'number', 
+      width: 150, 
+      align: 'center', 
+      headerAlign: 'center' 
+    },
+    { 
+      field: 'price', 
+      headerName: 'Giá (VNĐ)', 
+      type: 'number', 
+      width: 150, 
+      align: 'right', 
+      headerAlign: 'right',
+      valueFormatter: (params) => {
+        return params.value.toLocaleString();
+      },
+    },
+    { 
+      field: 'status', 
+      headerName: 'Trạng thái', 
+      width: 150, 
+      align: 'center', 
+      headerAlign: 'center',
+      renderCell: (params: GridRenderCellParams<SpaService>) => (
+        <Chip 
+          label={params.value === 'active' ? 'Hoạt động' : 'Ngừng hoạt động'} 
+          color={params.value === 'active' ? 'success' : 'default'}
+          size="small"
+        />
+      ),
+    },
+    { 
+      field: 'createdAt', 
+      headerName: 'Ngày tạo', 
+      width: 130, 
+      align: 'center', 
+      headerAlign: 'center' 
+    },
+    {
+      field: 'actions',
+      headerName: 'Thao tác',
+      width: 150,
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      filterable: false,
+      renderCell: (params: GridRenderCellParams<SpaService>) => (
+        <Box>
+          <Tooltip title="Xem chi tiết">
+            <IconButton size="small" color="info">
+              <VisibilityIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Chỉnh sửa">
+            <IconButton size="small" color="primary">
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Xóa">
+            <IconButton size="small" color="error">
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ),
+    },
+  ];
+
+  return (
+    <Container maxWidth="xl">
+      {/* Header với tiêu đề và nút thêm mới */}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, mt: 2 }}>
+        <Typography variant="h5" component="h1">
+          Quản Lý Dịch Vụ Spa
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Cập nhật lần cuối: 2025-03-27 11:23:20 | Người dùng: dinhbach306
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          size="medium"
+        >
+          Thêm Dịch Vụ Mới
+        </Button>
+      </Box>
+
+      {/* Phần filter */}
+      <Paper sx={{ p: 2, mb: 3 }} elevation={2}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <FilterListIcon sx={{ mr: 1 }} fontSize="small" />
+            Bộ lọc tìm kiếm
+          </Typography>
+          
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              label="Tìm kiếm dịch vụ"
+              variant="outlined"
+              size="small"
+              fullWidth
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" />
+                  </InputAdornment>
+                ),
+                endAdornment: searchTerm && (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={() => setSearchTerm('')}>
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            
+            <FormControl size="small" fullWidth variant="outlined">
+              <InputLabel>Danh mục</InputLabel>
+              <Select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value as string)}
+                label="Danh mục"
+              >
+                <MenuItem value="">Tất cả danh mục</MenuItem>
+                {categories.map((category) => (
+                  <MenuItem key={category} value={category}>{category}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            
+            <FormControl size="small" fullWidth variant="outlined">
+              <InputLabel>Trạng thái</InputLabel>
+              <Select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as string)}
+                label="Trạng thái"
+              >
+                <MenuItem value="">Tất cả trạng thái</MenuItem>
+                <MenuItem value="active">Đang hoạt động</MenuItem>
+                <MenuItem value="inactive">Ngừng hoạt động</MenuItem>
+              </Select>
+            </FormControl>
+            
+            <Button 
+              variant="outlined" 
+              size="medium" 
+              onClick={clearAllFilters} 
+              disabled={!searchTerm && !categoryFilter && !statusFilter}
+              startIcon={<ClearIcon />}
+              sx={{ minWidth: '120px' }}
+            >
+              Xóa lọc
+            </Button>
+          </Stack>
+        </Box>
+      </Paper>
+
+      {/* DataGrid hiển thị dữ liệu */}
+      <Paper sx={{ height: 500, width: '100%' }} elevation={3}>
+        <Box sx={{ pl: 2, pr: 2, pt: 2, pb: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6">
+            Danh sách dịch vụ
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Tổng số: {filteredData.length} dịch vụ
+          </Typography>
+        </Box>
+        
+        <DataGrid
+          rows={filteredData}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 25]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          getRowClassName={(params) => 
+            params.row.status === 'inactive' ? 'inactive-row' : ''
+          }
+          sx={{
+            border: 'none',
+            '& .inactive-row': {
+              bgcolor: 'rgba(0, 0, 0, 0.04)',
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              fontWeight: 'bold',
+            },
+          }}
+          slots={{
+            toolbar: GridToolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: false,
+              printOptions: { disableToolbarButton: true },
+              csvOptions: { disableToolbarButton: false },
+            },
+          }}
+          localeText={{
+            footerRowSelected: (count) => `${count} dịch vụ đã chọn`,
+            toolbarExport: 'Xuất dữ liệu',
+            toolbarExportCSV: 'Tải xuống CSV',
+            toolbarFilters: 'Lọc',
+            toolbarColumns: 'Cột',
+            toolbarDensity: 'Hiển thị',
+            toolbarDensityComfortable: 'Thoải mái',
+            toolbarDensityStandard: 'Tiêu chuẩn',
+            toolbarDensityCompact: 'Gọn gàng',
+            columnsPanelTextFieldLabel: 'Tìm cột',
+            columnsPanelTextFieldPlaceholder: 'Tên cột',
+            columnsPanelShowAllButton: 'Hiện tất cả',
+            columnsPanelHideAllButton: 'Ẩn tất cả',
+            noRowsLabel: 'Không có dữ liệu',
+          }}
+        />
+      </Paper>
+    </Container>
+  );
+};
+
+export default SpaDataGridScreen;

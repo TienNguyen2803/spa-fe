@@ -13,7 +13,8 @@ import { CredentialResponse } from "../../../interfaces/google";
 import { IUserResponse } from "../../../types/auth";
 import { useNavigation } from "@refinedev/core";
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID =
+  "456283535586-di7sa1ubk4nd43mkhg0rgedamrsdkaei.apps.googleusercontent.com";
 
 export const LoginPage: React.FC = () => {
   const { mutate: login } = useLogin<IUserResponse>();
@@ -48,7 +49,7 @@ export const LoginPage: React.FC = () => {
             "user",
             JSON.stringify({
               ...response.data,
-            })
+            }),
           );
           push("/");
           // Handle successful login
@@ -57,7 +58,7 @@ export const LoginPage: React.FC = () => {
           // Handle login error
           console.error("Login failed:", error);
         },
-      }
+      },
     );
   };
 

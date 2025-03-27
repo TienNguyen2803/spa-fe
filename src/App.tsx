@@ -33,6 +33,8 @@ import ServicesPage from "./pages/Clients/Services";
 import { UsersCreate, UsersEdit, UsersList, UsersShow } from "./pages/users";
 import { IUserResponse } from "./types/auth";
 import { LoginPage } from "./pages/Admin/Login";
+import ListSpaPage from "./pages/Admin/Spas/List";
+import CreateSpaPage from "./pages/Admin/Spas/Create";
 
 const axiosInstance = axios.create({
   baseURL:
@@ -50,7 +52,7 @@ axiosInstance.interceptors.request.use((config) => {
 function App() {
   const dataProvider = nestjsxCrudDataProvider(
     "https://630feb56-a4db-450b-855a-72e24a12336d-00-t2xqh6jdz5p8.pike.replit.dev/api/v1",
-    axiosInstance
+    axiosInstance,
   );
 
   const authProvider: AuthBindings = {
@@ -60,7 +62,7 @@ function App() {
           "user",
           JSON.stringify({
             ...user,
-          })
+          }),
         );
 
         localStorage.setItem("token", `${user.token}`);
@@ -146,6 +148,10 @@ function App() {
                   edit: "/users/edit/:id",
                   show: "/users/show/:id",
                 },
+                {
+                  name: "Danh sách Spa",
+                  list: "/spas",
+                },
               ]}
               options={{
                 // syncWithLocation: true,
@@ -156,7 +162,6 @@ function App() {
               <Routes>
                 {/* Clients Layout */}
                 <Route element={<ThemeClientLayout />}>
-                  <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/services" element={<ServicesPage />} />
@@ -189,6 +194,10 @@ function App() {
                     </Authenticated>
                   }
                 >
+                  <Route path="/spas">
+                    <Route index element={<ListSpaPage />} />
+                    <Route path="create" element={<CreateSpaPage />} />
+                  </Route>
                   <Route path="/users">
                     <Route index element={<UsersList />} />
                     <Route path="create" element={<UsersCreate />} />
