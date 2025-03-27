@@ -181,12 +181,40 @@ export default function CreateSpaPage() {
                 <Box key={field.id} sx={{ mb: 2, p: 2, border: '1px solid #eee', borderRadius: 1 }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                      <TextField
-                        {...register(`banners.${index}.image_url`)}
-                        fullWidth
-                        label="URL Hình ảnh"
-                        size="small"
-                      />
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          startIcon={<CloudUpload />}
+                          size="small"
+                        >
+                          Upload Banner
+                          <input 
+                            type="file" 
+                            hidden 
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                // TODO: Implement actual file upload
+                                const previewUrl = URL.createObjectURL(file);
+                                // Update form value with temporary preview URL
+                                register(`banners.${index}.image_url`).onChange({
+                                  target: { value: previewUrl }
+                                });
+                              }
+                            }}
+                          />
+                        </Button>
+                        {watch(`banners.${index}.image_url`) && (
+                          <Box 
+                            component="img" 
+                            src={watch(`banners.${index}.image_url`)} 
+                            alt="Preview" 
+                            sx={{ width: 100, height: 60, objectFit: 'cover', borderRadius: 1 }}
+                          />
+                        )}
+                      </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
