@@ -4,8 +4,6 @@ import { CloudUpload } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 export default function CreateSpaPage() {
   const [previewBanner, setPreviewBanner] = useState("");
@@ -29,14 +27,14 @@ export default function CreateSpaPage() {
         subtitle: "",
         order: 0,
         is_active: true,
-        type: 0
+        type: 0,
       },
       workingHours: {
         day: "",
         open_time: "09:00",
-        close_time: "18:00"
-      }
-    }
+        close_time: "18:00",
+      },
+    },
   });
 
   const handleLogoUpload = async (event) => {
@@ -66,8 +64,10 @@ export default function CreateSpaPage() {
     <Create saveButtonProps={{ onClick: handleSubmit(onSubmit) }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ p: 2, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>Thông tin cơ bản</Typography>
+          <Card sx={{ p: 2, height: "100%" }}>
+            <Typography variant="h6" gutterBottom>
+              Thông tin cơ bản
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -78,7 +78,7 @@ export default function CreateSpaPage() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <Button
                     variant="outlined"
                     component="label"
@@ -86,10 +86,20 @@ export default function CreateSpaPage() {
                     size="small"
                   >
                     Upload Logo
-                    <input type="file" hidden accept="image/*" onChange={handleLogoUpload} />
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                    />
                   </Button>
                   {previewLogo && (
-                    <Box component="img" src={previewLogo} alt="Preview" sx={{ width: 100, height: 100, objectFit: 'cover' }} />
+                    <Box
+                      component="img"
+                      src={previewLogo}
+                      alt="Preview"
+                      sx={{ width: 100, height: 100, objectFit: "cover" }}
+                    />
                   )}
                 </Box>
               </Grid>
@@ -132,11 +142,13 @@ export default function CreateSpaPage() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Card sx={{ p: 2, height: '100%' }}>
-            <Typography variant="h6" gutterBottom>Banner</Typography>
+          <Card sx={{ p: 2, height: "100%" }}>
+            <Typography variant="h6" gutterBottom>
+              Banner
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                   <Button
                     variant="outlined"
                     component="label"
@@ -144,10 +156,20 @@ export default function CreateSpaPage() {
                     size="small"
                   >
                     Upload Banner
-                    <input type="file" hidden accept="image/*" onChange={handleBannerUpload} />
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={handleBannerUpload}
+                    />
                   </Button>
                   {previewBanner && (
-                    <Box component="img" src={previewBanner} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
+                    <Box
+                      component="img"
+                      src={previewBanner}
+                      alt="Preview"
+                      sx={{ width: 200, height: 100, objectFit: "cover" }}
+                    />
                   )}
                 </Box>
               </Grid>
@@ -171,7 +193,9 @@ export default function CreateSpaPage() {
           </Card>
 
           <Card sx={{ p: 2, mt: 2 }}>
-            <Typography variant="h6" gutterBottom>Thời gian làm việc</Typography>
+            <Typography variant="h6" gutterBottom>
+              Thời gian làm việc
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
                 <TextField
@@ -182,34 +206,34 @@ export default function CreateSpaPage() {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Controller
-                    name="workingHours.open_time"
-                    control={control}
-                    render={({ field }) => (
-                      <TimePicker
-                        label="Giờ mở cửa"
-                        {...field}
-                        slotProps={{ textField: { size: 'small', fullWidth: true } }}
-                      />
-                    )}
-                  />
-                </LocalizationProvider>
+                <Controller
+                  name="workingHours.open_time"
+                  control={control}
+                  render={({ field }) => (
+                    <TimePicker
+                      label="Giờ mở cửa"
+                      {...field}
+                      slotProps={{
+                        textField: { size: "small", fullWidth: true },
+                      }}
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12} md={4}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Controller
-                    name="workingHours.close_time"
-                    control={control}
-                    render={({ field }) => (
-                      <TimePicker
-                        label="Giờ đóng cửa"
-                        {...field}
-                        slotProps={{ textField: { size: 'small', fullWidth: true } }}
-                      />
-                    )}
-                  />
-                </LocalizationProvider>
+                <Controller
+                  name="workingHours.close_time"
+                  control={control}
+                  render={({ field }) => (
+                    <TimePicker
+                      label="Giờ đóng cửa"
+                      {...field}
+                      slotProps={{
+                        textField: { size: "small", fullWidth: true },
+                      }}
+                    />
+                  )}
+                />
               </Grid>
             </Grid>
           </Card>
