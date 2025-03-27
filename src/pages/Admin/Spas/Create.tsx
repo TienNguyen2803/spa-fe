@@ -3,7 +3,7 @@ import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
