@@ -1,28 +1,27 @@
-
-import React, { useState, useMemo } from 'react';
-import { 
-  Box, 
-  Button, 
-  Container, 
-  Paper, 
-  Typography, 
-  TextField, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem, 
-  Stack, 
-  Chip, 
-  IconButton, 
-  InputAdornment, 
-  Tooltip
-} from '@mui/material';
-import { 
-  DataGrid, 
-  GridColDef, 
-  GridRenderCellParams, 
-  GridToolbar
-} from '@mui/x-data-grid';
+import React, { useState, useMemo } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+  Chip,
+  IconButton,
+  InputAdornment,
+  Tooltip,
+} from "@mui/material";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -30,8 +29,8 @@ import {
   Delete as DeleteIcon,
   FilterList as FilterListIcon,
   Clear as ClearIcon,
-  Visibility as VisibilityIcon
-} from '@mui/icons-material';
+  Visibility as VisibilityIcon,
+} from "@mui/icons-material";
 
 interface SpaService {
   id: number;
@@ -39,73 +38,123 @@ interface SpaService {
   category: string;
   duration: number;
   price: number;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
   createdAt: string;
 }
 
 const spaServices: SpaService[] = [
-  { id: 1, name: 'Massage Toàn Thân', category: 'Massage', duration: 60, price: 500000, status: 'active', createdAt: '2025-03-15' },
-  { id: 2, name: 'Facial Cao Cấp', category: 'Chăm sóc da', duration: 90, price: 750000, status: 'active', createdAt: '2025-03-20' },
-  { id: 3, name: 'Tẩy Da Chết', category: 'Chăm sóc da', duration: 45, price: 350000, status: 'inactive', createdAt: '2025-03-10' },
+  {
+    id: 1,
+    name: "Massage Toàn Thân",
+    category: "Massage",
+    duration: 60,
+    price: 500000,
+    status: "active",
+    createdAt: "2025-03-15",
+  },
+  {
+    id: 2,
+    name: "Facial Cao Cấp",
+    category: "Chăm sóc da",
+    duration: 90,
+    price: 750000,
+    status: "active",
+    createdAt: "2025-03-20",
+  },
+  {
+    id: 3,
+    name: "Tẩy Da Chết",
+    category: "Chăm sóc da",
+    duration: 45,
+    price: 350000,
+    status: "inactive",
+    createdAt: "2025-03-10",
+  },
 ];
 
 export default function ListSpaPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
-  
-  const categories = Array.from(new Set(spaServices.map(item => item.category)));
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
+  const categories = Array.from(
+    new Set(spaServices.map((item) => item.category)),
+  );
 
   const filteredData = useMemo(() => {
     return spaServices.filter((service) => {
-      const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = categoryFilter ? service.category === categoryFilter : true;
-      const matchesStatus = statusFilter ? service.status === statusFilter : true;
+      const matchesSearch = service.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesCategory = categoryFilter
+        ? service.category === categoryFilter
+        : true;
+      const matchesStatus = statusFilter
+        ? service.status === statusFilter
+        : true;
       return matchesSearch && matchesCategory && matchesStatus;
     });
   }, [searchTerm, categoryFilter, statusFilter]);
 
   const clearAllFilters = () => {
-    setSearchTerm('');
-    setCategoryFilter('');
-    setStatusFilter('');
+    setSearchTerm("");
+    setCategoryFilter("");
+    setStatusFilter("");
   };
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70, align: 'center', headerAlign: 'center' },
-    { field: 'name', headerName: 'Tên dịch vụ', flex: 1, minWidth: 200 },
-    { field: 'category', headerName: 'Danh mục', width: 150 },
-    { field: 'duration', headerName: 'Thời gian (phút)', type: 'number', width: 150, align: 'center', headerAlign: 'center' },
-    { 
-      field: 'price', 
-      headerName: 'Giá (VNĐ)', 
-      type: 'number', 
-      width: 150, 
-      align: 'right', 
-      headerAlign: 'right',
-      valueFormatter: (params) => params.value.toLocaleString(),
+    {
+      field: "id",
+      headerName: "ID",
+      width: 70,
+      align: "center",
+      headerAlign: "center",
     },
-    { 
-      field: 'status', 
-      headerName: 'Trạng thái', 
-      width: 150, 
-      align: 'center', 
-      headerAlign: 'center',
+    { field: "name", headerName: "Tên dịch vụ", flex: 1, minWidth: 200 },
+    { field: "category", headerName: "Danh mục", width: 150 },
+    {
+      field: "duration",
+      headerName: "Thời gian (phút)",
+      type: "number",
+      width: 150,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "price",
+      headerName: "Giá (VNĐ)",
+      type: "number",
+      width: 150,
+      align: "right",
+      headerAlign: "right",
+    },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 150,
+      align: "center",
+      headerAlign: "center",
       renderCell: (params: GridRenderCellParams<SpaService>) => (
-        <Chip 
-          label={params.value === 'active' ? 'Hoạt động' : 'Ngừng hoạt động'} 
-          color={params.value === 'active' ? 'success' : 'default'}
+        <Chip
+          label={params.value === "active" ? "Hoạt động" : "Ngừng hoạt động"}
+          color={params.value === "active" ? "success" : "default"}
           size="small"
         />
       ),
     },
-    { field: 'createdAt', headerName: 'Ngày tạo', width: 130, align: 'center', headerAlign: 'center' },
     {
-      field: 'actions',
-      headerName: 'Thao tác',
+      field: "createdAt",
+      headerName: "Ngày tạo",
+      width: 130,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "actions",
+      headerName: "Thao tác",
       width: 150,
-      align: 'center',
-      headerAlign: 'center',
+      align: "center",
+      headerAlign: "center",
       sortable: false,
       filterable: false,
       renderCell: (params: GridRenderCellParams<SpaService>) => (
@@ -132,7 +181,15 @@ export default function ListSpaPage() {
 
   return (
     <Container maxWidth="xl">
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, mt: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 3,
+          mt: 2,
+        }}
+      >
         <Typography variant="h5" component="h1">
           Quản Lý Dịch Vụ Spa
         </Typography>
@@ -148,12 +205,15 @@ export default function ListSpaPage() {
 
       <Paper sx={{ p: 2, mb: 3 }} elevation={2}>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle1" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Typography
+            variant="subtitle1"
+            sx={{ display: "flex", alignItems: "center", mb: 2 }}
+          >
             <FilterListIcon sx={{ mr: 1 }} fontSize="small" />
             Bộ lọc tìm kiếm
           </Typography>
-          
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <TextField
               label="Tìm kiếm dịch vụ"
               variant="outlined"
@@ -169,14 +229,14 @@ export default function ListSpaPage() {
                 ),
                 endAdornment: searchTerm && (
                   <InputAdornment position="end">
-                    <IconButton size="small" onClick={() => setSearchTerm('')}>
+                    <IconButton size="small" onClick={() => setSearchTerm("")}>
                       <ClearIcon fontSize="small" />
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
               }}
             />
-            
+
             <FormControl size="small" fullWidth variant="outlined">
               <InputLabel>Danh mục</InputLabel>
               <Select
@@ -186,11 +246,13 @@ export default function ListSpaPage() {
               >
                 <MenuItem value="">Tất cả danh mục</MenuItem>
                 {categories.map((category) => (
-                  <MenuItem key={category} value={category}>{category}</MenuItem>
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
-            
+
             <FormControl size="small" fullWidth variant="outlined">
               <InputLabel>Trạng thái</InputLabel>
               <Select
@@ -203,14 +265,14 @@ export default function ListSpaPage() {
                 <MenuItem value="inactive">Ngừng hoạt động</MenuItem>
               </Select>
             </FormControl>
-            
-            <Button 
-              variant="outlined" 
-              size="medium" 
-              onClick={clearAllFilters} 
+
+            <Button
+              variant="outlined"
+              size="medium"
+              onClick={clearAllFilters}
               disabled={!searchTerm && !categoryFilter && !statusFilter}
               startIcon={<ClearIcon />}
-              sx={{ minWidth: '120px' }}
+              sx={{ minWidth: "120px" }}
             >
               Xóa lọc
             </Button>
@@ -218,7 +280,7 @@ export default function ListSpaPage() {
         </Box>
       </Paper>
 
-      <Paper sx={{ height: 500, width: '100%' }} elevation={3}>
+      <Paper sx={{ height: 500, width: "100%" }} elevation={3}>
         <DataGrid
           rows={filteredData}
           columns={columns}
@@ -230,17 +292,17 @@ export default function ListSpaPage() {
           pageSizeOptions={[5, 10, 25]}
           checkboxSelection
           disableRowSelectionOnClick
-          getRowClassName={(params) => 
-            params.row.status === 'inactive' ? 'inactive-row' : ''
+          getRowClassName={(params) =>
+            params.row.status === "inactive" ? "inactive-row" : ""
           }
           sx={{
-            border: 'none',
-            '& .inactive-row': {
-              bgcolor: 'rgba(0, 0, 0, 0.04)',
+            border: "none",
+            "& .inactive-row": {
+              bgcolor: "rgba(0, 0, 0, 0.04)",
             },
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              fontWeight: 'bold',
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "rgba(0, 0, 0, 0.04)",
+              fontWeight: "bold",
             },
           }}
           slots={{
@@ -255,19 +317,19 @@ export default function ListSpaPage() {
           }}
           localeText={{
             footerRowSelected: (count) => `${count} dịch vụ đã chọn`,
-            toolbarExport: 'Xuất dữ liệu',
-            toolbarExportCSV: 'Tải xuống CSV',
-            toolbarFilters: 'Lọc',
-            toolbarColumns: 'Cột',
-            toolbarDensity: 'Hiển thị',
-            toolbarDensityComfortable: 'Thoải mái',
-            toolbarDensityStandard: 'Tiêu chuẩn',
-            toolbarDensityCompact: 'Gọn gàng',
-            columnsPanelTextFieldLabel: 'Tìm cột',
-            columnsPanelTextFieldPlaceholder: 'Tên cột',
-            columnsPanelShowAllButton: 'Hiện tất cả',
-            columnsPanelHideAllButton: 'Ẩn tất cả',
-            noRowsLabel: 'Không có dữ liệu',
+            toolbarExport: "Xuất dữ liệu",
+            toolbarExportCSV: "Tải xuống CSV",
+            toolbarFilters: "Lọc",
+            toolbarColumns: "Cột",
+            toolbarDensity: "Hiển thị",
+            toolbarDensityComfortable: "Thoải mái",
+            toolbarDensityStandard: "Tiêu chuẩn",
+            toolbarDensityCompact: "Gọn gàng",
+            columnsPanelTextFieldLabel: "Tìm cột",
+            columnsPanelTextFieldPlaceholder: "Tên cột",
+            columnsPanelShowAllButton: "Hiện tất cả",
+            columnsPanelHideAllButton: "Ẩn tất cả",
+            noRowsLabel: "Không có dữ liệu",
           }}
         />
       </Paper>
