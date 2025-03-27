@@ -50,6 +50,7 @@ axiosInstance.interceptors.request.use((config) => {
 function App() {
   const dataProvider = nestjsxCrudDataProvider(
     "https://630feb56-a4db-450b-855a-72e24a12336d-00-t2xqh6jdz5p8.pike.replit.dev/api/v1",
+    axiosInstance
   );
 
   const authProvider: AuthBindings = {
@@ -59,7 +60,7 @@ function App() {
           "user",
           JSON.stringify({
             ...user,
-          }),
+          })
         );
 
         localStorage.setItem("token", `${user.token}`);
@@ -145,11 +146,6 @@ function App() {
                   edit: "/users/edit/:id",
                   show: "/users/show/:id",
                 },
-                {
-                  name: "home",
-                  list: "/home",
-                  // Các thuộc tính meta khác nếu cần
-                },
               ]}
               options={{
                 // syncWithLocation: true,
@@ -158,7 +154,9 @@ function App() {
               }}
             >
               <Routes>
+                {/* Clients Layout */}
                 <Route element={<ThemeClientLayout />}>
+                  <Route path="/" element={<HomePage />} />
                   <Route path="/home" element={<HomePage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/services" element={<ServicesPage />} />
@@ -167,6 +165,7 @@ function App() {
                   <Route path="/contact" element={<ContactPage />} />
                 </Route>
 
+                {/* Admin Layout */}
                 <Route
                   element={
                     <Authenticated

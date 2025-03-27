@@ -48,7 +48,7 @@ export const LoginPage: React.FC = () => {
             "user",
             JSON.stringify({
               ...response.data,
-            }),
+            })
           );
           push("/");
           // Handle successful login
@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
           // Handle login error
           console.error("Login failed:", error);
         },
-      },
+      }
     );
   };
 
