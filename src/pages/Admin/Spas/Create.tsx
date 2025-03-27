@@ -40,19 +40,20 @@ export default function CreateSpaPage() {
     name: "banners"
   });
 
-  const handleImageUpload = async (event) => {
+  const handleImageUpload = async (event, index) => {
     const file = event.target.files[0];
     if (file) {
-      // TODO: Implement file upload to imgs directory
-      const fakePath = `/imgs/${file.name}`;
-      setPreviewImage(URL.createObjectURL(file));
-      // Update form value
+      const imageUrl = URL.createObjectURL(file);
+      // Update form value for banner image_url
+      register(`banners.${index}.image_url`).onChange({
+        target: { value: imageUrl }
+      });
     }
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    // TODO: Handle form submission
+    console.log('Form Data:', data);
+    // TODO: Implement API call to save spa data
   };
 
   return (
