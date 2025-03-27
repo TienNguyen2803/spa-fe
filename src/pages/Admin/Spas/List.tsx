@@ -150,7 +150,7 @@ export default function ListSpaPage() {
             label="Tìm kiếm"
             variant="outlined"
             size="small"
-            fullWidth
+            sx={{ width: '300px' }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
@@ -161,7 +161,11 @@ export default function ListSpaPage() {
               ),
               endAdornment: searchTerm && (
                 <InputAdornment position="end">
-                  <IconButton size="small" onClick={() => setSearchTerm("")}>
+                  <IconButton 
+                    size="small" 
+                    onClick={() => setSearchTerm("")}
+                    sx={{ visibility: searchTerm ? 'visible' : 'hidden' }}
+                  >
                     <ClearIcon fontSize="small" />
                   </IconButton>
                 </InputAdornment>
