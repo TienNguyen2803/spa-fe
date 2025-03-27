@@ -1,3 +1,4 @@
+
 import { Create } from "@refinedev/mui";
 import { Box, Card, Grid, TextField, Typography, Button, Checkbox, FormControlLabel, MenuItem, IconButton } from "@mui/material";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -22,7 +23,7 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
-
+  
   const { register, control, handleSubmit, watch } = useForm({
     defaultValues: {
       banners: [{ image_url: "", title: "", subtitle: "", order: 0, is_active: true, type: 0 }],
@@ -39,58 +40,19 @@ export default function CreateSpaPage() {
     name: "banners"
   });
 
-  const uploadImage = async (file: File): Promise<string> => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // TODO: Replace with your actual API endpoint
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-
-      const data = await response.json();
-      return data.url;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  };
-
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const file = event.target.files?.[0];
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
     if (file) {
-      try {
-        // Show preview immediately
-        const previewUrl = URL.createObjectURL(file);
-        register(`banners.${index}.image_url`).onChange({
-          target: { value: previewUrl }
-        });
-
-        // Upload file and get actual URL
-        const uploadedUrl = await uploadImage(file);
-        register(`banners.${index}.image_url`).onChange({
-          target: { value: uploadedUrl }
-        });
-      } catch (error) {
-        // Handle error (show notification, etc.)
-        console.error('Upload failed:', error);
-      }
+      // TODO: Implement file upload to imgs directory
+      const fakePath = `/imgs/${file.name}`;
+      setPreviewImage(URL.createObjectURL(file));
+      // Update form value
     }
   };
 
-  const onSubmit = async (data: any) => {
-    try {
-      console.log('Form Data:', data);
-      // TODO: Implement API call to save spa data
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
+  const onSubmit = (data) => {
+    console.log(data);
+    // TODO: Handle form submission
   };
 
   return (
@@ -214,7 +176,7 @@ export default function CreateSpaPage() {
                   Thêm Banner
                 </Button>
               </Box>
-
+              
               {bannerFields.map((field, index) => (
                 <Box key={field.id} sx={{ mb: 2, p: 2, border: '1px solid #eee', borderRadius: 1 }}>
                   <Grid container spacing={2}>
@@ -231,7 +193,17 @@ export default function CreateSpaPage() {
                             type="file" 
                             hidden 
                             accept="image/*"
-                            onChange={(e) => handleImageUpload(e, index)}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                // TODO: Implement actual file upload
+                                const previewUrl = URL.createObjectURL(file);
+                                // Update form value with temporary preview URL
+                                register(`banners.${index}.image_url`).onChange({
+                                  target: { value: previewUrl }
+                                });
+                              }
+                            }}
                           />
                         </Button>
                         {watch(`banners.${index}.image_url`) && (
