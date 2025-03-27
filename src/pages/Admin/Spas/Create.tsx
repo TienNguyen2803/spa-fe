@@ -21,8 +21,16 @@ const DAYS_OF_WEEK = [
 
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
+  const [banners, setBanners] = useState([{
+    image_url: "",
+    title: "",
+    subtitle: "",
+    order: 0,
+    is_active: true,
+    type: 0
+  }]);
 
-  const { register, control, handleSubmit } = useForm({
+  const { register, control, handleSubmit, getValues } = useForm({
     defaultValues: {
       name: "",
       logo_url: "",
@@ -54,12 +62,30 @@ export default function CreateSpaPage() {
     console.log(data);
   };
 
-  const handleImageUpload = async (event) => {
+  const handleImageUpload = async (index, event) => {
     const file = event.target.files[0];
     if (file) {
       const fakePath = `/imgs/${file.name}`;
-      setPreviewImage(URL.createObjectURL(file));
+      const updatedBanners = [...banners];
+      updatedBanners[index].image_url = fakePath;
+      setBanners(updatedBanners);
     }
+  };
+
+  const addBanner = () => {
+    setBanners([...banners, {
+      image_url: "",
+      title: "",
+      subtitle: "",
+      order: banners.length,
+      is_active: true,
+      type: 0
+    }]);
+  };
+
+  const removeBanner = (index) => {
+    const updatedBanners = banners.filter((_, i) => i !== index);
+    setBanners(updatedBanners);
   };
 
   return (
@@ -240,114 +266,117 @@ export default function CreateSpaPage() {
             <Card sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6">Banners</Typography>
+                <Button onClick={addBanner} variant="contained" startIcon={<Add />} size="small">Add Banner</Button>
               </Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Button
-                      variant="outlined"
-                      component="label"
-                      startIcon={<CloudUpload />}
-                      size="small"
-                    >
-                      Upload Banner
-                      <input 
-                        type="file" 
-                        hidden 
-                        accept="image/*"
-                        onChange={(e) => {
-                          handleImageUpload(e);
-                          register('banners.0.image_url').onChange(e);
-                        }}
-                      />
-                    </Button>
-                    {previewImage && (
-                      <Box component="img" src={previewImage} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
-                    )}
-                  </Box>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name="banners.0.title"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="Tiêu đề"
-                        size="small"
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Controller
-                    name="banners.0.subtitle"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="Phụ đề"
-                        size="small"
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Controller
-                    name="banners.0.order"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="Thứ tự"
-                        type="number"
-                        size="small"
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Controller
-                    name="banners.0.type"
-                    control={control}
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        fullWidth
-                        label="Loại"
+              {banners.map((banner, index) => (
+                <Grid container spacing={2} key={index}>
+                  <Grid item xs={12}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Button
+                        variant="outlined"
+                        component="label"
+                        startIcon={<CloudUpload />}
                         size="small"
                       >
-                        {BANNER_TYPES.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    )}
-                  />
+                        Upload Banner
+                        <input 
+                          type="file" 
+                          hidden 
+                          accept="image/*"
+                          onChange={(e) => handleImageUpload(index, e)}
+                        />
+                      </Button>
+                      {banner.image_url && (
+                        <Box component="img" src={banner.image_url} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
+                      )}
+                      <IconButton onClick={() => removeBanner(index)} aria-label="delete" size="small">
+                        <Delete />
+                      </IconButton>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={`banners.${index}.title`}
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          label="Tiêu đề"
+                          size="small"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Controller
+                      name={`banners.${index}.subtitle`}
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          label="Phụ đề"
+                          size="small"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Controller
+                      name={`banners.${index}.order`}
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          label="Thứ tự"
+                          type="number"
+                          size="small"
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Controller
+                      name={`banners.${index}.type`}
+                      control={control}
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          select
+                          fullWidth
+                          label="Loại"
+                          size="small"
+                        >
+                          {BANNER_TYPES.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Controller
+                      name={`banners.${index}.is_active`}
+                      control={control}
+                      render={({ field }) => (
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              {...field}
+                              checked={field.value}
+                            />
+                          }
+                          label="Kích hoạt"
+                        />
+                      )}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Controller
-                    name="banners.0.is_active"
-                    control={control}
-                    render={({ field }) => (
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            {...field}
-                            checked={field.value}
-                          />
-                        }
-                        label="Kích hoạt"
-                      />
-                    )}
-                  />
-                </Grid>
-              </Grid>
+              ))}
             </Card>
           </Grid>
 
