@@ -1,12 +1,11 @@
-
 import { Create } from "@refinedev/mui";
 import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 export default function CreateSpaPage() {
   const [previewBanner, setPreviewBanner] = useState("");
@@ -60,194 +59,162 @@ export default function CreateSpaPage() {
 
   const onSubmit = (data) => {
     console.log(data);
+    // TODO: Handle form submission
   };
 
   return (
-    <Create>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h6">Thông tin cơ bản</Typography>
-          </Grid>
-          
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Tên Spa" 
-              {...register("name")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Địa chỉ" 
-              {...register("address")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Số điện thoại" 
-              {...register("phone")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Email" 
-              type="email" 
-              {...register("email")}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField 
-              fullWidth 
-              label="Mô tả" 
-              multiline 
-              rows={4} 
-              {...register("description")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<CloudUpload />}
-              >
-                Upload Logo
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={handleLogoUpload}
+    <Create saveButtonProps={{ onClick: handleSubmit(onSubmit) }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Card sx={{ p: 2, height: '100%' }}>
+            <Typography variant="h6" gutterBottom>Thông tin cơ bản</Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("name")}
+                  fullWidth
+                  label="Tên Spa"
+                  size="small"
                 />
-              </Button>
-              {previewLogo && (
-                <Box mt={2}>
-                  <img src={previewLogo} alt="Logo preview" style={{ maxWidth: '200px' }} />
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<CloudUpload />}
+                    size="small"
+                  >
+                    Upload Logo
+                    <input type="file" hidden accept="image/*" onChange={handleLogoUpload} />
+                  </Button>
+                  {previewLogo && (
+                    <Box component="img" src={previewLogo} alt="Preview" sx={{ width: 100, height: 100, objectFit: 'cover' }} />
+                  )}
                 </Box>
-              )}
-            </Box>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mt: 2 }}>Banner</Typography>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<CloudUpload />}
-              >
-                Upload Banner
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={handleBannerUpload}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("address")}
+                  fullWidth
+                  label="Địa chỉ"
+                  size="small"
                 />
-              </Button>
-              {previewBanner && (
-                <Box mt={2}>
-                  <img src={previewBanner} alt="Banner preview" style={{ maxWidth: '200px' }} />
-                </Box>
-              )}
-            </Box>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mt: 2 }}>Thời gian làm việc</Typography>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <TextField 
-              fullWidth 
-              label="Ngày" 
-              {...register("workingHours.day")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Controller
-                name="workingHours.open_time"
-                control={control}
-                render={({ field }) => (
-                  <TimePicker
-                    label="Giờ mở cửa"
-                    value={field.value}
-                    onChange={(newValue) => field.onChange(newValue)}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Controller
-                name="workingHours.close_time"
-                control={control}
-                render={({ field }) => (
-                  <TimePicker
-                    label="Giờ đóng cửa"
-                    value={field.value}
-                    onChange={(newValue) => field.onChange(newValue)}
-                  />
-                )}
-              />
-            </LocalizationProvider>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mt: 2 }}>SEO</Typography>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="SEO Title" 
-              {...register("seo_title")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="SEO Description" 
-              {...register("seo_description")}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mt: 2 }}>Social Media</Typography>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Facebook URL" 
-              {...register("facebook_url")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField 
-              fullWidth 
-              label="Instagram URL" 
-              {...register("instagram_url")}
-            />
-          </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("phone")}
+                  fullWidth
+                  label="Số điện thoại"
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("email")}
+                  fullWidth
+                  label="Email"
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("description")}
+                  fullWidth
+                  label="Mô tả"
+                  multiline
+                  rows={4}
+                  size="small"
+                />
+              </Grid>
+            </Grid>
+          </Card>
         </Grid>
-      </form>
+
+        <Grid item xs={12} md={6}>
+          <Card sx={{ p: 2, height: '100%' }}>
+            <Typography variant="h6" gutterBottom>Banner</Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<CloudUpload />}
+                    size="small"
+                  >
+                    Upload Banner
+                    <input type="file" hidden accept="image/*" onChange={handleBannerUpload} />
+                  </Button>
+                  {previewBanner && (
+                    <Box component="img" src={previewBanner} alt="Preview" sx={{ width: 200, height: 100, objectFit: 'cover' }} />
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("banner.title")}
+                  fullWidth
+                  label="Tiêu đề"
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("banner.subtitle")}
+                  fullWidth
+                  label="Phụ đề"
+                  size="small"
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          <Card sx={{ p: 2, mt: 2 }}>
+            <Typography variant="h6" gutterBottom>Thời gian làm việc</Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  {...register("workingHours.day")}
+                  fullWidth
+                  label="Ngày"
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Controller
+                    name="workingHours.open_time"
+                    control={control}
+                    render={({ field }) => (
+                      <TimePicker
+                        label="Giờ mở cửa"
+                        {...field}
+                        slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Controller
+                    name="workingHours.close_time"
+                    control={control}
+                    render={({ field }) => (
+                      <TimePicker
+                        label="Giờ đóng cửa"
+                        {...field}
+                        slotProps={{ textField: { size: 'small', fullWidth: true } }}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+      </Grid>
     </Create>
   );
 }
