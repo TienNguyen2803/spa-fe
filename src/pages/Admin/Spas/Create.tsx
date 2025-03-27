@@ -27,11 +27,11 @@ export default function CreateSpaPage() {
   const { register, control, handleSubmit, watch } = useForm({
     defaultValues: {
       banners: [{ image_url: "", title: "", subtitle: "", order: 0, is_active: true, type: 0 }],
-      workingHours: DAYS_OF_WEEK.map(day => ({ 
-        day,
+      workingHours: [{
+        day: "Monday",
         open_time: "09:00",
         close_time: "18:00"
-      }))
+      }]
     }
   });
 
@@ -284,40 +284,32 @@ export default function CreateSpaPage() {
             <Card sx={{ p: 2 }}>
               <Typography variant="h6" gutterBottom>Giờ làm việc</Typography>
               <Grid container spacing={2}>
-                {DAYS_OF_WEEK.map((day, index) => (
-                  <Grid item xs={12} key={day} sx={{ display: 'flex', gap: 2 }}>
-                    <TextField
-                      value={day}
-                      disabled
-                      size="small"
-                      sx={{ width: 120 }}
-                    />
-                    <TextField
-                      {...register(`workingHours.${index}.open_time`)}
-                      label="Giờ mở cửa"
-                      type="time"
-                      size="small"
-                      InputLabelProps={{ shrink: true }}
-                    />
-                    <TextField
-                      {...register(`workingHours.${index}.close_time`)}
-                      label="Giờ đóng cửa"
-                      type="time"
-                      size="small"
-                      InputLabelProps={{ shrink: true }}
-                    />
-                  </Grid>
-                ))}
+                <Grid item xs={12} sx={{ display: 'flex', gap: 2 }}>
+                  <TextField
+                    {...register(`workingHours.0.day`)}
+                    defaultValue="Monday"
+                    size="small"
+                    sx={{ width: 120 }}
+                  />
+                  <TextField
+                    {...register(`workingHours.0.open_time`)}
+                    label="Giờ mở cửa"
+                    type="time"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                  <TextField
+                    {...register(`workingHours.0.close_time`)}
+                    label="Giờ đóng cửa"
+                    type="time"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </Grid>
               </Grid>
             </Card>
           </Grid>
         </Grid>
-
-        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-          <Button type="submit" variant="contained" color="primary">
-            Lưu
-          </Button>
-        </Box>
       </form>
     </Create>
   );
