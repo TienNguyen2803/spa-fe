@@ -1,112 +1,296 @@
 
 import { Create } from "@refinedev/mui";
-import { Box, TextField, Grid, Button } from "@mui/material";
-import { useForm } from "@refinedev/react-hook-form";
-import { IResourceComponentsProps } from "@refinedev/core";
+import { Box, Card, Grid, TextField, Typography, Button, Checkbox, FormControlLabel, MenuItem, IconButton } from "@mui/material";
+import { useForm, useFieldArray } from "react-hook-form";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import { CloudUpload, Preview, Add, Delete } from "@mui/icons-material";
+import { useState } from "react";
+
+const DAYS_OF_WEEK = [
+  "Monday",
+  "Tuesday", 
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
+
+const BANNER_TYPES = [
+  { value: 0, label: "Banner chính" },
+  { value: 1, label: "Banner phụ" }
+];
 
 export default function CreateSpaPage() {
-  const {
-    saveButtonProps,
-    register,
-    formState: { errors },
-  } = useForm();
+  const [previewImage, setPreviewImage] = useState("");
+  
+  const { register, control, handleSubmit, watch } = useForm({
+    defaultValues: {
+      banners: [{ image_url: "", title: "", subtitle: "", order: 0, is_active: true, type: 0 }],
+      workingHours: DAYS_OF_WEEK.map(day => ({ 
+        day,
+        open_time: "09:00",
+        close_time: "18:00"
+      }))
+    }
+  });
+
+  const { fields: bannerFields, append: appendBanner, remove: removeBanner } = useFieldArray({
+    control,
+    name: "banners"
+  });
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // TODO: Implement file upload to imgs directory
+      const fakePath = `/imgs/${file.name}`;
+      setPreviewImage(URL.createObjectURL(file));
+      // Update form value
+    }
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // TODO: Handle form submission
+  };
 
   return (
-    <Create saveButtonProps={saveButtonProps}>
-      <Box
-        component="form"
-        sx={{ display: "flex", flexDirection: "column" }}
-        autoComplete="off"
-      >
+    <Create>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Card sx={{ p: 2, height: '100%' }}>
+              <Typography variant="h6" gutterBottom>Thông tin cơ bản</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    {...register("name")}
+                    fullWidth
+                    label="Tên Spa"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      startIcon={<CloudUpload />}
+                      size="small"
+                    >
+                      Upload Logo
+                      <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
+                    </Button>
+                    {previewImage && (
+                      <Box component="img" src={previewImage} alt="Preview" sx={{ width: 100, height: 100, objectFit: 'cover' }} />
+                    )}
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    {...register("address")}
+                    fullWidth
+                    label="Địa chỉ"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    {...register("phone")}
+                    fullWidth
+                    label="Số điện thoại"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    {...register("email")}
+                    fullWidth
+                    label="Email"
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Card sx={{ p: 2, height: '100%' }}>
+              <Typography variant="h6" gutterBottom>SEO & Social Media</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    {...register("seo_title")}
+                    fullWidth
+                    label="SEO Title"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    {...register("seo_description")}
+                    fullWidth
+                    label="SEO Description"
+                    multiline
+                    rows={2}
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    {...register("facebook_url")}
+                    fullWidth
+                    label="Facebook URL"
+                    size="small"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    {...register("instagram_url")}
+                    fullWidth
+                    label="Instagram URL"
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
+            </Card>
+          </Grid>
+
           <Grid item xs={12}>
-            <TextField
-              {...register("name", { required: "Tên spa là bắt buộc" })}
-              error={!!errors.name}
-              helperText={errors.name?.message as string}
-              fullWidth
-              label="Tên Spa"
-            />
+            <Card sx={{ p: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h6">Banners</Typography>
+                <Button 
+                  startIcon={<Add />}
+                  onClick={() => appendBanner({ 
+                    image_url: "", 
+                    title: "", 
+                    subtitle: "", 
+                    order: bannerFields.length, 
+                    is_active: true, 
+                    type: 0 
+                  })}
+                  size="small"
+                >
+                  Thêm Banner
+                </Button>
+              </Box>
+              
+              {bannerFields.map((field, index) => (
+                <Box key={field.id} sx={{ mb: 2, p: 2, border: '1px solid #eee', borderRadius: 1 }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        {...register(`banners.${index}.image_url`)}
+                        fullWidth
+                        label="URL Hình ảnh"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        {...register(`banners.${index}.title`)}
+                        fullWidth
+                        label="Tiêu đề"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        {...register(`banners.${index}.subtitle`)}
+                        fullWidth
+                        label="Phụ đề"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <TextField
+                        {...register(`banners.${index}.order`)}
+                        fullWidth
+                        label="Thứ tự"
+                        type="number"
+                        size="small"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <TextField
+                        {...register(`banners.${index}.type`)}
+                        select
+                        fullWidth
+                        label="Loại"
+                        size="small"
+                      >
+                        {BANNER_TYPES.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={12} md={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            {...register(`banners.${index}.is_active`)}
+                            defaultChecked
+                          />
+                        }
+                        label="Kích hoạt"
+                      />
+                      <IconButton 
+                        color="error" 
+                        onClick={() => removeBanner(index)}
+                        size="small"
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Box>
+              ))}
+            </Card>
           </Grid>
+
           <Grid item xs={12}>
-            <TextField
-              {...register("logo_url")}
-              fullWidth
-              label="URL Logo"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("address", { required: "Địa chỉ là bắt buộc" })}
-              error={!!errors.address}
-              helperText={errors.address?.message as string}
-              fullWidth
-              label="Địa chỉ"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("phone", { required: "Số điện thoại là bắt buộc" })}
-              error={!!errors.phone}
-              helperText={errors.phone?.message as string}
-              fullWidth
-              label="Số điện thoại"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("email", {
-                required: "Email là bắt buộc",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Email không hợp lệ",
-                },
-              })}
-              error={!!errors.email}
-              helperText={errors.email?.message as string}
-              fullWidth
-              label="Email"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("description")}
-              fullWidth
-              multiline
-              rows={4}
-              label="Mô tả"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("seo_title")}
-              fullWidth
-              label="Tiêu đề SEO"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("seo_description")}
-              fullWidth
-              label="Mô tả SEO"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("facebook_url")}
-              fullWidth
-              label="URL Facebook"
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("instagram_url")}
-              fullWidth
-              label="URL Instagram"
-            />
+            <Card sx={{ p: 2 }}>
+              <Typography variant="h6" gutterBottom>Giờ làm việc</Typography>
+              <Grid container spacing={2}>
+                {DAYS_OF_WEEK.map((day, index) => (
+                  <Grid item xs={12} key={day} sx={{ display: 'flex', gap: 2 }}>
+                    <TextField
+                      value={day}
+                      disabled
+                      size="small"
+                      sx={{ width: 120 }}
+                    />
+                    <TextField
+                      {...register(`workingHours.${index}.open_time`)}
+                      label="Giờ mở cửa"
+                      type="time"
+                      size="small"
+                      InputLabelProps={{ shrink: true }}
+                    />
+                    <TextField
+                      {...register(`workingHours.${index}.close_time`)}
+                      label="Giờ đóng cửa"
+                      type="time"
+                      size="small"
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Card>
           </Grid>
         </Grid>
-      </Box>
+
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button type="submit" variant="contained" color="primary">
+            Lưu
+          </Button>
+        </Box>
+      </form>
     </Create>
   );
 }
