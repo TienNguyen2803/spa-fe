@@ -1,42 +1,36 @@
-import React, { useState, useMemo } from "react";
-import {
-  Box,
+import React, { useState } from "react";
+import { useTable } from "@refinedev/core";
+import { List } from "@refinedev/mui";
+import { 
+  Box, 
   Button,
-  Container,
-  Paper,
-  Typography,
-  TextField,
-  Stack,
-  IconButton,
-  InputAdornment,
+  IconButton, 
   Tooltip,
-} from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-} from "@mui/x-data-grid";
-import {
-  Add as AddIcon,
-  Search as SearchIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Clear as ClearIcon,
-  Visibility as VisibilityIcon,
-} from "@mui/icons-material";
+  TextField,
+  InputAdornment,
+  Stack
+} from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+
 
 interface Spa {
   id: number;
   name: string;
+  logo_url: string;
   address: string;
   phone: string;
   email: string;
   description: string;
-  facebook_url: string;
-  instagram_url: string;
-  logo_url: string;
   seo_title: string;
   seo_description: string;
+  facebook_url: string;
+  instagram_url: string;
 }
 
 const spas: Spa[] = [
@@ -53,7 +47,6 @@ const spas: Spa[] = [
     facebook_url: "https://facebook.com/luxuryspa",
     instagram_url: "https://instagram.com/luxuryspa",
   },
-  // Add more mock data here
 ];
 
 export default function ListSpaPage() {
@@ -64,13 +57,10 @@ export default function ListSpaPage() {
     setSearchQuery(searchTerm);
   };
 
-  const filteredData = useMemo(() => {
-    return spas.filter((spa) => 
-      spa.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      spa.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      spa.email.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery]);
+  const { tableQueryResult: { data: tableData } } = useTable({
+    resource: "spas",
+    syncWithLocation: true,
+  });
 
   const columns: GridColDef[] = [
     {
@@ -103,7 +93,7 @@ export default function ListSpaPage() {
       headerAlign: "center",
       sortable: false,
       filterable: false,
-      renderCell: (params: GridRenderCellParams<Spa>) => (
+      renderCell: (params) => (
         <Box>
           <Tooltip title="Xem chi tiết">
             <IconButton size="small" color="info">
@@ -126,36 +116,20 @@ export default function ListSpaPage() {
   ];
 
   return (
-    <Container maxWidth="xl">
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 3,
-          mt: 2,
-        }}
-      >
-        <Typography variant="h5" component="h1">
-          Quản Lý Spa
-        </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          size="medium"
-        >
-          Tạo Spa
-        </Button>
-      </Box>
-
-      <Paper sx={{ p: 2, mb: 3 }} elevation={2}>
-        <Stack direction="row" spacing={2} alignItems="center">
+    <List
+      breadcrumb={true}
+      createButtonProps={{
+        startIcon: <AddIcon />,
+        children: "Tạo Spa",
+      }}
+    >
+      <Stack spacing={2}>
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <TextField
             label="Tìm kiếm"
             variant="outlined"
             size="small"
-            sx={{ width: '500px' }}
+            sx={{ width: '400px' }}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -194,89 +168,32 @@ export default function ListSpaPage() {
           >
             Tìm kiếm
           </Button>
-        </Stack>
-      </Paper>
-
-      <Paper sx={{ height: 600, width: "100%" }} elevation={3}>
+        </Box>
         <DataGrid
-          rows={filteredData}
+          rows={tableData || spas} // Fallback to local data if refinedev fetching fails.
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25]}
+          autoHeight
+          checkboxSelection={false}
           disableColumnMenu
-          disableColumnFilter
-          disableDensitySelector
-          hideFooterSelectedRowCount
+          disableRowSelectionOnClick
           sx={{
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            borderRadius: 2,
-            '& .MuiDataGrid-root': {
-              border: '1px solid #e0e0e0',
+            border: "1px solid #e0e0e0",
+            "& .MuiDataGrid-row": {
+              borderBottom: "1px solid #e0e0e0",
             },
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f5f5f5',
-              borderBottom: '2px solid #e0e0e0',
-              color: '#1a1a1a',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              '& .MuiDataGrid-columnHeaderTitle': {
-                fontWeight: 600,
-              },
-              '& .MuiDataGrid-columnHeader': {
-                borderRight: '1px solid #e0e0e0',
-                '&:last-child': {
-                  borderRight: 'none',
-                },
-              },
+            "& .MuiDataGrid-cell": {
+              borderRight: "1px solid #e0e0e0",
             },
-            '& .MuiDataGrid-cell': {
-              borderRight: '1px solid #e0e0e0',
-              borderBottom: '1px solid #e0e0e0',
-              color: '#333',
-              fontSize: '0.875rem',
-              '&:hover': {
-                backgroundColor: '#f8f8f8',
-              },
-              '&:last-child': {
-                borderRight: 'none',
-              },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: "2px solid #e0e0e0",
+              bgcolor: "#f5f5f5",
             },
-            '& .MuiDataGrid-row': {
-              borderBottom: '1px solid #e0e0e0',
-              '&:hover': {
-                backgroundColor: '#f8f8f8',
-              },
-              '&:nth-of-type(even)': {
-                backgroundColor: '#fafafa',
-              },
-              '&:last-child': {
-                borderBottom: 'none',
-              },
-            },
-            '& .MuiDataGrid-footer': {
-              borderTop: '2px solid #e0e0e0',
-              backgroundColor: '#fff',
-            },
-            '& .MuiIconButton-root': {
-              color: '#666',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              },
-            },
-            '& .MuiDataGrid-toolbarContainer': {
-              gap: 2,
-              padding: 2,
-              backgroundColor: '#fff',
-              borderBottom: '1px solid #e0e0e0',
-            },
+            "& .MuiDataGrid-columnHeader": {
+              borderRight: "1px solid #e0e0e0",
+            }
           }}
         />
-      </Paper>
-    </Container>
+      </Stack>
+    </List>
   );
 }
