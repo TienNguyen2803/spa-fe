@@ -24,8 +24,9 @@ const BANNER_TYPES = [
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
   
-  const { register, control, handleSubmit, watch } = useForm({
+  const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
+      logo_url: "",
       banners: [{ image_url: "", title: "", subtitle: "", order: 0, is_active: true, type: 0 }],
       workingHours: [{
         day: "Monday",
@@ -44,10 +45,6 @@ export default function CreateSpaPage() {
     const file = event.target.files?.[0];
     if (file) {
       try {
-        // Create FormData object
-        const formData = new FormData();
-        formData.append('file', file);
-
         // Generate unique filename
         const filename = `${Date.now()}-${file.name}`;
         const filepath = `/imgs/${filename}`;
@@ -56,10 +53,8 @@ export default function CreateSpaPage() {
         const previewUrl = URL.createObjectURL(file);
         setPreviewImage(previewUrl);
 
-        // Update form data with file path
-        register('logo').onChange({
-          target: { value: filepath }
-        });
+        // Update form data with file path using setValue
+        setValue('logo_url', filepath);
 
       } catch (error) {
         console.error('Error uploading image:', error);
