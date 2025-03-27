@@ -1,15 +1,14 @@
 import { Create } from "@refinedev/mui";
 import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { DateTimePicker } from "@mui/x-date-pickers";
 
 export default function CreateSpaPage() {
   const [previewBanner, setPreviewBanner] = useState("");
   const [previewLogo, setPreviewLogo] = useState("");
 
-  const { register, control, handleSubmit } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       name: "",
       logo_url: "",
@@ -206,33 +205,23 @@ export default function CreateSpaPage() {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <Controller
-                  name="workingHours.open_time"
-                  control={control}
-                  render={({ field }) => (
-                    <TimePicker
-                      label="Giờ mở cửa"
-                      {...field}
-                      slotProps={{
-                        textField: { size: "small", fullWidth: true },
-                      }}
-                    />
-                  )}
+                <TextField
+                  {...register("workingHours.open_time")}
+                  fullWidth
+                  label="Giờ mở cửa"
+                  size="small"
+                  type="time"
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <Controller
-                  name="workingHours.close_time"
-                  control={control}
-                  render={({ field }) => (
-                    <TimePicker
-                      label="Giờ đóng cửa"
-                      {...field}
-                      slotProps={{
-                        textField: { size: "small", fullWidth: true },
-                      }}
-                    />
-                  )}
+                <TextField
+                  {...register("workingHours.close_time")}
+                  fullWidth
+                  label="Giờ đóng cửa"
+                  size="small"
+                  type="time"
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
             </Grid>
