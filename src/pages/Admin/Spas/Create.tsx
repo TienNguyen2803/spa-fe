@@ -1,4 +1,3 @@
-
 import { Create } from "@refinedev/mui";
 import { Box, Card, Grid, TextField, Typography, Button, Checkbox, FormControlLabel, MenuItem, IconButton } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
@@ -22,7 +21,7 @@ const DAYS_OF_WEEK = [
 
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
-  
+
   const { register, control, handleSubmit } = useForm({
     defaultValues: {
       name: "",
@@ -250,9 +249,13 @@ export default function CreateSpaPage() {
                     render={({ field }) => (
                       <TextField
                         {...field}
+                        type="file"
                         fullWidth
                         label="Banner URL"
                         size="small"
+                        onChange={e => {
+                          field.onChange(e.target.files[0])
+                        }}
                       />
                     )}
                   />
@@ -353,17 +356,10 @@ export default function CreateSpaPage() {
                     render={({ field }) => (
                       <TextField
                         {...field}
-                        select
                         fullWidth
-                        label="Ngày"
+                        label="Ngày làm việc"
                         size="small"
-                      >
-                        {DAYS_OF_WEEK.map(day => (
-                          <MenuItem key={day} value={day}>
-                            {day}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      />
                     )}
                   />
                 </Grid>
