@@ -291,20 +291,24 @@ export default function CreateSpaPage() {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
+                                const filename = `${Date.now()}-${file.name}`;
+                                const filepath = `/imgs/${filename}`;
                                 const previewUrl = URL.createObjectURL(file);
+                                
+                                setValue(`banners.${index}.image_url`, filepath);
                                 setValue(`banners.${index}.preview_url`, previewUrl);
-                                register(`banners.${index}.image_url`).onChange(
-                                  {
-                                    target: { value: file },
-                                  },
-                                );
+                                setValue(`banners.${index}.filename`, file.name);
                               }
                             }}
                           />
                         </Button>
-                        {getValues(`banners.${index}.preview_url`) && (
+                        {getValues(`banners.${index}.filename`) ? (
+                          <Typography variant="body2" sx={{ mt: 1 }}>
+                            {getValues(`banners.${index}.filename`)}
+                          </Typography>
+                        ) : (
                           <Box
-                            component="img"
+                            component="img" 
                             src={getValues(`banners.${index}.preview_url`)}
                             alt="Preview"
                             sx={{
