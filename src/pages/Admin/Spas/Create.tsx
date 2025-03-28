@@ -293,25 +293,17 @@ export default function CreateSpaPage() {
                               if (file) {
                                 const filename = `${Date.now()}-${file.name}`;
                                 const filepath = `/imgs/${filename}`;
-                                const previewUrl = URL.createObjectURL(file);
-                                
                                 setValue(`banners.${index}.image_url`, filepath);
-                                setValue(`banners.${index}.preview_url`, previewUrl);
                                 setValue(`banners.${index}.filename`, file.name);
                               }
                             }}
                           />
                         </Button>
-                        {getValues(`banners.${index}.filename`) ? (
+                        {getValues(`banners.${index}.filename`) && (
                           <Typography variant="body2" sx={{ mt: 1 }}>
                             {getValues(`banners.${index}.filename`)}
                           </Typography>
-                        ) : (
-                          <Box
-                            component="img" 
-                            src={getValues(`banners.${index}.preview_url`)}
-                            alt="Preview"
-                            sx={{
+                        )}
                               width: 100,
                               height: 60,
                               objectFit: "cover",
