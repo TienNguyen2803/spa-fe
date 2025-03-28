@@ -34,12 +34,13 @@ const BANNER_TYPES = [
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
 
-  const { register, control, handleSubmit, watch, setValue } = useForm({
+  const { register, control, handleSubmit, watch, setValue, getValues } = useForm({
     defaultValues: {
       logo_url: "",
       banners: [
         {
           image_url: "",
+          preview_url: "",
           title: "",
           subtitle: "",
           order: 0,
@@ -247,6 +248,7 @@ export default function CreateSpaPage() {
                   onClick={() =>
                     appendBanner({
                       image_url: "",
+                      preview_url: "",
                       title: "",
                       subtitle: "",
                       order: bannerFields.length,
@@ -290,19 +292,20 @@ export default function CreateSpaPage() {
                               const file = e.target.files?.[0];
                               if (file) {
                                 const previewUrl = URL.createObjectURL(file);
+                                setValue(`banners.${index}.preview_url`, previewUrl);
                                 register(`banners.${index}.image_url`).onChange(
                                   {
-                                    target: { value: previewUrl },
+                                    target: { value: file },
                                   },
                                 );
                               }
                             }}
                           />
                         </Button>
-                        {watch(`banners.${index}.image_url`) && (
+                        {getValues(`banners.${index}.preview_url`) && (
                           <Box
                             component="img"
-                            src={watch(`banners.${index}.image_url`)}
+                            src={getValues(`banners.${index}.preview_url`)}
                             alt="Preview"
                             sx={{
                               width: 100,
