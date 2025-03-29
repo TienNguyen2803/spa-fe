@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { List } from "@refinedev/mui";
+import { useCreate } from "@refinedev/core";
 import { useFieldArray, useForm, UseFormRegister } from "react-hook-form";
 
 interface ISpaForm {
@@ -83,19 +84,34 @@ export default function CreateSpaPage() {
     name: "banners",
   });
 
-  const onSubmit = async (data: any) => {
-    console.log("Form Data:", {
-      name: data.name,
-      address: data.address,
-      phone: data.phone,
-      email: data.email,
-      logo_url: data.logo_url,
-      banners: data.banners,
-      workingHours: data.workingHours,
-      seo_title: data.seo_title,
-      seo_description: data.seo_description,
-      facebook_url: data.facebook_url,
-      instagram_url: data.instagram_url,
+  const { mutate, isLoading } = useCreate({
+    resource: "spa-info",
+    successNotification: {
+      message: "Tạo mới Spa thành công",
+      type: "success",
+    },
+    errorNotification: {
+      message: "Có lỗi xảy ra khi tạo Spa",
+      type: "error",  
+    },
+  });
+
+  const onSubmit = async (data: ISpaForm) => {
+    mutate({ 
+      resource: "spa-info",
+      values: {
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        email: data.email,
+        logo_url: data.logo_url,
+        banners: data.banners,
+        workingHours: data.workingHours,
+        seo_title: data.seo_title,
+        seo_description: data.seo_description,
+        facebook_url: data.facebook_url,
+        instagram_url: data.instagram_url,
+      }
     });
   };
 
@@ -410,8 +426,9 @@ export default function CreateSpaPage() {
             variant="contained"
             color="primary"
             onClick={handleSubmit(onSubmit)}
+            disabled={isLoading}
           >
-            Save
+            {isLoading ? "Đang lưu..." : "Save"}
           </Button>
         </Box>
       </form>
