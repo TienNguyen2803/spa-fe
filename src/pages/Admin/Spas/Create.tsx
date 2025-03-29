@@ -1,30 +1,18 @@
-import { List } from "@refinedev/mui";
+import { Add, CloudUpload, Delete } from "@mui/icons-material";
 import {
   Box,
-  Card,
-  Grid,
-  TextField,
-  Typography,
   Button,
+  Card,
   Checkbox,
   FormControlLabel,
-  MenuItem,
+  Grid,
   IconButton,
+  MenuItem,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { useForm, useFieldArray } from "react-hook-form";
-import { DateTimePicker } from "@mui/x-date-pickers";
-import { CloudUpload, Preview, Add, Delete } from "@mui/icons-material";
-import { useState } from "react";
-
-const DAYS_OF_WEEK = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+import { List } from "@refinedev/mui";
+import { useFieldArray, useForm } from "react-hook-form";
 
 const BANNER_TYPES = [
   { value: 0, label: "Banner chính" },
@@ -32,8 +20,6 @@ const BANNER_TYPES = [
 ];
 
 export default function CreateSpaPage() {
-  const [previewImage, setPreviewImage] = useState("");
-
   const { register, control, handleSubmit, watch, setValue, getValues } =
     useForm({
       defaultValues: {
@@ -69,25 +55,6 @@ export default function CreateSpaPage() {
     name: "banners",
   });
 
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      try {
-        // Generate unique filename
-        const filename = `${Date.now()}-${file.name}`;
-        const filepath = `/imgs/${filename}`;
-
-        // Update form data with file path using setValue
-        setValue("logo_url", filepath);
-        setValue("logo_filename", file.name);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
-    }
-  };
-
   const onSubmit = async (data: any) => {
     console.log("Form Data:", {
       name: data.name,
@@ -108,7 +75,6 @@ export default function CreateSpaPage() {
     <List>
       <form>
         <Grid container spacing={2}>
-          
           <Grid item xs={12} md={6}>
             <Card sx={{ p: 2, height: "100%" }}>
               <Typography variant="h6" gutterBottom>
@@ -141,15 +107,15 @@ export default function CreateSpaPage() {
                           if (file) {
                             const filename = `${Date.now()}-${file.name}`;
                             const filepath = `/imgs/${filename}`;
-                            setValue('logo_url', filepath);
-                            setValue('logo_filename', file.name);
+                            setValue("logo_url", filepath);
+                            setValue("logo_filename", file.name);
                           }
                         }}
                       />
                     </Button>
-                    {watch('logo_filename') && (
+                    {watch("logo_filename") && (
                       <Typography variant="body2">
-                        {watch('logo_filename')}
+                        {watch("logo_filename")}
                       </Typography>
                     )}
                   </Box>
@@ -287,11 +253,17 @@ export default function CreateSpaPage() {
                               if (file) {
                                 const filename = `${Date.now()}-${file.name}`;
                                 const filepath = `/imgs/${filename}`;
-                                setValue(`banners.${index}.image_url`, filepath);
-                                setValue(`banners.${index}.filename`, file.name);
+                                setValue(
+                                  `banners.${index}.image_url`,
+                                  filepath
+                                );
+                                setValue(
+                                  `banners.${index}.filename`,
+                                  file.name
+                                );
                                 // Force rerender
                                 const currentFields = getValues();
-                                setValue('banners', [...currentFields.banners]);
+                                setValue("banners", [...currentFields.banners]);
                               }
                             }}
                           />
@@ -405,8 +377,8 @@ export default function CreateSpaPage() {
             </Card>
           </Grid>
         </Grid>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-          <Button 
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+          <Button
             variant="contained"
             color="primary"
             onClick={handleSubmit(onSubmit)}
