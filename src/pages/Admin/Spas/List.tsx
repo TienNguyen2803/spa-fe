@@ -37,7 +37,7 @@ export default function ListSpaPage() {
   const {
     tableQueryResult: { data: tableData },
   } = useTable({
-    resource: "spas",
+    resource: "spa-info",
     syncWithLocation: true,
   });
 

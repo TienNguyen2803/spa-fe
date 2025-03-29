@@ -106,12 +106,8 @@ export default function CreateSpaPage() {
       type: "success",
     },
     errorNotification: {
-      message: "Có lỗi xảy ra khi tạo Spa", 
+      message: "Có lỗi xảy ra khi tạo Spa",
       type: "error",
-    },
-    onSuccess: () => {
-      push("/spas");
-      return Promise.resolve();
     },
   });
 
@@ -124,10 +120,10 @@ export default function CreateSpaPage() {
       hasError = true;
     }
 
-    // Check banners image_url 
-    const newBannerErrors = data.banners.map(banner => !banner.image_url);
+    // Check banners image_url
+    const newBannerErrors = data.banners.map((banner) => !banner.image_url);
     setShowBannerErrors(newBannerErrors);
-    if (newBannerErrors.some(error => error)) {
+    if (newBannerErrors.some((error) => error)) {
       hasError = true;
     }
 
@@ -137,22 +133,29 @@ export default function CreateSpaPage() {
       return;
     }
 
-    mutate({
-      resource: "spa-info",
-      values: {
-        name: data.name,
-        address: data.address,
-        phone: data.phone,
-        email: data.email,
-        logo_url: data.logo_url,
-        banners: data.banners,
-        workingHours: data.workingHours,
-        seo_title: data.seo_title,
-        seo_description: data.seo_description,
-        facebook_url: data.facebook_url,
-        instagram_url: data.instagram_url,
+    mutate(
+      {
+        resource: "spa-info",
+        values: {
+          name: data.name,
+          address: data.address,
+          phone: data.phone,
+          email: data.email,
+          logo_url: data.logo_url,
+          banners: data.banners,
+          workingHours: data.workingHours,
+          seo_title: data.seo_title,
+          seo_description: data.seo_description,
+          facebook_url: data.facebook_url,
+          instagram_url: data.instagram_url,
+        },
       },
-    });
+      {
+        onSuccess: () => {
+          push("/spas");
+        },
+      },
+    );
   };
 
   return (
@@ -176,7 +179,9 @@ export default function CreateSpaPage() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+                  >
                     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       <Button
                         variant="outlined"
@@ -231,7 +236,9 @@ export default function CreateSpaPage() {
                     label="Số điện thoại"
                     size="small"
                     error={!!errors.phone && isSubmitted}
-                    helperText={errors.phone ? "Vui lòng nhập số điện thoại" : ""}
+                    helperText={
+                      errors.phone ? "Vui lòng nhập số điện thoại" : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -261,7 +268,9 @@ export default function CreateSpaPage() {
                     label="SEO Title"
                     size="small"
                     error={!!errors.seo_title && isSubmitted}
-                    helperText={errors.seo_title ? "Vui lòng nhập SEO Title" : ""}
+                    helperText={
+                      errors.seo_title ? "Vui lòng nhập SEO Title" : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -274,7 +283,9 @@ export default function CreateSpaPage() {
                     size="small"
                     error={!!errors.seo_description && isSubmitted}
                     helperText={
-                      errors.seo_description ? "Vui lòng nhập SEO Description" : ""
+                      errors.seo_description
+                        ? "Vui lòng nhập SEO Description"
+                        : ""
                     }
                   />
                 </Grid>
@@ -378,11 +389,11 @@ export default function CreateSpaPage() {
                                   setValue(
                                     `banners.${index}.image_url`,
                                     filepath,
-                                    { shouldValidate: true }
+                                    { shouldValidate: true },
                                   );
                                   setValue(
                                     `banners.${index}.filename`,
-                                    file.name
+                                    file.name,
                                   );
                                   const newBannerErrors = [...showBannerErrors];
                                   newBannerErrors[index] = false;
@@ -397,11 +408,12 @@ export default function CreateSpaPage() {
                             </Typography>
                           )}
                         </Box>
-                        {(showBannerErrors[index] || isSubmitted) && !watch(`banners.${index}.image_url`) && (
-                          <Typography color="error" variant="caption">
-                            Vui lòng chọn ảnh banner
-                          </Typography>
-                        )}
+                        {(showBannerErrors[index] || isSubmitted) &&
+                          !watch(`banners.${index}.image_url`) && (
+                            <Typography color="error" variant="caption">
+                              Vui lòng chọn ảnh banner
+                            </Typography>
+                          )}
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -428,7 +440,9 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Phụ đề"
                         size="small"
-                        error={!!errors.banners?.[index]?.subtitle && isSubmitted}
+                        error={
+                          !!errors.banners?.[index]?.subtitle && isSubmitted
+                        }
                         helperText={
                           errors.banners?.[index]?.subtitle
                             ? "Vui lòng nhập phụ đề"
@@ -513,9 +527,7 @@ export default function CreateSpaPage() {
                     sx={{ width: 180 }}
                     error={!!errors.workingHours?.[0]?.day && isSubmitted}
                     helperText={
-                      errors.workingHours?.[0]?.day
-                        ? "Vui lòng chọn ngày"
-                        : ""
+                      errors.workingHours?.[0]?.day ? "Vui lòng chọn ngày" : ""
                     }
                   />
                   <TextField
@@ -541,7 +553,9 @@ export default function CreateSpaPage() {
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
-                    error={!!errors.workingHours?.[0]?.close_time && isSubmitted}
+                    error={
+                      !!errors.workingHours?.[0]?.close_time && isSubmitted
+                    }
                     helperText={
                       errors.workingHours?.[0]?.close_time
                         ? "Vui lòng nhập giờ đóng cửa"
