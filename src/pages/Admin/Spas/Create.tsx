@@ -111,28 +111,49 @@ export default function CreateSpaPage() {
   });
 
   const onSubmit = async (data: ISpaForm) => {
+    // Custom validation for logo and banners
+    let hasError = false;
+    if (!data.logo_url) {
+      setValue("logo_url", "", { shouldValidate: true });
+      hasError = true;
+    }
+
+    data.banners.forEach((banner, index) => {
+      if (!banner.image_url) {
+        setValue(`banners.${index}.image_url`, "", { shouldValidate: true });
+        hasError = true;
+      }
+    });
+
     const result = await trigger();
-    if (!result) {
+    if (!result || hasError) {
       window.alert("Vui lòng điền đầy đủ thông tin bắt buộc");
       return;
     }
 
-    mutate({
-      resource: "spa-info",
-      values: {
-        name: data.name,
-        address: data.address,
-        phone: data.phone,
-        email: data.email,
-        logo_url: data.logo_url,
-        banners: data.banners,
-        workingHours: data.workingHours,
-        seo_title: data.seo_title,
-        seo_description: data.seo_description,
-        facebook_url: data.facebook_url,
-        instagram_url: data.instagram_url,
-      },
-    });
+    try {
+      await mutate({
+        resource: "spa-info",
+        values: {
+          name: data.name,
+          address: data.address,
+          phone: data.phone,
+          email: data.email,
+          logo_url: data.logo_url,
+          banners: data.banners,
+          workingHours: data.workingHours,
+          seo_title: data.seo_title,
+          seo_description: data.seo_description,
+          facebook_url: data.facebook_url,
+          instagram_url: data.instagram_url,
+        },
+      });
+
+      // Ensure navigation happens after successful mutation
+      push("/spas");
+    } catch (error) {
+      console.error("Error creating spa:", error);
+    }
   };
 
   return (
@@ -401,19 +422,11 @@ export default function CreateSpaPage() {
                     </Grid>
                     <Grid item xs={12} md={2}>
                       <TextField
-                        {...register(`banners.${index}.order`, {
-                          required: true,
-                        })}
+                        {...register(`banners.${index}.order`, {})}
                         fullWidth
                         label="Thứ tự"
                         type="number"
                         size="small"
-                        error={!getValues(`banners.${index}.order`) && isSubmitted}
-                        helperText={
-                          !getValues(`banners.${index}.order`)
-                            ? "Vui lòng nhập thứ tự"
-                            : ""
-                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={2}>
