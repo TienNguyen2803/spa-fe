@@ -50,10 +50,10 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { push } = useNavigation();
-  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors, isSubmitted }, trigger } =
+  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors }, trigger } =
     useForm<ISpaForm>({
       mode: 'onSubmit',
-      reValidateMode: 'onSubmit',
+      reValidateMode: 'onChange',
       defaultValues: {
         logo_url: "",
         logo_filename: "",
@@ -103,8 +103,12 @@ export default function CreateSpaPage() {
   });
 
   const onSubmit = async (data: ISpaForm) => {
-    const isValid = await trigger();
-    if (!isValid) return;
+    const isValid = await trigger(undefined, { shouldFocus: true });
+    if (!isValid) {
+      // Show error notification
+      window.alert("Vui lòng điền đầy đủ thông tin bắt buộc");
+      return;
+    }
     
     mutate({
       resource: "spa-info",
