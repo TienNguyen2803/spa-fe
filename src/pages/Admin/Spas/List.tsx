@@ -155,23 +155,32 @@ export default function ListSpaPage() {
       {
         field: "logo_url",
         headerName: "Logo",
-        width: 120,
+        width: 150,
         renderCell: (params) => (
           <Box
-            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+            sx={{ 
+              display: "flex", 
+              justifyContent: "center", 
+              width: "100%",
+              p: 1
+            }}
           >
             <Avatar
               src={params.value}
               alt={params.row.name}
               variant="rounded"
               sx={{
-                width: 50,
-                height: 50,
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                width: 60,
+                height: 60,
+                backgroundColor: "white",
+                border: "2px solid #f5f5f5",
+                borderRadius: "12px",
+                boxShadow: "0 3px 6px rgba(0,0,0,0.08)",
                 transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "scale(1.1)",
-                  boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                  transform: "scale(1.05)",
+                  boxShadow: "0 6px 12px rgba(0,0,0,0.12)",
+                  border: "2px solid #e0e0e0"
                 },
               }}
             />
@@ -298,10 +307,10 @@ export default function ListSpaPage() {
         <Box
           sx={{
             display: "flex",
-            gap: 2,
+            gap: 1,
             alignItems: "center",
             flexGrow: 1,
-            maxWidth: 600,
+            maxWidth: 800,
           }}
         >
           <TextField
@@ -376,35 +385,42 @@ export default function ListSpaPage() {
             rows={dataGridProps.rows || []}
             columns={columns}
             autoHeight
-            checkboxSelection
-            disableColumnMenu={false}
-            disableRowSelectionOnClick={false}
+            disableColumnMenu
+            disableRowSelectionOnClick
             loading={isLoading}
             getRowClassName={(params) =>
               `spa-row-${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}`
             }
             sx={{
               border: "1px solid #e0e0e0",
-              borderRadius: 1,
+              borderRadius: 2,
+              "& .MuiDataGrid-main": {
+                padding: "12px"
+              },
               "& .MuiDataGrid-row": {
-                borderBottom: "1px solid #e0e0e0",
+                borderBottom: "1px solid #f0f0f0",
                 "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.04)",
+                  backgroundColor: "rgba(0, 0, 0, 0.02)",
                 },
               },
               "& .spa-row-even": {
-                backgroundColor: "rgba(0, 0, 0, 0.02)",
+                backgroundColor: "rgba(0, 0, 0, 0.01)",
               },
               "& .MuiDataGrid-cell": {
-                borderRight: "1px solid #e0e0e0",
+                padding: "12px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start"
               },
               "& .MuiDataGrid-columnHeaders": {
-                borderBottom: "2px solid #e0e0e0",
-                bgcolor: "#f5f5f5",
-                fontWeight: "bold",
+                borderBottom: "2px solid #f0f0f0",
+                bgcolor: "#fafafa",
+                fontWeight: "600",
+                fontSize: "0.875rem",
+                color: "#333"
               },
               "& .MuiDataGrid-columnHeader": {
-                borderRight: "1px solid #e0e0e0",
+                padding: "12px 16px",
               },
             }}
           />
