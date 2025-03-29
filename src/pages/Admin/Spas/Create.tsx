@@ -88,17 +88,7 @@ export default function CreateSpaPage() {
     }
   };
 
-  const handleBannerUpload = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-  const file = event.target.files?.[0];
-  if (file) {
-    const filename = `${Date.now()}-${file.name}`;
-    const filepath = `/imgs/${filename}`;
-    setValue(`banners.${index}.image_url`, filepath);
-    setValue(`banners.${index}.filename`, file.name);
-  }
-};
-
-const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log("Form Data:", {
       name: data.name,
       address: data.address,
@@ -291,36 +281,38 @@ const onSubmit = async (data: any) => {
                       <Box
                         sx={{ display: "flex", alignItems: "center", gap: 2 }}
                       >
-                        {getValues(`banners.${index}.filename`) ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Typography variant="body2">
-                              {getValues(`banners.${index}.filename`)}
-                            </Typography>
-                            <IconButton
-                              size="small"
-                              onClick={() => {
-                                setValue(`banners.${index}.image_url`, '');
-                                setValue(`banners.${index}.filename`, '');
-                              }}
-                            >
-                              <Delete fontSize="small" />
-                            </IconButton>
-                          </Box>
-                        ) : (
-                          <Button
-                            variant="outlined"
-                            component="label"
-                            startIcon={<CloudUpload />}
-                            size="small"
-                          >
-                            Upload Banner
-                            <input
-                              type="file"
-                              hidden
-                              accept="image/*"
-                              onChange={(e) => handleBannerUpload(e, index)}
-                            />
-                          </Button>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          startIcon={<CloudUpload />}
+                          size="small"
+                        >
+                          Upload Banner
+                          <input
+                            type="file"
+                            hidden
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const filename = `${Date.now()}-${file.name}`;
+                                const filepath = `/imgs/${filename}`;
+                                setValue(
+                                  `banners.${index}.image_url`,
+                                  filepath,
+                                );
+                                setValue(
+                                  `banners.${index}.filename`,
+                                  file.name,
+                                );
+                              }
+                            }}
+                          />
+                        </Button>
+                        {getValues(`banners.${index}.filename`) && (
+                          <Typography variant="body2" sx={{ mt: 1 }}>
+                            {getValues(`banners.${index}.filename`)}
+                          </Typography>
                         )}
                       </Box>
                     </Grid>
