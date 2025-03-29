@@ -133,29 +133,27 @@ export default function CreateSpaPage() {
       return;
     }
 
-    mutate(
-      {
-        resource: "spa-info",
-        values: {
-          name: data.name,
-          address: data.address,
-          phone: data.phone,
-          email: data.email,
-          logo_url: data.logo_url,
-          banners: data.banners,
-          workingHours: data.workingHours,
-          seo_title: data.seo_title,
-          seo_description: data.seo_description,
-          facebook_url: data.facebook_url,
-          instagram_url: data.instagram_url,
-        },
+    mutate({
+      resource: "spa-info", 
+      values: {
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        email: data.email,
+        logo_url: data.logo_url,
+        banners: data.banners,
+        workingHours: data.workingHours,
+        seo_title: data.seo_title,
+        seo_description: data.seo_description,
+        facebook_url: data.facebook_url,
+        instagram_url: data.instagram_url,
       },
-      {
-        onSuccess: () => {
-          push("/spas");
-        },
+    },
+    {
+      onSuccess: () => {
+        push("/spas");
       },
-    );
+    });
   };
 
   return (
