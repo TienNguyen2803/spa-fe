@@ -34,29 +34,30 @@ const BANNER_TYPES = [
 export default function CreateSpaPage() {
   const [previewImage, setPreviewImage] = useState("");
 
-  const { register, control, handleSubmit, watch, setValue, getValues } = useForm({
-    defaultValues: {
-      logo_url: "",
-      banners: [
-        {
-          image_url: "",
-          preview_url: "",
-          title: "",
-          subtitle: "",
-          order: 0,
-          is_active: true,
-          type: 0,
-        },
-      ],
-      workingHours: [
-        {
-          day: "Monday",
-          open_time: "09:00",
-          close_time: "18:00",
-        },
-      ],
-    },
-  });
+  const { register, control, handleSubmit, watch, setValue, getValues } =
+    useForm({
+      defaultValues: {
+        logo_url: "",
+        banners: [
+          {
+            image_url: "",
+            preview_url: "",
+            title: "",
+            subtitle: "",
+            order: 0,
+            is_active: true,
+            type: 0,
+          },
+        ],
+        workingHours: [
+          {
+            day: "Monday",
+            open_time: "09:00",
+            close_time: "18:00",
+          },
+        ],
+      },
+    });
 
   const {
     fields: bannerFields,
@@ -293,8 +294,14 @@ export default function CreateSpaPage() {
                               if (file) {
                                 const filename = `${Date.now()}-${file.name}`;
                                 const filepath = `/imgs/${filename}`;
-                                setValue(`banners.${index}.image_url`, filepath);
-                                setValue(`banners.${index}.filename`, file.name);
+                                setValue(
+                                  `banners.${index}.image_url`,
+                                  filepath,
+                                );
+                                setValue(
+                                  `banners.${index}.filename`,
+                                  file.name,
+                                );
                               }
                             }}
                           />
@@ -303,13 +310,6 @@ export default function CreateSpaPage() {
                           <Typography variant="body2" sx={{ mt: 1 }}>
                             {getValues(`banners.${index}.filename`)}
                           </Typography>
-                        )}
-                              width: 100,
-                              height: 60,
-                              objectFit: "cover",
-                              borderRadius: 1,
-                            }}
-                          />
                         )}
                       </Box>
                     </Grid>
