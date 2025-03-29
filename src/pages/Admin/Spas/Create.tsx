@@ -111,8 +111,8 @@ export default function CreateSpaPage() {
     },
     onSuccess: () => {
       push("/spas");
+      return Promise.resolve();
     },
-    redirect: "list",
   });
 
   const onSubmit = async (data: ISpaForm) => {
