@@ -55,7 +55,8 @@ export default function ListSpaPage() {
       field: "no",
       headerName: "No.",
       width: 70,
-      renderCell: (params) => params.api.getRowIndex(params.row.id) + 1,
+      valueGetter: (params) => params.api.getRowIndex(params.row.id) + 1,
+      sortable: false,
     },
     { field: "name", headerName: "Tên Spa", width: 200 },
     {
