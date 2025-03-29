@@ -153,35 +153,45 @@ export default function ListSpaPage() {
       {
         field: "logo_url",
         headerName: "Logo",
-        width: 150,
+        width: 180,
+        align: "center",
+        headerAlign: "center",
         renderCell: (params) => (
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
+              alignItems: "center",
               width: "100%",
+              height: "100%",
               p: 1,
             }}
           >
-            <Avatar
-              src={params.value}
-              alt={params.row.name}
-              variant="rounded"
-              sx={{
-                width: 60,
-                height: 60,
-                backgroundColor: "white",
-                border: "2px solid #f5f5f5",
-                borderRadius: "12px",
-                boxShadow: "0 3px 6px rgba(0,0,0,0.08)",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.12)",
-                  border: "2px solid #e0e0e0",
-                },
-              }}
-            />
+            <Tooltip title={params.row.name} arrow>
+              <Avatar
+                src={params.value}
+                alt={params.row.name}
+                variant="rounded"
+                sx={{
+                  width: 70,
+                  height: 70,
+                  backgroundColor: "white",
+                  border: "1px solid rgba(0,0,0,0.1)",
+                  borderRadius: "8px",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                  transition: "all 0.2s ease-in-out",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    border: "1px solid rgba(25, 118, 210, 0.5)",
+                  },
+                  objectFit: "contain",
+                  p: 1,
+                }}
+                onClick={() => window.open(params.value, '_blank')}
+              />
+            </Tooltip>
           </Box>
         ),
       },
