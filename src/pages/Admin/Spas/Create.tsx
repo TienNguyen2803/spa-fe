@@ -51,6 +51,7 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { push } = useNavigation();
+
   const {
     register,
     control,
@@ -168,19 +169,6 @@ export default function CreateSpaPage() {
     }
   };
 
-  const appendBanner = () => {
-    setShowBannerErrors([...showBannerErrors, false]);
-    appendBanner({
-      image_url: "",
-      preview_url: "",
-      title: "",
-      subtitle: "",
-      order: bannerFields.length,
-      is_active: true,
-      type: 0,
-    });
-  };
-
   return (
     <List>
       <form>
@@ -202,7 +190,9 @@ export default function CreateSpaPage() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+                  >
                     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       <Button
                         variant="outlined"
@@ -349,11 +339,7 @@ export default function CreateSpaPage() {
                 }}
               >
                 <Typography variant="h6">Banners</Typography>
-                <Button
-                  startIcon={<Add />}
-                  onClick={appendBanner}
-                  size="small"
-                >
+                <Button startIcon={<Add />} onClick={appendBanner} size="small">
                   Thêm Banner
                 </Button>
               </Box>
@@ -370,8 +356,16 @@ export default function CreateSpaPage() {
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{ display: "flex", alignItems: "center", gap: 2 }}
+                        >
                           <Button
                             variant="outlined"
                             component="label"
@@ -404,7 +398,9 @@ export default function CreateSpaPage() {
 
                                   //Force rerender
                                   const currentFields = getValues();
-                                  setValue("banners", [...currentFields.banners]);
+                                  setValue("banners", [
+                                    ...currentFields.banners,
+                                  ]);
                                 }
                               }}
                             />
@@ -415,11 +411,12 @@ export default function CreateSpaPage() {
                             </Typography>
                           )}
                         </Box>
-                        {showBannerErrors[index] && !getValues(`banners.${index}.image_url`) && (
-                          <Typography color="error" variant="caption">
-                            Vui lòng chọn ảnh banner
-                          </Typography>
-                        )}
+                        {showBannerErrors[index] &&
+                          !getValues(`banners.${index}.image_url`) && (
+                            <Typography color="error" variant="caption">
+                              Vui lòng chọn ảnh banner
+                            </Typography>
+                          )}
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -430,7 +427,9 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Tiêu đề"
                         size="small"
-                        error={!getValues(`banners.${index}.title`) && isSubmitted}
+                        error={
+                          !getValues(`banners.${index}.title`) && isSubmitted
+                        }
                         helperText={
                           !getValues(`banners.${index}.title`)
                             ? "Vui lòng nhập tiêu đề"
@@ -446,7 +445,9 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Phụ đề"
                         size="small"
-                        error={!getValues(`banners.${index}.subtitle`) && isSubmitted}
+                        error={
+                          !getValues(`banners.${index}.subtitle`) && isSubmitted
+                        }
                         helperText={
                           !getValues(`banners.${index}.subtitle`)
                             ? "Vui lòng nhập phụ đề"
@@ -522,7 +523,9 @@ export default function CreateSpaPage() {
                     label="Ngày trong tuần"
                     size="small"
                     sx={{ width: 180 }}
-                    error={!!(getValues(`workingHours.0.day`) === "") && isSubmitted}
+                    error={
+                      !!(getValues(`workingHours.0.day`) === "") && isSubmitted
+                    }
                     helperText={
                       getValues(`workingHours.0.day`) === ""
                         ? "Vui lòng chọn ngày"
@@ -537,7 +540,10 @@ export default function CreateSpaPage() {
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
-                    error={!!(getValues(`workingHours.0.open_time`) === "") && isSubmitted}
+                    error={
+                      !!(getValues(`workingHours.0.open_time`) === "") &&
+                      isSubmitted
+                    }
                     helperText={
                       getValues(`workingHours.0.open_time`) === ""
                         ? "Vui lòng nhập giờ mở cửa"
@@ -552,7 +558,10 @@ export default function CreateSpaPage() {
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
-                    error={!!(getValues(`workingHours.0.close_time`) === "") && isSubmitted}
+                    error={
+                      !!(getValues(`workingHours.0.close_time`) === "") &&
+                      isSubmitted
+                    }
                     helperText={
                       getValues(`workingHours.0.close_time`) === ""
                         ? "Vui lòng nhập giờ đóng cửa"
