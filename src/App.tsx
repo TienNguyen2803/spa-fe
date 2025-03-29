@@ -35,6 +35,7 @@ import { IUserResponse } from "./types/auth";
 import { LoginPage } from "./pages/Admin/Login";
 import ListSpaPage from "./pages/Admin/Spas/List";
 import CreateSpaPage from "./pages/Admin/Spas/Create";
+import EditSpaPage from "./pages/Admin/Spas/Edit";
 
 const axiosInstance = axios.create({
   baseURL:
@@ -151,6 +152,7 @@ function App() {
                 {
                   name: "Danh sách Spa",
                   list: "/spas",
+                  edit: "/users/edit/:id",
                 },
               ]}
               options={{
@@ -197,6 +199,7 @@ function App() {
                   <Route path="/spas">
                     <Route index element={<ListSpaPage />} />
                     <Route path="create" element={<CreateSpaPage />} />
+                    <Route path="edit/:id" element={<CreateSpaPage />} />
                   </Route>
                   <Route path="/users">
                     <Route index element={<UsersList />} />
