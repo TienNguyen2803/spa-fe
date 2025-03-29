@@ -51,18 +51,43 @@ export default function ListSpaPage() {
   };
 
   const columns: GridColDef[] = [
+    {
+      field: "no",
+      headerName: "No.",
+      width: 70,
+      renderCell: (params) => params.api.getRowIndex(params.row.id) + 1,
+    },
     { field: "name", headerName: "Tên Spa", width: 200 },
     {
       field: "logo_url",
       headerName: "Logo",
-      width: 100,
+      width: 120,
       renderCell: (params) => (
-        <Avatar
-          src={params.value}
-          alt={params.row.name}
-          variant="rounded"
-          sx={{ width: 40, height: 40 }}
-        />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+            p: 1
+          }}
+        >
+          <Avatar
+            src={params.value}
+            alt={params.row.name}
+            variant="rounded"
+            sx={{
+              width: 50,
+              height: 50,
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              transition: 'transform 0.2s',
+              '&:hover': {
+                transform: 'scale(1.1)',
+              }
+            }}
+          />
+        </Box>
       ),
     },
     { field: "address", headerName: "Địa chỉ", width: 300 },
