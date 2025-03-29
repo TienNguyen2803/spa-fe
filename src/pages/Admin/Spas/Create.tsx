@@ -38,6 +38,7 @@ export default function CreateSpaPage() {
     useForm({
       defaultValues: {
         logo_url: "",
+        logo_filename: "",
         banners: [
           {
             image_url: "",
@@ -78,12 +79,9 @@ export default function CreateSpaPage() {
         const filename = `${Date.now()}-${file.name}`;
         const filepath = `/imgs/${filename}`;
 
-        // For preview
-        const previewUrl = URL.createObjectURL(file);
-        setPreviewImage(previewUrl);
-        console.log("filepath", filepath);
         // Update form data with file path using setValue
         setValue("logo_url", filepath);
+        setValue("logo_filename", file.name);
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -148,16 +146,21 @@ export default function CreateSpaPage() {
                         type="file"
                         hidden
                         accept="image/*"
-                        onChange={handleImageUpload}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const filename = `${Date.now()}-${file.name}`;
+                            const filepath = `/imgs/${filename}`;
+                            setValue('logo_url', filepath);
+                            setValue('logo_filename', file.name);
+                          }
+                        }}
                       />
                     </Button>
-                    {previewImage && (
-                      <Box
-                        component="img"
-                        src={previewImage}
-                        alt="Preview"
-                        sx={{ width: 100, height: 100, objectFit: "cover" }}
-                      />
+                    {watch('logo_filename') && (
+                      <Typography variant="body2">
+                        {watch('logo_filename')}
+                      </Typography>
                     )}
                   </Box>
                 </Grid>
