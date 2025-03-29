@@ -50,9 +50,10 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { push } = useNavigation();
-  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors }, trigger } =
+  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors, isSubmitted }, trigger } =
     useForm<ISpaForm>({
       mode: 'onSubmit',
+      reValidateMode: 'onSubmit',
       defaultValues: {
         logo_url: "",
         logo_filename: "",
@@ -139,8 +140,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Tên Spa"
                     size="small"
-                    error={!!errors.name}
-                    helperText={errors.name ? "Vui lòng nhập tên Spa" : ""}
+                    error={isSubmitted && !!errors.name}
+                    helperText={isSubmitted && errors.name ? "Vui lòng nhập tên Spa" : ""}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -180,8 +181,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Địa chỉ"
                     size="small"
-                    error={!!(getValues("address") === "")}
-                    helperText={getValues("address") === "" ? "Vui lòng nhập địa chỉ" : ""}
+                    error={isSubmitted && !!errors.address}
+                    helperText={isSubmitted && errors.address ? "Vui lòng nhập địa chỉ" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -190,8 +191,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Số điện thoại"
                     size="small"
-                    error={!!(getValues("phone") === "")}
-                    helperText={getValues("phone") === "" ? "Vui lòng nhập số điện thoại" : ""}
+                    error={isSubmitted && !!errors.phone}
+                    helperText={isSubmitted && errors.phone ? "Vui lòng nhập số điện thoại" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -200,8 +201,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Email"
                     size="small"
-                    error={!!(getValues("email") === "")}
-                    helperText={getValues("email") === "" ? "Vui lòng nhập email" : ""}
+                    error={isSubmitted && !!errors.email}
+                    helperText={isSubmitted && errors.email ? "Vui lòng nhập email" : ""}
                   />
                 </Grid>
               </Grid>
@@ -220,8 +221,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="SEO Title"
                     size="small"
-                    error={!!(getValues("seo_title") === "")}
-                    helperText={getValues("seo_title") === "" ? "Vui lòng nhập SEO Title" : ""}
+                    error={isSubmitted && !!errors.seo_title}
+                    helperText={isSubmitted && errors.seo_title ? "Vui lòng nhập SEO Title" : ""}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -232,8 +233,8 @@ export default function CreateSpaPage() {
                     multiline
                     rows={2}
                     size="small"
-                    error={!!(getValues("seo_description") === "")}
-                    helperText={getValues("seo_description") === "" ? "Vui lòng nhập SEO Description" : ""}
+                    error={isSubmitted && !!errors.seo_description}
+                    helperText={isSubmitted && errors.seo_description ? "Vui lòng nhập SEO Description" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -242,8 +243,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Facebook URL"
                     size="small"
-                    error={!!(getValues("facebook_url") === "")}
-                    helperText={getValues("facebook_url") === "" ? "Vui lòng nhập Facebook URL" : ""}
+                    error={isSubmitted && !!errors.facebook_url}
+                    helperText={isSubmitted && errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -252,8 +253,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Instagram URL"
                     size="small"
-                    error={!!(getValues("instagram_url") === "")}
-                    helperText={getValues("instagram_url") === "" ? "Vui lòng nhập Instagram URL" : ""}
+                    error={isSubmitted && !!errors.instagram_url}
+                    helperText={isSubmitted && errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""}
                   />
                 </Grid>
               </Grid>
