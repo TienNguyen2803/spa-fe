@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import { useTable, useNavigation } from "@refinedev/core";
 import { List } from "@refinedev/mui";
@@ -69,8 +68,6 @@ export default function ListSpaPage() {
     { field: "address", headerName: "Địa chỉ", width: 300 },
     { field: "phone", headerName: "Số điện thoại", width: 150 },
     { field: "email", headerName: "Email", width: 250 },
-    { field: "seo_title", headerName: "Tiêu đề SEO", width: 200 },
-    { field: "seo_description", headerName: "Mô tả SEO", width: 200 },
     { field: "facebook_url", headerName: "Facebook", width: 150 },
     { field: "instagram_url", headerName: "Instagram", width: 150 },
     {
