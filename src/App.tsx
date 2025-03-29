@@ -150,6 +150,7 @@ function App() {
                 },
                 {
                   name: "Danh sách Spa",
+                  list: "/spas",
                 },
               ]}
               options={{
