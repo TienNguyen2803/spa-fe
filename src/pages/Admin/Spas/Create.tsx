@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { List } from "@refinedev/mui";
 import { useCreate } from "@refinedev/core";
-import { useFieldArray, useForm, UseFormRegister } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 
 interface ISpaForm {
   name: string;
@@ -92,12 +92,12 @@ export default function CreateSpaPage() {
     },
     errorNotification: {
       message: "Có lỗi xảy ra khi tạo Spa",
-      type: "error",  
+      type: "error",
     },
   });
 
   const onSubmit = async (data: ISpaForm) => {
-    mutate({ 
+    mutate({
       resource: "spa-info",
       values: {
         name: data.name,
@@ -111,7 +111,7 @@ export default function CreateSpaPage() {
         seo_description: data.seo_description,
         facebook_url: data.facebook_url,
         instagram_url: data.instagram_url,
-      }
+      },
     });
   };
 
@@ -299,11 +299,11 @@ export default function CreateSpaPage() {
                                 const filepath = `/imgs/${filename}`;
                                 setValue(
                                   `banners.${index}.image_url`,
-                                  filepath
+                                  filepath,
                                 );
                                 setValue(
                                   `banners.${index}.filename`,
-                                  file.name
+                                  file.name,
                                 );
                                 // Force rerender
                                 const currentFields = getValues();
