@@ -106,12 +106,13 @@ export default function CreateSpaPage() {
       type: "success",
     },
     errorNotification: {
-      message: "Có lỗi xảy ra khi tạo Spa",
+      message: "Có lỗi xảy ra khi tạo Spa", 
       type: "error",
     },
     onSuccess: () => {
       push("/spas");
     },
+    redirect: "list",
   });
 
   const onSubmit = async (data: ISpaForm) => {
