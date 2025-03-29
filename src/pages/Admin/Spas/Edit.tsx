@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
 import { useUpdate, useNavigation, useOne } from "@refinedev/core";
@@ -64,7 +64,9 @@ export default function EditSpaPage() {
   React.useEffect(() => {
     if (data?.data) {
       form.reset(data.data);
-      setShowBannerErrors(new Array(data.data.banners?.length || 1).fill(false));
+      setShowBannerErrors(
+        new Array(data.data.banners?.length || 1).fill(false),
+      );
     }
   }, [data]);
 
