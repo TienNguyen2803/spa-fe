@@ -1,4 +1,3 @@
-
 import { Add, CloudUpload, Delete } from "@mui/icons-material";
 import {
   Box,
@@ -377,7 +376,8 @@ export default function CreateSpaPage() {
                                   const filepath = `/imgs/${filename}`;
                                   setValue(
                                     `banners.${index}.image_url`,
-                                    filepath
+                                    filepath,
+                                    { shouldValidate: true }
                                   );
                                   setValue(
                                     `banners.${index}.filename`,
