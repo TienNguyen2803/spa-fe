@@ -184,8 +184,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Địa chỉ"
                     size="small"
-                    error={isSubmitted && !!errors.address}
-                    helperText={isSubmitted && errors.address ? "Vui lòng nhập địa chỉ" : ""}
+                    error={!!errors.address}
+                    helperText={errors.address ? "Vui lòng nhập địa chỉ" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -194,8 +194,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Số điện thoại"
                     size="small"
-                    error={isSubmitted && !!errors.phone}
-                    helperText={isSubmitted && errors.phone ? "Vui lòng nhập số điện thoại" : ""}
+                    error={!!errors.phone}
+                    helperText={errors.phone ? "Vui lòng nhập số điện thoại" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -204,8 +204,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Email"
                     size="small"
-                    error={isSubmitted && !!errors.email}
-                    helperText={isSubmitted && errors.email ? "Vui lòng nhập email" : ""}
+                    error={!!errors.email}
+                    helperText={errors.email ? "Vui lòng nhập email" : ""}
                   />
                 </Grid>
               </Grid>
@@ -224,8 +224,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="SEO Title"
                     size="small"
-                    error={isSubmitted && !!errors.seo_title}
-                    helperText={isSubmitted && errors.seo_title ? "Vui lòng nhập SEO Title" : ""}
+                    error={!!errors.seo_title}
+                    helperText={errors.seo_title ? "Vui lòng nhập SEO Title" : ""}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -236,8 +236,8 @@ export default function CreateSpaPage() {
                     multiline
                     rows={2}
                     size="small"
-                    error={isSubmitted && !!errors.seo_description}
-                    helperText={isSubmitted && errors.seo_description ? "Vui lòng nhập SEO Description" : ""}
+                    error={!!errors.seo_description}
+                    helperText={errors.seo_description ? "Vui lòng nhập SEO Description" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -246,8 +246,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Facebook URL"
                     size="small"
-                    error={isSubmitted && !!errors.facebook_url}
-                    helperText={isSubmitted && errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""}
+                    error={!!errors.facebook_url}
+                    helperText={errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -256,8 +256,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Instagram URL"
                     size="small"
-                    error={isSubmitted && !!errors.instagram_url}
-                    helperText={isSubmitted && errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""}
+                    error={!!errors.instagram_url}
+                    helperText={errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""}
                   />
                 </Grid>
               </Grid>
