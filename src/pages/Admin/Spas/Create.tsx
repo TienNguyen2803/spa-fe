@@ -57,10 +57,10 @@ export default function CreateSpaPage() {
     watch,
     setValue,
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     trigger,
   } = useForm<ISpaForm>({
-    mode: "onChange",
+    mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
       logo_url: "",
@@ -151,7 +151,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Tên Spa"
                     size="small"
-                    error={!!errors.name}
+                    error={!!errors.name && isSubmitted}
                     helperText={errors.name ? "Vui lòng nhập tên Spa" : ""}
                   />
                 </Grid>
@@ -192,7 +192,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Địa chỉ"
                     size="small"
-                    error={!!errors.address}
+                    error={!!errors.address && isSubmitted}
                     helperText={errors.address ? "Vui lòng nhập địa chỉ" : ""}
                   />
                 </Grid>
@@ -202,7 +202,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Số điện thoại"
                     size="small"
-                    error={!!errors.phone}
+                    error={!!errors.phone && isSubmitted}
                     helperText={
                       errors.phone ? "Vui lòng nhập số điện thoại" : ""
                     }
@@ -214,7 +214,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Email"
                     size="small"
-                    error={!!errors.email}
+                    error={!!errors.email && isSubmitted}
                     helperText={errors.email ? "Vui lòng nhập email" : ""}
                   />
                 </Grid>
@@ -234,7 +234,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="SEO Title"
                     size="small"
-                    error={!!errors.seo_title}
+                    error={!!errors.seo_title && isSubmitted}
                     helperText={
                       errors.seo_title ? "Vui lòng nhập SEO Title" : ""
                     }
@@ -248,7 +248,7 @@ export default function CreateSpaPage() {
                     multiline
                     rows={2}
                     size="small"
-                    error={!!errors.seo_description}
+                    error={!!errors.seo_description && isSubmitted}
                     helperText={
                       errors.seo_description
                         ? "Vui lòng nhập SEO Description"
@@ -262,7 +262,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Facebook URL"
                     size="small"
-                    error={!!errors.facebook_url}
+                    error={!!errors.facebook_url && isSubmitted}
                     helperText={
                       errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""
                     }
@@ -274,7 +274,7 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Instagram URL"
                     size="small"
-                    error={!!errors.instagram_url}
+                    error={!!errors.instagram_url && isSubmitted}
                     helperText={
                       errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""
                     }
@@ -375,7 +375,7 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Tiêu đề"
                         size="small"
-                        error={!getValues(`banners.${index}.title`)}
+                        error={!getValues(`banners.${index}.title`) && isSubmitted}
                         helperText={
                           !getValues(`banners.${index}.title`)
                             ? "Vui lòng nhập tiêu đề"
@@ -391,7 +391,7 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Phụ đề"
                         size="small"
-                        error={!getValues(`banners.${index}.subtitle`)}
+                        error={!getValues(`banners.${index}.subtitle`) && isSubmitted}
                         helperText={
                           !getValues(`banners.${index}.subtitle`)
                             ? "Vui lòng nhập phụ đề"
@@ -408,7 +408,7 @@ export default function CreateSpaPage() {
                         label="Thứ tự"
                         type="number"
                         size="small"
-                        error={!getValues(`banners.${index}.order`)}
+                        error={!getValues(`banners.${index}.order`) && isSubmitted}
                         helperText={
                           !getValues(`banners.${index}.order`)
                             ? "Vui lòng nhập thứ tự"
@@ -475,7 +475,7 @@ export default function CreateSpaPage() {
                     label="Ngày trong tuần"
                     size="small"
                     sx={{ width: 180 }}
-                    error={!!(getValues(`workingHours.0.day`) === "")}
+                    error={!!(getValues(`workingHours.0.day`) === "") && isSubmitted}
                     helperText={
                       getValues(`workingHours.0.day`) === ""
                         ? "Vui lòng chọn ngày"
@@ -490,7 +490,7 @@ export default function CreateSpaPage() {
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
-                    error={!!(getValues(`workingHours.0.open_time`) === "")}
+                    error={!!(getValues(`workingHours.0.open_time`) === "") && isSubmitted}
                     helperText={
                       getValues(`workingHours.0.open_time`) === ""
                         ? "Vui lòng nhập giờ mở cửa"
@@ -505,7 +505,7 @@ export default function CreateSpaPage() {
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
-                    error={!!(getValues(`workingHours.0.close_time`) === "")}
+                    error={!!(getValues(`workingHours.0.close_time`) === "") && isSubmitted}
                     helperText={
                       getValues(`workingHours.0.close_time`) === ""
                         ? "Vui lòng nhập giờ đóng cửa"
