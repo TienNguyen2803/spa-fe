@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from "react";
-import { useTable, useNavigation } from "@refinedev/core";
-import { List } from "@refinedev/mui";
+
+import React, { useState, useCallback, useMemo } from "react";
+import { useTable, useNavigation, HttpError } from "@refinedev/core";
+import { List, useDataGrid } from "@refinedev/mui";
 import {
   Box,
   Button,
@@ -8,14 +9,22 @@ import {
   IconButton,
   InputAdornment,
   Avatar,
+  Typography,
+  Chip,
+  Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import {
   Add as AddIcon,
   Search as SearchIcon,
   Clear as ClearIcon,
   Edit as EditIcon,
+  Delete as DeleteIcon,
+  Facebook as FacebookIcon,
+  Instagram as InstagramIcon,
+  Link as LinkIcon,
 } from "@mui/icons-material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 
 interface Spa {
   id: number;
@@ -32,52 +41,90 @@ interface Spa {
 
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const { push } = useNavigation();
 
   const {
-    tableQueryResult: { data: tableData },
-  } = useTable({
+    dataGridProps,
+    tableQueryResult: { data: tableData, isLoading, isError },
+    filters,
+    setFilters,
+    setCurrent,
+    setSorting,
+  } = useDataGrid<Spa, HttpError>({
     resource: "spa-info",
-    syncWithLocation: true,
+    pagination: {
+      pageSize: 10,
+    },
+    sorters: {
+      initial: [
+        {
+          field: "name",
+          order: "asc",
+        },
+      ],
+    },
+    filters: {
+      initial: [
+        {
+          field: "q",
+          operator: "contains",
+          value: searchTerm,
+        },
+      ],
+    },
   });
 
-  const handleSearch = () => {
-    setSearchQuery(searchTerm);
-  };
+  const handleSearch = useCallback(() => {
+    setFilters([{
+      field: "q",
+      operator: "contains",
+      value: searchTerm,
+    }]);
+  }, [searchTerm, setFilters]);
 
-  const handleEdit = (id: number) => {
+  const handleClearSearch = useCallback(() => {
+    setSearchTerm("");
+    setFilters([{
+      field: "q",
+      operator: "contains",
+      value: "",
+    }]);
+  }, [setFilters]);
+
+  const handleEdit = useCallback((id: number) => {
     push(`/spas/edit/${id}`);
-  };
+  }, [push]);
 
-  const columns: GridColDef[] = [
+  const handleCreate = useCallback(() => {
+    push("/spas/create");
+  }, [push]);
+
+  const columns: GridColDef[] = useMemo(() => [
     {
       field: "index",
       headerName: "No.",
       width: 70,
-      renderCell: (params) => {
-        const index = params.api.getRowIndexRelativeToCurrentPage(params.row.id);
-        return index + 1;
-      },
+      renderCell: (params) => (
+        <Typography>{params.api.getRowIndexRelativeToCurrentPage(params.row.id) + 1}</Typography>
+      ),
       sortable: false,
-      filterable: false,
     },
-    { field: "name", headerName: "Tên Spa", width: 200 },
+    {
+      field: "name",
+      headerName: "Tên Spa",
+      width: 200,
+      renderCell: (params) => (
+        <Tooltip title={params.value} arrow>
+          <Typography noWrap>{params.value}</Typography>
+        </Tooltip>
+      ),
+    },
     {
       field: "logo_url",
       headerName: "Logo",
       width: 120,
       renderCell: (params) => (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: "100%",
-            p: 1,
-          }}
-        >
+        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <Avatar
             src={params.value}
             alt={params.row.name}
@@ -86,45 +133,117 @@ export default function ListSpaPage() {
               width: 50,
               height: 50,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              transition: "transform 0.2s",
+              transition: "all 0.3s ease",
               "&:hover": {
                 transform: "scale(1.1)",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
               },
             }}
           />
         </Box>
       ),
     },
-    { field: "address", headerName: "Địa chỉ", width: 300 },
-    { field: "phone", headerName: "Số điện thoại", width: 150 },
-    { field: "email", headerName: "Email", width: 250 },
-    { field: "facebook_url", headerName: "Facebook", width: 150 },
-    { field: "instagram_url", headerName: "Instagram", width: 150 },
+    {
+      field: "address",
+      headerName: "Địa chỉ",
+      width: 300,
+      renderCell: (params) => (
+        <Tooltip title={params.value} arrow>
+          <Typography noWrap>{params.value}</Typography>
+        </Tooltip>
+      ),
+    },
+    {
+      field: "phone",
+      headerName: "Số điện thoại",
+      width: 150,
+      renderCell: (params) => (
+        <Chip
+          icon={<LinkIcon fontSize="small" />}
+          label={params.value}
+          variant="outlined"
+          size="small"
+          onClick={() => window.open(`tel:${params.value}`)}
+          clickable
+        />
+      ),
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 250,
+      renderCell: (params) => (
+        <Tooltip title={params.value} arrow>
+          <Chip
+            icon={<LinkIcon fontSize="small" />}
+            label={params.value}
+            variant="outlined"
+            size="small"
+            onClick={() => window.open(`mailto:${params.value}`)}
+            clickable
+            sx={{ maxWidth: 230 }}
+          />
+        </Tooltip>
+      ),
+    },
+    {
+      field: "social_media",
+      headerName: "Mạng xã hội",
+      width: 150,
+      renderCell: (params) => (
+        <Box sx={{ display: "flex", gap: 1 }}>
+          {params.row.facebook_url && (
+            <Tooltip title="Facebook" arrow>
+              <IconButton
+                size="small"
+                color="primary"
+                onClick={() => window.open(params.row.facebook_url, "_blank")}
+              >
+                <FacebookIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          {params.row.instagram_url && (
+            <Tooltip title="Instagram" arrow>
+              <IconButton
+                size="small"
+                color="secondary"
+                onClick={() => window.open(params.row.instagram_url, "_blank")}
+              >
+                <InstagramIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
+      ),
+    },
     {
       field: "actions",
       headerName: "Hành động",
-      width: 120,
-      sortable: false,
+      width: 150,
       renderCell: (params) => (
-        <Button
-          startIcon={<EditIcon />}
-          onClick={() => handleEdit(params.row.id)}
-          size="small"
-        >
-          Chỉnh sửa
-        </Button>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Tooltip title="Chỉnh sửa" arrow>
+            <IconButton
+              color="primary"
+              onClick={() => handleEdit(params.row.id)}
+              size="small"
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Xóa" arrow>
+            <IconButton
+              color="error"
+              size="small"
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
       ),
     },
-  ];
-
-  const filteredData = useMemo(() => {
-    return (tableData?.data || []).filter(
-      (spa: Spa) =>
-        spa.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        spa.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        spa.email.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-  }, [searchQuery, tableData]);
+  ], [handleEdit]);
 
   return (
     <List>
@@ -134,14 +253,19 @@ export default function ListSpaPage() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          bgcolor: "background.paper",
+          borderRadius: 1,
+          mb: 2,
+          boxShadow: 1,
         }}
       >
-        <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexGrow: 1, maxWidth: 600 }}>
           <TextField
             label="Tìm kiếm"
+            placeholder="Tìm theo tên, địa chỉ hoặc email..."
             variant="outlined"
             size="small"
-            sx={{ width: "500px" }}
+            fullWidth
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
@@ -155,13 +279,9 @@ export default function ListSpaPage() {
                   <SearchIcon />
                 </InputAdornment>
               ),
-              endAdornment: (
+              endAdornment: searchTerm && (
                 <InputAdornment position="end">
-                  <IconButton
-                    size="small"
-                    onClick={() => setSearchTerm("")}
-                    sx={{ visibility: searchTerm ? "visible" : "hidden" }}
-                  >
+                  <IconButton size="small" onClick={handleClearSearch}>
                     <ClearIcon fontSize="small" />
                   </IconButton>
                 </InputAdornment>
@@ -173,9 +293,7 @@ export default function ListSpaPage() {
             onClick={handleSearch}
             sx={{
               backgroundColor: "#1976d2",
-              "&:hover": {
-                backgroundColor: "#1565c0",
-              },
+              "&:hover": { backgroundColor: "#1565c0" },
             }}
           >
             Tìm kiếm
@@ -184,35 +302,84 @@ export default function ListSpaPage() {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => push("/spas/create")}
+          onClick={handleCreate}
+          sx={{
+            bgcolor: "success.main",
+            "&:hover": { bgcolor: "success.dark" },
+          }}
         >
           Tạo Spa
         </Button>
       </Box>
-      <DataGrid
-        rows={filteredData}
-        columns={columns}
-        autoHeight
-        checkboxSelection={false}
-        disableColumnMenu
-        disableRowSelectionOnClick
-        sx={{
-          border: "1px solid #e0e0e0",
-          "& .MuiDataGrid-row": {
-            borderBottom: "1px solid #e0e0e0",
-          },
-          "& .MuiDataGrid-cell": {
-            borderRight: "1px solid #e0e0e0",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            borderBottom: "2px solid #e0e0e0",
-            bgcolor: "#f5f5f5",
-          },
-          "& .MuiDataGrid-columnHeader": {
-            borderRight: "1px solid #e0e0e0",
-          },
-        }}
-      />
+
+      {isError ? (
+        <Box sx={{ p: 3, textAlign: "center" }}>
+          <Typography color="error" variant="h6">
+            Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
+          </Typography>
+          <Button sx={{ mt: 2 }} variant="outlined" onClick={() => location.reload()}>
+            Tải lại trang
+          </Button>
+        </Box>
+      ) : (
+        <Box sx={{ position: "relative" }}>
+          <DataGrid
+            {...dataGridProps}
+            rows={dataGridProps.rows || []}
+            columns={columns}
+            autoHeight
+            checkboxSelection
+            disableColumnMenu={false}
+            disableRowSelectionOnClick={false}
+            loading={isLoading}
+            getRowClassName={(params) => 
+              `spa-row-${params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'}`
+            }
+            sx={{
+              border: "1px solid #e0e0e0",
+              borderRadius: 1,
+              "& .MuiDataGrid-row": {
+                borderBottom: "1px solid #e0e0e0",
+                "&:hover": {
+                  backgroundColor: "rgba(0, 0, 0, 0.04)",
+                },
+              },
+              "& .spa-row-even": {
+                backgroundColor: "rgba(0, 0, 0, 0.02)",
+              },
+              "& .MuiDataGrid-cell": {
+                borderRight: "1px solid #e0e0e0",
+              },
+              "& .MuiDataGrid-columnHeaders": {
+                borderBottom: "2px solid #e0e0e0",
+                bgcolor: "#f5f5f5",
+                fontWeight: "bold",
+              },
+              "& .MuiDataGrid-columnHeader": {
+                borderRight: "1px solid #e0e0e0",
+              },
+            }}
+          />
+          {isLoading && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                zIndex: 9,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          )}
+        </Box>
+      )}
     </List>
   );
 }
