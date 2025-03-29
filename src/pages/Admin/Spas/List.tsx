@@ -65,12 +65,12 @@ export default function ListSpaPage() {
       renderCell: (params) => (
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
-            p: 1
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+            p: 1,
           }}
         >
           <Avatar
@@ -80,11 +80,11 @@ export default function ListSpaPage() {
             sx={{
               width: 50,
               height: 50,
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              transition: 'transform 0.2s',
-              '&:hover': {
-                transform: 'scale(1.1)',
-              }
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              transition: "transform 0.2s",
+              "&:hover": {
+                transform: "scale(1.1)",
+              },
             }}
           />
         </Box>
