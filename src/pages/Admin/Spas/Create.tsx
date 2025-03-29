@@ -12,7 +12,35 @@ import {
   Typography,
 } from "@mui/material";
 import { List } from "@refinedev/mui";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, UseFormRegister } from "react-hook-form";
+
+interface ISpaForm {
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  logo_url: string;
+  logo_filename: string;
+  seo_title: string;
+  seo_description: string;
+  facebook_url: string;
+  instagram_url: string;
+  banners: {
+    image_url: string;
+    preview_url: string;
+    title: string;
+    subtitle: string;
+    order: number;
+    is_active: boolean;
+    type: number;
+    filename?: string;
+  }[];
+  workingHours: {
+    day: string;
+    open_time: string;
+    close_time: string;
+  }[];
+}
 
 const BANNER_TYPES = [
   { value: 0, label: "Banner chính" },
@@ -21,7 +49,7 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { register, control, handleSubmit, watch, setValue, getValues } =
-    useForm({
+    useForm<ISpaForm>({
       defaultValues: {
         logo_url: "",
         logo_filename: "",
@@ -277,7 +305,7 @@ export default function CreateSpaPage() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        {...register(`banners.${index}.title`)}
+                        {...register(`banners.${index}.title` as const)}
                         fullWidth
                         label="Tiêu đề"
                         size="small"
@@ -352,7 +380,7 @@ export default function CreateSpaPage() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ display: "flex", gap: 2 }}>
                   <TextField
-                    {...register(`workingHours.0.day`)}
+                    {...register(`workingHours.0.day` as const)}
                     defaultValue="Monday"
                     label="Ngày trong tuần"
                     size="small"
