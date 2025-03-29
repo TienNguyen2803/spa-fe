@@ -14,6 +14,7 @@ import {
 import { List } from "@refinedev/mui";
 import { useCreate, useNavigation } from "@refinedev/core";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useState } from "react";
 
 interface ISpaForm {
   name: string;
@@ -95,6 +96,9 @@ export default function CreateSpaPage() {
     name: "banners",
   });
 
+  const [showLogoError, setShowLogoError] = useState(false);
+  const [showBannerErrors, setShowBannerErrors] = useState([false]);
+
   const { mutate, isLoading } = useCreate({
     resource: "spa-info",
     successNotification: {
@@ -114,14 +118,22 @@ export default function CreateSpaPage() {
     // Custom validation for logo and banners
     let hasError = false;
     if (!data.logo_url) {
-      setValue("logo_url", "", { shouldValidate: true });
+      setShowLogoError(true);
       hasError = true;
+    } else {
+      setShowLogoError(false);
     }
 
     data.banners.forEach((banner, index) => {
       if (!banner.image_url) {
-        setValue(`banners.${index}.image_url`, "", { shouldValidate: true });
+        const newBannerErrors = [...showBannerErrors];
+        newBannerErrors[index] = true;
+        setShowBannerErrors(newBannerErrors);
         hasError = true;
+      } else {
+        const newBannerErrors = [...showBannerErrors];
+        newBannerErrors[index] = false;
+        setShowBannerErrors(newBannerErrors);
       }
     });
 
@@ -156,6 +168,19 @@ export default function CreateSpaPage() {
     }
   };
 
+  const appendBanner = () => {
+    setShowBannerErrors([...showBannerErrors, false]);
+    appendBanner({
+      image_url: "",
+      preview_url: "",
+      title: "",
+      subtitle: "",
+      order: bannerFields.length,
+      is_active: true,
+      type: 0,
+    });
+  };
+
   return (
     <List>
       <form>
@@ -177,7 +202,7 @@ export default function CreateSpaPage() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexDirection: "column", alignItems: "flex-start" }}>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       <Button
                         variant="outlined"
@@ -197,7 +222,7 @@ export default function CreateSpaPage() {
                               const filepath = `/imgs/${filename}`;
                               setValue("logo_url", filepath);
                               setValue("logo_filename", file.name);
-                              setValue("logo_error", "");
+                              setShowLogoError(false);
                             }
                           }}
                         />
@@ -208,7 +233,7 @@ export default function CreateSpaPage() {
                         </Typography>
                       )}
                     </Box>
-                    {!watch("logo_url") && (
+                    {showLogoError && !watch("logo_url") && (
                       <Typography color="error" variant="caption">
                         Vui lòng chọn logo
                       </Typography>
@@ -326,17 +351,7 @@ export default function CreateSpaPage() {
                 <Typography variant="h6">Banners</Typography>
                 <Button
                   startIcon={<Add />}
-                  onClick={() =>
-                    appendBanner({
-                      image_url: "",
-                      preview_url: "",
-                      title: "",
-                      subtitle: "",
-                      order: bannerFields.length,
-                      is_active: true,
-                      type: 0,
-                    })
-                  }
+                  onClick={appendBanner}
                   size="small"
                 >
                   Thêm Banner
@@ -355,7 +370,7 @@ export default function CreateSpaPage() {
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexDirection: "column", alignItems: "flex-start" }}>
+                      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                           <Button
                             variant="outlined"
@@ -381,6 +396,12 @@ export default function CreateSpaPage() {
                                     `banners.${index}.filename`,
                                     file.name,
                                   );
+
+                                  // Update banner errors array
+                                  const newBannerErrors = [...showBannerErrors];
+                                  newBannerErrors[index] = false;
+                                  setShowBannerErrors(newBannerErrors);
+
                                   //Force rerender
                                   const currentFields = getValues();
                                   setValue("banners", [...currentFields.banners]);
@@ -394,7 +415,7 @@ export default function CreateSpaPage() {
                             </Typography>
                           )}
                         </Box>
-                        {!getValues(`banners.${index}.image_url`) && (
+                        {showBannerErrors[index] && !getValues(`banners.${index}.image_url`) && (
                           <Typography color="error" variant="caption">
                             Vui lòng chọn ảnh banner
                           </Typography>
