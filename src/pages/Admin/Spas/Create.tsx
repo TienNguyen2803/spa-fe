@@ -1,23 +1,9 @@
 // src/pages/Admin/Spas/Create.tsx
-import { Add, CloudUpload, Delete } from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material";
 import { List } from "@refinedev/mui";
 import { useCreate, useNavigation } from "@refinedev/core";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import SpaForm from "./components/SpaForm";
-
 
 interface ISpaForm {
   name: string;
@@ -46,11 +32,6 @@ interface ISpaForm {
     close_time: string;
   }[];
 }
-
-const BANNER_TYPES = [
-  { value: 0, label: "Banner chính" },
-  { value: 1, label: "Banner phụ" },
-];
 
 export default function CreateSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);

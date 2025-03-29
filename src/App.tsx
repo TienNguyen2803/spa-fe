@@ -199,7 +199,7 @@ function App() {
                   <Route path="/spas">
                     <Route index element={<ListSpaPage />} />
                     <Route path="create" element={<CreateSpaPage />} />
-                    <Route path="edit/:id" element={<CreateSpaPage />} />
+                    <Route path="edit/:id" element={<EditSpaPage />} />
                   </Route>
                   <Route path="/users">
                     <Route index element={<UsersList />} />
