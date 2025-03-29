@@ -153,9 +153,34 @@ export default function ListSpaPage() {
       {
         field: "logo_url",
         headerName: "Logo",
-        width: 180,
-        align: "center",
-        headerAlign: "center",
+        width: 120,
+        renderCell: (params) => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <Avatar
+              src={params.value}
+              alt={params.row.name}
+              variant="rounded"
+              sx={{
+                width: 50,
+                height: 50,
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                },
+              }}
+            />
+          </Box>
+        ),
+        sortable: false,
       },
       {
         field: "address",
