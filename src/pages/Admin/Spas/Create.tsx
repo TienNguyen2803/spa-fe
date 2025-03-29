@@ -105,18 +105,7 @@ export default function CreateSpaPage() {
   };
 
   return (
-    <List
-      headerButtons={[
-        <Button
-          key="save"
-          onClick={handleSubmit(onSubmit)}
-          variant="contained"
-          color="primary"
-        >
-          Save
-        </Button>,
-      ]}
-    >
+    <List>
       <form>
         <Grid container spacing={2}>
           
@@ -393,8 +382,9 @@ export default function CreateSpaPage() {
                   <TextField
                     {...register(`workingHours.0.day`)}
                     defaultValue="Monday"
+                    label="Ngày trong tuần"
                     size="small"
-                    sx={{ width: 120 }}
+                    sx={{ width: 180 }}
                   />
                   <TextField
                     {...register(`workingHours.0.open_time`)}
@@ -415,6 +405,15 @@ export default function CreateSpaPage() {
             </Card>
           </Grid>
         </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+          <Button 
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit(onSubmit)}
+          >
+            Save
+          </Button>
+        </Box>
       </form>
     </List>
   );
