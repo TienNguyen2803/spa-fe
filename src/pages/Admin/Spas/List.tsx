@@ -115,87 +115,127 @@ export default function ListSpaPage() {
       {
         field: "index",
         headerName: "No.",
-        width: 70,
+        width: 80,
+        align: "center",
+        headerAlign: "center",
         renderCell: (params) => {
-          try {
-            // Lấy index của hàng trong trang hiện tại
-            const rowIndexInPage = params.api.getRowIndexRelativeToVisibleRows
-              ? params.api.getRowIndexRelativeToVisibleRows(params.row.id)
-              : params.api.getRowIndex(params.row.id) %
-                params.api.getPageSize();
-
-            // Tính toán STT dựa trên trang hiện tại
-            const currentPage = params.api.state?.pagination?.page || 0;
-            const pageSize = params.api.state?.pagination?.pageSize || 10;
-
-            return currentPage * pageSize + rowIndexInPage + 1;
-          } catch (error) {
-            console.warn("Error calculating row number:", error);
-            return "-";
-          }
+          const index = params.api.getRowIndexRelativeToCurrentPage(params.row.id);
+          return (
+            <Typography variant="body2" fontWeight="500">
+              {index + 1}
+            </Typography>
+          );
         },
         sortable: false,
         filterable: false,
-        disableColumnMenu: true,
-        headerAlign: "center",
-        align: "center",
       },
       {
         field: "name",
         headerName: "Tên Spa",
-        width: 200,
+        flex: 1,
+        minWidth: 200,
         renderCell: (params) => (
           <Tooltip title={params.value} arrow>
-            <Typography noWrap>{params.value}</Typography>
+            <Typography variant="body2" noWrap sx={{ fontWeight: 500 }}>
+              {params.value}
+            </Typography>
           </Tooltip>
         ),
       },
       {
         field: "logo_url",
         headerName: "Logo",
-        width: 180,
+        width: 120,
         align: "center",
         headerAlign: "center",
+        renderCell: (params) => (
+          <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+            <Tooltip title={`Logo ${params.row.name}`} arrow>
+              <Avatar
+                src={params.value}
+                alt={params.row.name}
+                variant="rounded"
+                sx={{
+                  width: 50,
+                  height: 50,
+                  bgcolor: "background.paper",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: 1,
+                  boxShadow: 1,
+                  transition: "all 0.2s ease-in-out",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: 2,
+                    borderColor: "primary.main",
+                  },
+                  p: 0.5,
+                }}
+                onClick={() => window.open(params.value, '_blank')}
+              />
+            </Tooltip>
+          </Box>
+        ),
       },
       {
         field: "address",
         headerName: "Địa chỉ",
-        width: 300,
+        flex: 1.5,
+        minWidth: 250,
         renderCell: (params) => (
           <Tooltip title={params.value} arrow>
-            <Typography noWrap>{params.value}</Typography>
+            <Typography variant="body2" noWrap>
+              {params.value}
+            </Typography>
           </Tooltip>
         ),
       },
       {
         field: "phone",
         headerName: "Số điện thoại",
-        width: 150,
+        width: 160,
+        align: "center",
+        headerAlign: "center",
         renderCell: (params) => (
           <Chip
-            icon={<LinkIcon fontSize="small" />}
+            icon={<LinkIcon sx={{ fontSize: 16 }} />}
             label={params.value}
             variant="outlined"
             size="small"
             onClick={() => window.open(`tel:${params.value}`)}
             clickable
+            sx={{ 
+              '& .MuiChip-label': { 
+                fontSize: '0.875rem',
+                px: 1
+              }
+            }}
           />
         ),
       },
       {
         field: "email",
         headerName: "Email",
-        width: 250,
+        flex: 1,
+        minWidth: 200,
         renderCell: (params) => (
           <Tooltip title={params.value} arrow>
             <Chip
-              icon={<LinkIcon fontSize="small" />}
+              icon={<LinkIcon sx={{ fontSize: 16 }} />}
               label={params.value}
               variant="outlined"
               size="small"
               onClick={() => window.open(`mailto:${params.value}`)}
               clickable
-              sx={{ maxWidth: 230 }}
+              sx={{ 
+                maxWidth: '100%',
+                '& .MuiChip-label': {
+                  fontSize: '0.875rem',
+                  px: 1,
+                  textOverflow: 'ellipsis'
+                }
+              }}
             />
           </Tooltip>
         ),
@@ -203,17 +243,20 @@ export default function ListSpaPage() {
       {
         field: "social_media",
         headerName: "Mạng xã hội",
-        width: 150,
+        width: 120,
+        align: "center",
+        headerAlign: "center",
         renderCell: (params) => (
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ display: "flex", gap: 0.5, justifyContent: "center" }}>
             {params.row.facebook_url && (
               <Tooltip title="Facebook" arrow>
                 <IconButton
                   size="small"
                   color="primary"
                   onClick={() => window.open(params.row.facebook_url, "_blank")}
+                  sx={{ '&:hover': { bgcolor: 'primary.light' } }}
                 >
-                  <FacebookIcon />
+                  <FacebookIcon sx={{ fontSize: 20 }} />
                 </IconButton>
               </Tooltip>
             )}
@@ -222,11 +265,10 @@ export default function ListSpaPage() {
                 <IconButton
                   size="small"
                   color="secondary"
-                  onClick={() =>
-                    window.open(params.row.instagram_url, "_blank")
-                  }
+                  onClick={() => window.open(params.row.instagram_url, "_blank")}
+                  sx={{ '&:hover': { bgcolor: 'secondary.light' } }}
                 >
-                  <InstagramIcon />
+                  <InstagramIcon sx={{ fontSize: 20 }} />
                 </IconButton>
               </Tooltip>
             )}
@@ -236,21 +278,28 @@ export default function ListSpaPage() {
       {
         field: "actions",
         headerName: "Hành động",
-        width: 150,
+        width: 120,
+        align: "center",
+        headerAlign: "center",
         renderCell: (params) => (
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box sx={{ display: "flex", gap: 0.5, justifyContent: "center" }}>
             <Tooltip title="Chỉnh sửa" arrow>
               <IconButton
                 color="primary"
                 onClick={() => handleEdit(params.row.id)}
                 size="small"
+                sx={{ '&:hover': { bgcolor: 'primary.light' } }}
               >
-                <EditIcon fontSize="small" />
+                <EditIcon sx={{ fontSize: 20 }} />
               </IconButton>
             </Tooltip>
             <Tooltip title="Xóa" arrow>
-              <IconButton color="error" size="small">
-                <DeleteIcon fontSize="small" />
+              <IconButton 
+                color="error" 
+                size="small"
+                sx={{ '&:hover': { bgcolor: 'error.light' } }}
+              >
+                <DeleteIcon sx={{ fontSize: 20 }} />
               </IconButton>
             </Tooltip>
           </Box>
