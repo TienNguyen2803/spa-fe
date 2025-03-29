@@ -313,44 +313,48 @@ export default function ListSpaPage() {
             maxWidth: 800,
           }}
         >
-          <TextField
-            label="Tìm kiếm"
-            placeholder="Tìm theo tên, địa chỉ hoặc email..."
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-              endAdornment: searchTerm && (
-                <InputAdornment position="end">
-                  <IconButton size="small" onClick={handleClearSearch}>
-                    <ClearIcon fontSize="small" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSearch}
-            sx={{
-              backgroundColor: "#1976d2",
-              "&:hover": { backgroundColor: "#1565c0" },
-            }}
-          >
-            Tìm kiếm
-          </Button>
+          <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+            <TextField
+              label="Tìm kiếm"
+              placeholder="Tìm theo tên, địa chỉ hoặc email..."
+              variant="outlined"
+              size="small"
+              fullWidth
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+                endAdornment: searchTerm && (
+                  <InputAdornment position="end">
+                    <IconButton size="small" onClick={handleClearSearch}>
+                      <ClearIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={handleSearch}
+              sx={{
+                minWidth: '120px',
+                height: '40px',
+                backgroundColor: "#1976d2",
+                "&:hover": { backgroundColor: "#1565c0" },
+              }}
+            >
+              Tìm kiếm
+            </Button>
+          </Box>
         </Box>
         <Button
           variant="contained"
