@@ -50,33 +50,41 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { push } = useNavigation();
-  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors }, trigger } =
-    useForm<ISpaForm>({
-      mode: 'onChange',
-      reValidateMode: 'onChange',
-      defaultValues: {
-        logo_url: "",
-        logo_filename: "",
-        banners: [
-          {
-            image_url: "",
-            preview_url: "",
-            title: "",
-            subtitle: "",
-            order: 0,
-            is_active: true,
-            type: 0,
-          },
-        ],
-        workingHours: [
-          {
-            day: "Monday",
-            open_time: "09:00",
-            close_time: "18:00",
-          },
-        ],
-      },
-    });
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    formState: { errors },
+    trigger,
+  } = useForm<ISpaForm>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      logo_url: "",
+      logo_filename: "",
+      banners: [
+        {
+          image_url: "",
+          preview_url: "",
+          title: "",
+          subtitle: "",
+          order: 0,
+          is_active: true,
+          type: 0,
+        },
+      ],
+      workingHours: [
+        {
+          day: "Monday",
+          open_time: "09:00",
+          close_time: "18:00",
+        },
+      ],
+    },
+  });
 
   const {
     fields: bannerFields,
@@ -195,7 +203,9 @@ export default function CreateSpaPage() {
                     label="Số điện thoại"
                     size="small"
                     error={!!errors.phone}
-                    helperText={errors.phone ? "Vui lòng nhập số điện thoại" : ""}
+                    helperText={
+                      errors.phone ? "Vui lòng nhập số điện thoại" : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -225,7 +235,9 @@ export default function CreateSpaPage() {
                     label="SEO Title"
                     size="small"
                     error={!!errors.seo_title}
-                    helperText={errors.seo_title ? "Vui lòng nhập SEO Title" : ""}
+                    helperText={
+                      errors.seo_title ? "Vui lòng nhập SEO Title" : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -237,7 +249,11 @@ export default function CreateSpaPage() {
                     rows={2}
                     size="small"
                     error={!!errors.seo_description}
-                    helperText={errors.seo_description ? "Vui lòng nhập SEO Description" : ""}
+                    helperText={
+                      errors.seo_description
+                        ? "Vui lòng nhập SEO Description"
+                        : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -247,7 +263,9 @@ export default function CreateSpaPage() {
                     label="Facebook URL"
                     size="small"
                     error={!!errors.facebook_url}
-                    helperText={errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""}
+                    helperText={
+                      errors.facebook_url ? "Vui lòng nhập Facebook URL" : ""
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -257,7 +275,9 @@ export default function CreateSpaPage() {
                     label="Instagram URL"
                     size="small"
                     error={!!errors.instagram_url}
-                    helperText={errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""}
+                    helperText={
+                      errors.instagram_url ? "Vui lòng nhập Instagram URL" : ""
+                    }
                   />
                 </Grid>
               </Grid>
@@ -349,38 +369,58 @@ export default function CreateSpaPage() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        {...register(`banners.${index}.title`, { required: true })}
+                        {...register(`banners.${index}.title`, {
+                          required: true,
+                        })}
                         fullWidth
                         label="Tiêu đề"
                         size="small"
-                        error={isSubmitted && !getValues(`banners.${index}.title`)}
-                        helperText={isSubmitted && !getValues(`banners.${index}.title`) ? "Vui lòng nhập tiêu đề" : ""}
+                        error={!getValues(`banners.${index}.title`)}
+                        helperText={
+                          !getValues(`banners.${index}.title`)
+                            ? "Vui lòng nhập tiêu đề"
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <TextField
-                        {...register(`banners.${index}.subtitle`, { required: true })}
+                        {...register(`banners.${index}.subtitle`, {
+                          required: true,
+                        })}
                         fullWidth
                         label="Phụ đề"
                         size="small"
-                        error={isSubmitted && !getValues(`banners.${index}.subtitle`)}
-                        helperText={isSubmitted && !getValues(`banners.${index}.subtitle`) ? "Vui lòng nhập phụ đề" : ""}
+                        error={!getValues(`banners.${index}.subtitle`)}
+                        helperText={
+                          !getValues(`banners.${index}.subtitle`)
+                            ? "Vui lòng nhập phụ đề"
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={2}>
                       <TextField
-                        {...register(`banners.${index}.order`, { required: true })}
+                        {...register(`banners.${index}.order`, {
+                          required: true,
+                        })}
                         fullWidth
                         label="Thứ tự"
                         type="number"
                         size="small"
-                        error={isSubmitted && !getValues(`banners.${index}.order`)}
-                        helperText={isSubmitted && !getValues(`banners.${index}.order`) ? "Vui lòng nhập thứ tự" : ""}
+                        error={!getValues(`banners.${index}.order`)}
+                        helperText={
+                          !getValues(`banners.${index}.order`)
+                            ? "Vui lòng nhập thứ tự"
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={2}>
                       <TextField
-                        {...register(`banners.${index}.type`, { required: true })}
+                        {...register(`banners.${index}.type`, {
+                          required: true,
+                        })}
                         select
                         fullWidth
                         label="Loại"
@@ -436,25 +476,41 @@ export default function CreateSpaPage() {
                     size="small"
                     sx={{ width: 180 }}
                     error={!!(getValues(`workingHours.0.day`) === "")}
-                    helperText={getValues(`workingHours.0.day`) === "" ? "Vui lòng chọn ngày" : ""}
+                    helperText={
+                      getValues(`workingHours.0.day`) === ""
+                        ? "Vui lòng chọn ngày"
+                        : ""
+                    }
                   />
                   <TextField
-                    {...register(`workingHours.0.open_time`, { required: true })}
+                    {...register(`workingHours.0.open_time`, {
+                      required: true,
+                    })}
                     label="Giờ mở cửa"
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
                     error={!!(getValues(`workingHours.0.open_time`) === "")}
-                    helperText={getValues(`workingHours.0.open_time`) === "" ? "Vui lòng nhập giờ mở cửa" : ""}
+                    helperText={
+                      getValues(`workingHours.0.open_time`) === ""
+                        ? "Vui lòng nhập giờ mở cửa"
+                        : ""
+                    }
                   />
                   <TextField
-                    {...register(`workingHours.0.close_time`, { required: true })}
+                    {...register(`workingHours.0.close_time`, {
+                      required: true,
+                    })}
                     label="Giờ đóng cửa"
                     type="time"
                     size="small"
                     InputLabelProps={{ shrink: true }}
                     error={!!(getValues(`workingHours.0.close_time`) === "")}
-                    helperText={getValues(`workingHours.0.close_time`) === "" ? "Vui lòng nhập giờ đóng cửa" : ""}
+                    helperText={
+                      getValues(`workingHours.0.close_time`) === ""
+                        ? "Vui lòng nhập giờ đóng cửa"
+                        : ""
+                    }
                   />
                 </Grid>
               </Grid>
