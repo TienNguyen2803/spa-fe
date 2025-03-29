@@ -52,11 +52,15 @@ export default function ListSpaPage() {
 
   const columns: GridColDef[] = [
     {
-      field: "no",
+      field: "index",
       headerName: "No.",
       width: 70,
-      valueGetter: (params) => params.api.getRowIndex(params.row.id) + 1,
+      renderCell: (params) => {
+        const index = params.api.getRowIndexRelativeToCurrentPage(params.row.id);
+        return index + 1;
+      },
       sortable: false,
+      filterable: false,
     },
     { field: "name", headerName: "Tên Spa", width: 200 },
     {
