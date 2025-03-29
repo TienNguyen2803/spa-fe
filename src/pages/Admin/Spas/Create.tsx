@@ -177,32 +177,40 @@ export default function CreateSpaPage() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Button
-                      variant="outlined"
-                      component="label"
-                      startIcon={<CloudUpload />}
-                      size="small"
-                    >
-                      Upload Logo
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            const filename = `${Date.now()}-${file.name}`;
-                            const filepath = `/imgs/${filename}`;
-                            setValue("logo_url", filepath);
-                            setValue("logo_filename", file.name);
-                          }
-                        }}
-                      />
-                    </Button>
-                    {watch("logo_filename") && (
-                      <Typography variant="body2">
-                        {watch("logo_filename")}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexDirection: "column", alignItems: "flex-start" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                      <Button
+                        variant="outlined"
+                        component="label"
+                        startIcon={<CloudUpload />}
+                        size="small"
+                      >
+                        Upload Logo
+                        <input
+                          type="file"
+                          hidden
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const filename = `${Date.now()}-${file.name}`;
+                              const filepath = `/imgs/${filename}`;
+                              setValue("logo_url", filepath);
+                              setValue("logo_filename", file.name);
+                              setValue("logo_error", "");
+                            }
+                          }}
+                        />
+                      </Button>
+                      {watch("logo_filename") && (
+                        <Typography variant="body2">
+                          {watch("logo_filename")}
+                        </Typography>
+                      )}
+                    </Box>
+                    {!watch("logo_url") && (
+                      <Typography color="error" variant="caption">
+                        Vui lòng chọn logo
                       </Typography>
                     )}
                   </Box>
@@ -347,43 +355,48 @@ export default function CreateSpaPage() {
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                      >
-                        <Button
-                          variant="outlined"
-                          component="label"
-                          startIcon={<CloudUpload />}
-                          size="small"
-                        >
-                          Upload Banner
-                          <input
-                            type="file"
-                            hidden
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const filename = `${Date.now()}-${file.name}`;
-                                const filepath = `/imgs/${filename}`;
-                                setValue(
-                                  `banners.${index}.image_url`,
-                                  filepath,
-                                );
-                                setValue(
-                                  `banners.${index}.filename`,
-                                  file.name,
-                                );
-                                // Force rerender
-                                const currentFields = getValues();
-                                setValue("banners", [...currentFields.banners]);
-                              }
-                            }}
-                          />
-                        </Button>
-                        {getValues(`banners.${index}.filename`) && (
-                          <Typography variant="body2" sx={{ mt: 1 }}>
-                            {getValues(`banners.${index}.filename`)}
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexDirection: "column", alignItems: "flex-start" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                          <Button
+                            variant="outlined"
+                            component="label"
+                            startIcon={<CloudUpload />}
+                            size="small"
+                          >
+                            Upload Banner
+                            <input
+                              type="file"
+                              hidden
+                              accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  const filename = `${Date.now()}-${file.name}`;
+                                  const filepath = `/imgs/${filename}`;
+                                  setValue(
+                                    `banners.${index}.image_url`,
+                                    filepath,
+                                  );
+                                  setValue(
+                                    `banners.${index}.filename`,
+                                    file.name,
+                                  );
+                                  //Force rerender
+                                  const currentFields = getValues();
+                                  setValue("banners", [...currentFields.banners]);
+                                }
+                              }}
+                            />
+                          </Button>
+                          {getValues(`banners.${index}.filename`) && (
+                            <Typography variant="body2">
+                              {getValues(`banners.${index}.filename`)}
+                            </Typography>
+                          )}
+                        </Box>
+                        {!getValues(`banners.${index}.image_url`) && (
+                          <Typography color="error" variant="caption">
+                            Vui lòng chọn ảnh banner
                           </Typography>
                         )}
                       </Box>
