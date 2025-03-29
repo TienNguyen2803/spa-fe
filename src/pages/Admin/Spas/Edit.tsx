@@ -1,6 +1,7 @@
+
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
-import { useForm } from "react-hook-form";
+import { useForm } from "@refinedev/react-hook-form";
 import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import { useParams } from "react-router-dom";
 import SpaForm from "./components/SpaForm";
@@ -39,36 +40,45 @@ export default function EditSpaPage() {
   const { push } = useNavigation();
   const { id } = useParams();
 
-  const form = useForm<ISpaForm>({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-  });
-
-  const { data } = useOne({
+  const { queryResult } = useOne({
     resource: "spa-info",
-    id: id as string,
+    id: id || "",
   });
 
-  const { mutate } = useUpdate({
-    resource: "spa-info",
-    successNotification: {
-      message: "Cập nhật Spa thành công",
-      type: "success",
+  const { data } = queryResult;
+
+  const {
+    refineCore: { onFinish },
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+    watch,
+  } = useForm<ISpaForm>({
+    refineCoreProps: {
+      resource: "spa-info",
+      id: id,
+      action: "edit",
+      redirect: false,
     },
-    errorNotification: {
-      message: "Có lỗi xảy ra khi cập nhật Spa",
-      type: "error",
+    values: {
+      name: data?.data.name || "",
+      address: data?.data.address || "",
+      phone: data?.data.phone || "",
+      email: data?.data.email || "",
+      logo_url: data?.data.logo_url || "",
+      logo_filename: data?.data.logo_filename || "",
+      seo_title: data?.data.seo_title || "",
+      seo_description: data?.data.seo_description || "",
+      facebook_url: data?.data.facebook_url || "",
+      instagram_url: data?.data.instagram_url || "",
+      banners: data?.data.banners || [],
+      workingHours: data?.data.workingHours || [],
     },
   });
 
-  React.useEffect(() => {
-    if (data?.data) {
-      form.reset(data.data);
-      setShowBannerErrors(
-        new Array(data.data.banners?.length || 1).fill(false),
-      );
-    }
-  }, [data]);
+  const { mutate } = useUpdate();
 
   const onSubmit = async (data: ISpaForm) => {
     let hasError = false;
@@ -84,30 +94,19 @@ export default function EditSpaPage() {
       hasError = true;
     }
 
-    await form.trigger();
     if (hasError) {
       window.alert("Vui lòng upload logo và banner");
       return;
     }
 
-    mutate(
-      {
-        resource: "spa-info",
-        id: id as string,
-        values: data,
-      },
-      {
-        onSuccess: () => {
-          push("/spas");
-        },
-      },
-    );
+    await onFinish(data);
+    push("/spas");
   };
 
   return (
     <List>
       <SpaForm
-        form={form}
+        form={{ register, handleSubmit, setValue, control, formState: { errors }, watch }}
         onSubmit={onSubmit}
         showLogoError={showLogoError}
         setShowLogoError={setShowLogoError}
