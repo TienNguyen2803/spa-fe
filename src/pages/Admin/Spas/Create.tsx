@@ -50,8 +50,9 @@ const BANNER_TYPES = [
 
 export default function CreateSpaPage() {
   const { push } = useNavigation();
-  const { register, control, handleSubmit, watch, setValue, getValues } =
+  const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors }, trigger } =
     useForm<ISpaForm>({
+      mode: 'onSubmit',
       defaultValues: {
         logo_url: "",
         logo_filename: "",
@@ -101,6 +102,9 @@ export default function CreateSpaPage() {
   });
 
   const onSubmit = async (data: ISpaForm) => {
+    const isValid = await trigger();
+    if (!isValid) return;
+    
     mutate({
       resource: "spa-info",
       values: {
@@ -135,8 +139,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Tên Spa"
                     size="small"
-                    error={!!(getValues("name") === "")}
-                    helperText={getValues("name") === "" ? "Vui lòng nhập tên Spa" : ""}
+                    error={!!errors.name}
+                    helperText={errors.name ? "Vui lòng nhập tên Spa" : ""}
                   />
                 </Grid>
                 <Grid item xs={12}>
