@@ -1,8 +1,9 @@
-
-import { Edit } from "@refinedev/mui";
-import { useForm } from "@refinedev/react-hook-form";
-import { Box, Grid, TextField } from "@mui/material";
+import { useState } from "react";
+import { List } from "@refinedev/mui";
+import { useForm } from "react-hook-form";
+import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import { useParams } from "react-router-dom";
+import SpaForm from "./components/SpaForm";
 
 interface ISpaForm {
   name: string;
@@ -33,123 +34,84 @@ interface ISpaForm {
 }
 
 export default function EditSpaPage() {
+  const [showLogoError, setShowLogoError] = useState(false);
+  const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
+  const { push } = useNavigation();
   const { id } = useParams();
 
-  const {
-    refineCore: { onFinish, formLoading, queryResult },
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-    saveButtonProps,
-  } = useForm<ISpaForm>({
-    refineCoreProps: {
-      resource: "spa-info",
-      id: id,
-      action: "edit",
-      redirect: false,
+  const form = useForm<ISpaForm>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+  });
+
+  const { data } = useOne({
+    resource: "spa-info",
+    id: id as string,
+  });
+
+  const { mutate } = useUpdate({
+    resource: "spa-info",
+    successNotification: {
+      message: "Cập nhật Spa thành công",
+      type: "success",
+    },
+    errorNotification: {
+      message: "Có lỗi xảy ra khi cập nhật Spa",
+      type: "error",
     },
   });
 
-  const spaData = queryResult?.data?.data;
+  React.useEffect(() => {
+    if (data?.data) {
+      form.reset(data.data);
+      setShowBannerErrors(new Array(data.data.banners?.length || 1).fill(false));
+    }
+  }, [data]);
+
+  const onSubmit = async (data: ISpaForm) => {
+    let hasError = false;
+
+    if (!data.logo_url) {
+      setShowLogoError(true);
+      hasError = true;
+    }
+
+    const newBannerErrors = data.banners.map((banner) => !banner.image_url);
+    setShowBannerErrors(newBannerErrors);
+    if (newBannerErrors.some((error) => error)) {
+      hasError = true;
+    }
+
+    await form.trigger();
+    if (hasError) {
+      window.alert("Vui lòng upload logo và banner");
+      return;
+    }
+
+    mutate(
+      {
+        resource: "spa-info",
+        id: id as string,
+        values: data,
+      },
+      {
+        onSuccess: () => {
+          push("/spas");
+        },
+      },
+    );
+  };
 
   return (
-    <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
-      <Box
-        component="form"
-        sx={{ pt: 2 }}
-        autoComplete="off"
-        onSubmit={handleSubmit(onFinish)}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("name", {
-                required: "Tên spa là bắt buộc",
-              })}
-              label="Tên Spa"
-              defaultValue={spaData?.name}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("email", {
-                required: "Email là bắt buộc",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Email không hợp lệ",
-                },
-              })}
-              label="Email"
-              defaultValue={spaData?.email}
-              error={!!errors.email}
-              helperText={errors.email?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("address", {
-                required: "Địa chỉ là bắt buộc",
-              })}
-              label="Địa chỉ"
-              defaultValue={spaData?.address}
-              error={!!errors.address}
-              helperText={errors.address?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("phone", {
-                required: "Số điện thoại là bắt buộc",
-              })}
-              label="Số điện thoại"
-              defaultValue={spaData?.phone}
-              error={!!errors.phone}
-              helperText={errors.phone?.message}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("facebook_url")}
-              label="Facebook URL"
-              defaultValue={spaData?.facebook_url}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              {...register("instagram_url")}
-              label="Instagram URL"
-              defaultValue={spaData?.instagram_url}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("seo_title")}
-              label="SEO Title"
-              defaultValue={spaData?.seo_title}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("seo_description")}
-              label="SEO Description"
-              defaultValue={spaData?.seo_description}
-              multiline
-              rows={3}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
-      </Box>
-    </Edit>
+    <List>
+      <SpaForm
+        form={form}
+        onSubmit={onSubmit}
+        showLogoError={showLogoError}
+        setShowLogoError={setShowLogoError}
+        showBannerErrors={showBannerErrors}
+        setShowBannerErrors={setShowBannerErrors}
+      />
+    </List>
   );
 }
