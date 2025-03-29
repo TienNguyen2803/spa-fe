@@ -350,8 +350,8 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Tiêu đề"
                         size="small"
-                        error={!!(getValues(`banners.${index}.title`) === "")}
-                        helperText={getValues(`banners.${index}.title`) === "" ? "Vui lòng nhập tiêu đề" : ""}
+                        error={isSubmitted && !getValues(`banners.${index}.title`)}
+                        helperText={isSubmitted && !getValues(`banners.${index}.title`) ? "Vui lòng nhập tiêu đề" : ""}
                       />
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -360,8 +360,8 @@ export default function CreateSpaPage() {
                         fullWidth
                         label="Phụ đề"
                         size="small"
-                        error={!!(getValues(`banners.${index}.subtitle`) === "")}
-                        helperText={getValues(`banners.${index}.subtitle`) === "" ? "Vui lòng nhập phụ đề" : ""}
+                        error={isSubmitted && !getValues(`banners.${index}.subtitle`)}
+                        helperText={isSubmitted && !getValues(`banners.${index}.subtitle`) ? "Vui lòng nhập phụ đề" : ""}
                       />
                     </Grid>
                     <Grid item xs={12} md={2}>
@@ -371,8 +371,8 @@ export default function CreateSpaPage() {
                         label="Thứ tự"
                         type="number"
                         size="small"
-                        error={!!(getValues(`banners.${index}.order`) === "")}
-                        helperText={getValues(`banners.${index}.order`) === "" ? "Vui lòng nhập thứ tự" : ""}
+                        error={isSubmitted && !getValues(`banners.${index}.order`)}
+                        helperText={isSubmitted && !getValues(`banners.${index}.order`) ? "Vui lòng nhập thứ tự" : ""}
                       />
                     </Grid>
                     <Grid item xs={12} md={2}>
