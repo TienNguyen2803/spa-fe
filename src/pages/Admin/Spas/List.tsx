@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import { useTable, useNavigation } from "@refinedev/core";
 import { List } from "@refinedev/mui";
@@ -7,11 +8,13 @@ import {
   TextField,
   IconButton,
   InputAdornment,
+  Avatar,
 } from "@mui/material";
 import {
   Add as AddIcon,
   Search as SearchIcon,
   Clear as ClearIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
@@ -22,7 +25,6 @@ interface Spa {
   address: string;
   phone: string;
   email: string;
-  description: string;
   seo_title: string;
   seo_description: string;
   facebook_url: string;
@@ -45,12 +47,47 @@ export default function ListSpaPage() {
     setSearchQuery(searchTerm);
   };
 
+  const handleEdit = (id: number) => {
+    push(`/spas/edit/${id}`);
+  };
+
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Tên", width: 200 },
-    { field: "address", headerName: "Địa chỉ", width: 250 },
+    { field: "name", headerName: "Tên Spa", width: 200 },
+    {
+      field: "logo_url",
+      headerName: "Logo",
+      width: 100,
+      renderCell: (params) => (
+        <Avatar
+          src={params.value}
+          alt={params.row.name}
+          variant="rounded"
+          sx={{ width: 40, height: 40 }}
+        />
+      ),
+    },
+    { field: "address", headerName: "Địa chỉ", width: 300 },
     { field: "phone", headerName: "Số điện thoại", width: 150 },
-    { field: "email", headerName: "Email", width: 200 },
+    { field: "email", headerName: "Email", width: 250 },
+    { field: "seo_title", headerName: "Tiêu đề SEO", width: 200 },
+    { field: "seo_description", headerName: "Mô tả SEO", width: 200 },
+    { field: "facebook_url", headerName: "Facebook", width: 150 },
+    { field: "instagram_url", headerName: "Instagram", width: 150 },
+    {
+      field: "actions",
+      headerName: "Hành động",
+      width: 120,
+      sortable: false,
+      renderCell: (params) => (
+        <Button
+          startIcon={<EditIcon />}
+          onClick={() => handleEdit(params.row.id)}
+          size="small"
+        >
+          Chỉnh sửa
+        </Button>
+      ),
+    },
   ];
 
   const filteredData = useMemo(() => {
