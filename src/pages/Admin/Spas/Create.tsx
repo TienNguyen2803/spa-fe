@@ -123,16 +123,16 @@ export default function CreateSpaPage() {
       hasError = true;
     }
 
-    // Check banners image_url
+    // Check banners image_url 
     const newBannerErrors = data.banners.map(banner => !banner.image_url);
     setShowBannerErrors(newBannerErrors);
     if (newBannerErrors.some(error => error)) {
       hasError = true;
     }
 
-    const result = await trigger();
-    if (!result || hasError) {
-      window.alert("Vui lòng điền đầy đủ thông tin bắt buộc");
+    await trigger();
+    if (hasError) {
+      window.alert("Vui lòng upload logo và banner");
       return;
     }
 
@@ -206,7 +206,7 @@ export default function CreateSpaPage() {
                         </Typography>
                       )}
                     </Box>
-                    {showLogoError && (
+                    {(showLogoError || isSubmitted) && !watch("logo_url") && (
                       <Typography color="error" variant="caption">
                         Vui lòng chọn logo
                       </Typography>
@@ -396,7 +396,7 @@ export default function CreateSpaPage() {
                             </Typography>
                           )}
                         </Box>
-                        {showBannerErrors[index] && (
+                        {(showBannerErrors[index] || isSubmitted) && !watch(`banners.${index}.image_url`) && (
                           <Typography color="error" variant="caption">
                             Vui lòng chọn ảnh banner
                           </Typography>
