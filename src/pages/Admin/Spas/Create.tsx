@@ -52,7 +52,7 @@ export default function CreateSpaPage() {
   const { push } = useNavigation();
   const { register, control, handleSubmit, watch, setValue, getValues, formState: { errors }, trigger } =
     useForm<ISpaForm>({
-      mode: 'onSubmit',
+      mode: 'onChange',
       reValidateMode: 'onChange',
       defaultValues: {
         logo_url: "",
@@ -103,13 +103,12 @@ export default function CreateSpaPage() {
   });
 
   const onSubmit = async (data: ISpaForm) => {
-    const isValid = await trigger(undefined, { shouldFocus: true });
-    if (!isValid) {
-      // Show error notification
+    const result = await trigger();
+    if (!result) {
       window.alert("Vui lòng điền đầy đủ thông tin bắt buộc");
       return;
     }
-    
+
     mutate({
       resource: "spa-info",
       values: {
@@ -144,8 +143,8 @@ export default function CreateSpaPage() {
                     fullWidth
                     label="Tên Spa"
                     size="small"
-                    error={isSubmitted && !!errors.name}
-                    helperText={isSubmitted && errors.name ? "Vui lòng nhập tên Spa" : ""}
+                    error={!!errors.name}
+                    helperText={errors.name ? "Vui lòng nhập tên Spa" : ""}
                   />
                 </Grid>
                 <Grid item xs={12}>
