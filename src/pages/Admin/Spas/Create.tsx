@@ -292,20 +292,28 @@ export default function CreateSpaPage() {
                           <input
                             type="file"
                             hidden
-                            accept="image/*"
-                            onChange={(e) => {
+                            accept="image/*"  
+                            onChange={async (e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                const filename = `${Date.now()}-${file.name}`;
-                                const filepath = `/imgs/${filename}`;
-                                setValue(
-                                  `banners.${index}.image_url`,
-                                  filepath,
-                                );
-                                setValue(
-                                  `banners.${index}.filename`,
-                                  file.name,
-                                );
+                                try {
+                                  const filename = `${Date.now()}-${file.name}`;
+                                  const filepath = `/imgs/${filename}`;
+                                  
+                                  await setValue(`banners.${index}.image_url`, filepath, {
+                                    shouldDirty: true,
+                                    shouldTouch: true,
+                                    shouldValidate: true
+                                  });
+                                  
+                                  await setValue(`banners.${index}.filename`, file.name, {
+                                    shouldDirty: true,
+                                    shouldTouch: true,
+                                    shouldValidate: true
+                                  });
+                                } catch (error) {
+                                  console.error("Error uploading banner:", error);
+                                }
                               }
                             }}
                           />
