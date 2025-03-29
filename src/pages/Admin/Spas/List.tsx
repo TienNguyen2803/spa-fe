@@ -118,20 +118,18 @@ export default function ListSpaPage() {
         width: 70,
         renderCell: (params) => {
           try {
-            // Lấy thông tin pagination hiện tại
-            const paginationModel = params.api.getPaginationModel
-              ? params.api.getPaginationModel()
-              : { page: 0, pageSize: 10 };
+            // Lấy index của hàng trong trang hiện tại
+            const rowIndexInPage = params.api.getRowIndexRelativeToVisibleRows
+              ? params.api.getRowIndexRelativeToVisibleRows(params.row.id)
+              : params.api.getRowIndex(params.row.id) %
+                params.api.getPageSize();
 
-            // Lấy index của hàng trong danh sách hiển thị
-            const rowIndex = params.api.getRowIndex(params.id);
+            // Tính toán STT dựa trên trang hiện tại
+            const currentPage = params.api.state?.pagination?.page || 0;
+            const pageSize = params.api.state?.pagination?.pageSize || 10;
 
-            // Tính toán số thứ tự dựa trên trang hiện tại và kích thước trang
-            return (
-              paginationModel.page * paginationModel.pageSize + rowIndex + 1
-            );
+            return currentPage * pageSize + rowIndexInPage + 1;
           } catch (error) {
-            // Xử lý trường hợp không lấy được index
             console.warn("Error calculating row number:", error);
             return "-";
           }
@@ -158,11 +156,11 @@ export default function ListSpaPage() {
         width: 150,
         renderCell: (params) => (
           <Box
-            sx={{ 
-              display: "flex", 
-              justifyContent: "center", 
+            sx={{
+              display: "flex",
+              justifyContent: "center",
               width: "100%",
-              p: 1
+              p: 1,
             }}
           >
             <Avatar
@@ -180,7 +178,7 @@ export default function ListSpaPage() {
                 "&:hover": {
                   transform: "scale(1.05)",
                   boxShadow: "0 6px 12px rgba(0,0,0,0.12)",
-                  border: "2px solid #e0e0e0"
+                  border: "2px solid #e0e0e0",
                 },
               }}
             />
@@ -313,7 +311,7 @@ export default function ListSpaPage() {
             maxWidth: 800,
           }}
         >
-          <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+          <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
             <TextField
               label="Tìm kiếm"
               placeholder="Tìm theo tên, địa chỉ hoặc email..."
@@ -346,8 +344,8 @@ export default function ListSpaPage() {
               variant="contained"
               onClick={handleSearch}
               sx={{
-                minWidth: '120px',
-                height: '40px',
+                minWidth: "120px",
+                height: "40px",
                 backgroundColor: "#1976d2",
                 "&:hover": { backgroundColor: "#1565c0" },
               }}
@@ -399,7 +397,7 @@ export default function ListSpaPage() {
               border: "1px solid #e0e0e0",
               borderRadius: 2,
               "& .MuiDataGrid-main": {
-                padding: "12px"
+                padding: "12px",
               },
               "& .MuiDataGrid-row": {
                 borderBottom: "1px solid #f0f0f0",
@@ -414,14 +412,14 @@ export default function ListSpaPage() {
                 padding: "12px 16px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "flex-start"
+                justifyContent: "flex-start",
               },
               "& .MuiDataGrid-columnHeaders": {
                 borderBottom: "2px solid #f0f0f0",
                 bgcolor: "#fafafa",
                 fontWeight: "600",
                 fontSize: "0.875rem",
-                color: "#333"
+                color: "#333",
               },
               "& .MuiDataGrid-columnHeader": {
                 padding: "12px 16px",
