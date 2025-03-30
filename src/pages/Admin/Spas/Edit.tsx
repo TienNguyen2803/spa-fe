@@ -5,6 +5,10 @@ import { useParams } from "react-router-dom";
 import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import SpaForm from "./components/SpaForm";
 
+type Params = {
+  id: string;
+}
+
 interface ISpaForm {
   name: string;
   address: string;
@@ -37,8 +41,7 @@ export default function EditSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
   const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
   const { push } = useNavigation();
-  const params = useParams();
-  const id = params?.id;
+  const { id } = useParams<Params>();
   console.log("Edit Spa ID:", id);
 
   const form = useForm<ISpaForm>({
