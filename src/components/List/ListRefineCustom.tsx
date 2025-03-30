@@ -1,15 +1,20 @@
+
 import React, { ReactNode } from "react";
-import { List } from "@refinedev/mui";
-import { UseListProps } from "@refinedev/core";
+import { List, ListProps } from "@refinedev/mui";
 
-type Props = UseListProps & {
+interface ListRefineCustomProps extends Omit<ListProps, 'children'> {
   children: ReactNode;
-};
+  canCreate?: boolean;
+}
 
-export const ListRefineCustom: React.FC<Props> = ({ children, ...rest }) => {
+export const ListRefineCustom: React.FC<ListRefineCustomProps> = ({ 
+  children, 
+  canCreate = false,
+  ...rest 
+}) => {
   return (
     <List
-      canCreate={false}
+      canCreate={canCreate}
       {...rest}
       headerProps={{
         sx: {
