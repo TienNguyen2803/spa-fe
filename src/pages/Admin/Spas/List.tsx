@@ -14,9 +14,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import {
-  Add as AddIcon,
-  Search as SearchIcon,
-  Clear as ClearIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   Facebook as FacebookIcon,
@@ -88,10 +85,6 @@ export default function ListSpaPage() {
     },
     [push],
   );
-
-  const handleCreate = useCallback(() => {
-    push("/spas/create");
-  }, [push]);
 
   const columns: GridColDef[] = useMemo(
     () => [
