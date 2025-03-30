@@ -76,9 +76,9 @@ export default function EditSpaPage() {
         instagram_url: data.data.instagram_url,
         banners: banners,
         workingHours: [{
-          day_of_week: data.data.workingHours?.[0]?.day_of_week || "Monday",
-          opening_time: data.data.workingHours?.[0]?.opening_time || "09:00",
-          closing_time: data.data.workingHours?.[0]?.closing_time || "17:00",
+          day_of_week: data.data.workingHours?.[0]?.day_of_week,
+          opening_time: data.data.workingHours?.[0]?.opening_time ,
+          closing_time: data.data.workingHours?.[0]?.closing_time,
           is_closed: data.data.workingHours?.[0]?.is_closed || false
         }]
       });
