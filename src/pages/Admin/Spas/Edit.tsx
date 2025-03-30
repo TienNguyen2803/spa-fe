@@ -58,28 +58,31 @@ export default function EditSpaPage() {
 
   React.useEffect(() => {
     if (data?.data) {
+      const banners = data.data.banners?.map(banner => ({
+        ...banner,
+        filename: banner.image_url?.split('/').pop() || ''
+      })) || [];
+
       form.reset({
         name: data.data.name,
         address: data.data.address,
         phone: data.data.phone,
         email: data.data.email,
         logo_url: data.data.logo_url,
-        logo_filename: data.data.logo_filename || "",
+        logo_filename: data.data.logo_url?.split('/').pop() || "",
         seo_title: data.data.seo_title,
         seo_description: data.data.seo_description,
         facebook_url: data.data.facebook_url,
         instagram_url: data.data.instagram_url,
-        banners: data.data.banners || [],
-        workingHours: [
-          {
-            day: data.data.workingHours?.[0]?.day_of_week,
-            open_time: data.data.workingHours?.[0]?.opening_time,
-            close_time: data.data.workingHours?.[0]?.closing_time,
-          },
-        ],
+        banners: banners,
+        workingHours: [{
+          day: data.data.workingHours?.[0]?.day || "Monday",
+          open_time: data.data.workingHours?.[0]?.open_time || "09:00",
+          close_time: data.data.workingHours?.[0]?.close_time || "17:00"
+        }]
       });
       setShowBannerErrors(
-        new Array(data.data.banners?.length || 1).fill(false),
+        new Array(banners.length || 1).fill(false),
       );
     }
   }, [data, form]);
