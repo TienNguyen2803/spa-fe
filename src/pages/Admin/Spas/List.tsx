@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { useTable, useNavigation, HttpError } from "@refinedev/core";
+import { useNavigation, HttpError } from "@refinedev/core";
 import { List, useDataGrid } from "@refinedev/mui";
 import {
   Box,
@@ -23,12 +23,7 @@ import {
   Instagram as InstagramIcon,
   Link as LinkIcon,
 } from "@mui/icons-material";
-import {
-  DataGrid,
-  GridColDef,
-  GridPaginationModel,
-  GridSortModel,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 interface Spa {
   id: number;
@@ -50,10 +45,7 @@ export default function ListSpaPage() {
   const {
     dataGridProps,
     tableQueryResult: { data: tableData, isLoading, isError },
-    filters,
     setFilters,
-    setCurrent,
-    setSorting,
   } = useDataGrid<Spa, HttpError>({
     resource: "spa-info",
     pagination: {
