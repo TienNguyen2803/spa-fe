@@ -27,6 +27,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { ISpa } from "./types/spa";
 import { ListRefineCustom } from "../../../components/List/ListRefineCustom";
+import { SearchBar } from "./components/SearchBar";
 
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -269,85 +270,17 @@ export default function ListSpaPage() {
 
   return (
     <ListRefineCustom
+      canCreate={true}
       title={<Typography fontWeight={"bold"}>Danh sách Spa</Typography>}
     >
       {/* Start Search component */}
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          bgcolor: "background.paper",
-          borderRadius: 1,
-          mb: 2,
-          boxShadow: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            alignItems: "center",
-            flexGrow: 1,
-            maxWidth: 800,
-          }}
-        >
-          <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-            <TextField
-              label="Tìm kiếm"
-              placeholder="Tìm theo tên, địa chỉ hoặc email..."
-              variant="outlined"
-              size="small"
-              fullWidth
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: searchTerm && (
-                  <InputAdornment position="end">
-                    <IconButton size="small" onClick={handleClearSearch}>
-                      <ClearIcon fontSize="small" />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleSearch}
-              sx={{
-                minWidth: "120px",
-                height: "40px",
-                backgroundColor: "#1976d2",
-                "&:hover": { backgroundColor: "#1565c0" },
-              }}
-            >
-              Tìm kiếm
-            </Button>
-          </Box>
-        </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleCreate}
-          sx={{
-            bgcolor: "success.main",
-            "&:hover": { bgcolor: "success.dark" },
-          }}
-        >
-          Tạo Spa
-        </Button>
-      </Box>
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
+        handleClearSearch={handleClearSearch}
+      />
+
       {/* End Search component */}
       {isError ? (
         <Box sx={{ p: 3, textAlign: "center" }}>
