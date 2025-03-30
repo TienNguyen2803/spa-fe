@@ -5,6 +5,8 @@ import { useState } from "react";
 import SpaForm from "./components/SpaForm";
 
 import { ISpaForm } from "./types";
+import { ListRefineCustom } from "../../../components/List/ListRefineCustom";
+import { Typography } from "@mui/material";
 
 export default function CreateSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
@@ -97,7 +99,9 @@ export default function CreateSpaPage() {
   };
 
   return (
-    <List canCreate={false} title={<p>Tạo Spa</p>}>
+      <ListRefineCustom
+        title={<Typography fontWeight={"bold"}>Tạo Spa</Typography>}
+      >
       <SpaForm
         form={form}
         onSubmit={onSubmit}
@@ -106,6 +110,6 @@ export default function CreateSpaPage() {
         showBannerErrors={showBannerErrors}
         setShowBannerErrors={setShowBannerErrors}
       />
-    </List>
+    </ListRefineCustom>
   );
 }

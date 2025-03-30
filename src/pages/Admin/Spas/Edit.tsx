@@ -6,6 +6,8 @@ import SpaForm from "./components/SpaForm";
 import { useParams } from "react-router";
 
 import { ISpaForm } from "./types";
+import { ListRefineCustom } from "../../../components/List/ListRefineCustom";
+import { Typography } from "@mui/material";
 
 type Params = {
   id: string;
@@ -124,7 +126,9 @@ export default function EditSpaPage() {
   }
 
   return (
-    <List canCreate={false} title={<p>Edit Spa</p>}>
+    <ListRefineCustom
+      title={<Typography fontWeight={"bold"}>Chỉnh Sửa Spa</Typography>}
+    >
       <SpaForm
         form={form}
         onSubmit={onSubmit}
@@ -133,6 +137,6 @@ export default function EditSpaPage() {
         showBannerErrors={showBannerErrors}
         setShowBannerErrors={setShowBannerErrors}
       />
-    </List>
+    </ListRefineCustom>
   );
 }
