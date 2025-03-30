@@ -150,13 +150,13 @@ function App() {
                   show: "/users/show/:id",
                 },
                 {
-                  name: "Danh sách Spa",
+                  name: "spas",
                   list: "/spas",
                   edit: "/spas/edit/:id",
                 },
               ]}
               options={{
-                // syncWithLocation: true,
+                syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
                 // useNewQueryKeys: true,
               }}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import SpaForm from "./components/SpaForm";
+import { useParams } from "react-router";
 
 type Params = {
   id: string;
-}
+};
 
 interface ISpaForm {
   name: string;
@@ -41,23 +41,21 @@ export default function EditSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
   const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
   const { push } = useNavigation();
-  const { id } = useParams<Params>();
-  console.log("Edit Spa ID:", id);
+  const params = useParams<Params>();
+  const id = params.id;
 
   const form = useForm<ISpaForm>({
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
 
-  const { data, isLoading } = useOne({
+  const { data, refetch } = useOne({
     resource: "spa-info",
     id: id || "",
     queryOptions: {
-      enabled: !!id,
+      enabled: false,
     },
   });
-
-  console.log(data, id);
 
   const { mutate } = useUpdate({
     resource: "spa-info",
@@ -71,7 +69,9 @@ export default function EditSpaPage() {
     },
   });
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
+    const data = await refetch();
+    console.log(data);
     if (data?.data) {
       form.reset(data.data);
       setShowBannerErrors(
