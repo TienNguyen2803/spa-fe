@@ -1,13 +1,10 @@
+
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
 import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import SpaForm from "./components/SpaForm";
 import { useParams } from "react-router";
-
-type Params = {
-  id: string;
-};
 
 interface ISpaForm {
   name: string;
@@ -31,11 +28,16 @@ interface ISpaForm {
     filename?: string;
   }[];
   workingHours: {
-    day: string;
-    open_time: string;
-    close_time: string;
+    day_of_week: string;
+    opening_time: string;
+    closing_time: string;
+    is_closed: boolean;
   }[];
 }
+
+type Params = {
+  id: string;
+};
 
 export default function EditSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
@@ -53,6 +55,18 @@ export default function EditSpaPage() {
     id: id || "",
     queryOptions: {
       enabled: !!id,
+    },
+  });
+
+  const { mutate } = useUpdate({
+    resource: "spa-info",
+    successNotification: {
+      message: "Cập nhật Spa thành công",
+      type: "success",
+    },
+    errorNotification: {
+      message: "Có lỗi xảy ra khi cập nhật Spa",
+      type: "error",
     },
   });
 
@@ -76,29 +90,17 @@ export default function EditSpaPage() {
         instagram_url: data.data.instagram_url,
         banners: banners,
         workingHours: [{
-          day_of_week: data.data.workingHours?.[0]?.day_of_week,
-          opening_time: data.data.workingHours?.[0]?.opening_time ,
-          closing_time: data.data.workingHours?.[0]?.closing_time,
+          day_of_week: data.data.workingHours?.[0]?.day_of_week || "Monday",
+          opening_time: data.data.workingHours?.[0]?.opening_time || "09:00",
+          closing_time: data.data.workingHours?.[0]?.closing_time || "17:00",
           is_closed: data.data.workingHours?.[0]?.is_closed || false
         }]
       });
       setShowBannerErrors(
-        new Array(banners.length || 1).fill(false),
+        new Array(banners.length || 1).fill(false)
       );
     }
   }, [data, form]);
-
-  const { mutate } = useUpdate({
-    resource: "spa-info",
-    successNotification: {
-      message: "Cập nhật Spa thành công",
-      type: "success",
-    },
-    errorNotification: {
-      message: "Có lỗi xảy ra khi cập nhật Spa",
-      type: "error",
-    },
-  });
 
   const onSubmit = async (data: ISpaForm) => {
     let hasError = false;
