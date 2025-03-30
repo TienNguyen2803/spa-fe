@@ -6,34 +6,7 @@ import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import SpaForm from "./components/SpaForm";
 import { useParams } from "react-router";
 
-interface ISpaForm {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  logo_url: string;
-  logo_filename: string;
-  seo_title: string;
-  seo_description: string;
-  facebook_url: string;
-  instagram_url: string;
-  banners: {
-    image_url: string;
-    preview_url: string;
-    title: string;
-    subtitle: string;
-    order: number;
-    is_active: boolean;
-    type: number;
-    filename?: string;
-  }[];
-  workingHours: {
-    day_of_week: string;
-    opening_time: string;
-    closing_time: string;
-    is_closed: boolean;
-  }[];
-}
+import { ISpaForm } from "./types";
 
 type Params = {
   id: string;

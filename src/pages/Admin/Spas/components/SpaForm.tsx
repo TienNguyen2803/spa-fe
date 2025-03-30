@@ -15,43 +15,7 @@ import {
 import { Add, CloudUpload, Delete } from "@mui/icons-material";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 
-interface ISpaForm {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  logo_url: string;
-  logo_filename: string;
-  seo_title: string;
-  seo_description: string;
-  facebook_url: string;
-  instagram_url: string;
-  banners: {
-    image_url: string;
-    preview_url: string;
-    title: string;
-    subtitle: string;
-    order: number;
-    is_active: boolean;
-    type: number;
-    filename?: string;
-  }[];
-  workingHours: {
-    day_of_week: string;
-    opening_time: string;
-    closing_time: string;
-    is_closed: boolean;
-  }[];
-}
-
-interface SpaFormProps {
-  form: UseFormReturn<ISpaForm>;
-  onSubmit: (data: ISpaForm) => void;
-  showLogoError: boolean;
-  setShowLogoError: (show: boolean) => void;
-  showBannerErrors: boolean[];
-  setShowBannerErrors: (errors: boolean[]) => void;
-}
+import { ISpaForm, ISpaFormProps } from "../types";
 
 const BANNER_TYPES = [
   { value: 0, label: "Banner chính" },

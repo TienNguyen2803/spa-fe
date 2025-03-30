@@ -5,34 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import SpaForm from "./components/SpaForm";
 
-interface ISpaForm {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  logo_url: string;
-  logo_filename: string;
-  seo_title: string;
-  seo_description: string;
-  facebook_url: string;
-  instagram_url: string;
-  banners: {
-    image_url: string;
-    preview_url: string;
-    title: string;
-    subtitle: string;
-    order: number;
-    is_active: boolean;
-    type: number;
-    filename?: string;
-  }[];
-  workingHours: {
-    day_of_week: string;
-    opening_time: string;
-    closing_time: string;
-    is_closed: boolean;
-  }[];
-}
+import { ISpaForm } from "./types";
 
 export default function CreateSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
