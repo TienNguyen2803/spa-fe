@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
@@ -41,11 +42,10 @@ export default function EditSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
   const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
   const { push } = useNavigation();
-  const params = useParams<Params>();
-  const id = params.id;
+  const { id } = useParams<Params>();
 
   const form = useForm<ISpaForm>({
-    mode: "onSubmit", 
+    mode: "onSubmit",
     reValidateMode: "onChange",
   });
 
@@ -59,7 +59,20 @@ export default function EditSpaPage() {
 
   React.useEffect(() => {
     if (data?.data) {
-      form.reset(data.data);
+      form.reset({
+        name: data.data.name,
+        address: data.data.address,
+        phone: data.data.phone,
+        email: data.data.email,
+        logo_url: data.data.logo_url,
+        logo_filename: data.data.logo_filename || "",
+        seo_title: data.data.seo_title,
+        seo_description: data.data.seo_description,
+        facebook_url: data.data.facebook_url,
+        instagram_url: data.data.instagram_url,
+        banners: data.data.banners || [],
+        workingHours: data.data.workingHours || []
+      });
       setShowBannerErrors(
         new Array(data.data.banners?.length || 1).fill(false),
       );
@@ -111,6 +124,10 @@ export default function EditSpaPage() {
       },
     );
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <List>
