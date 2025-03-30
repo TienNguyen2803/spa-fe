@@ -71,7 +71,11 @@ export default function EditSpaPage() {
         facebook_url: data.data.facebook_url,
         instagram_url: data.data.instagram_url,
         banners: data.data.banners || [],
-        workingHours: data.data.workingHours || []
+        workingHours: [{
+          day: data.data.workingHours?.[0]?.day || "Monday",
+          open_time: data.data.workingHours?.[0]?.open_time || "09:00",
+          close_time: data.data.workingHours?.[0]?.close_time || "17:00"
+        }]
       });
       setShowBannerErrors(
         new Array(data.data.banners?.length || 1).fill(false),
