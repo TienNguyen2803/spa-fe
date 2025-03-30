@@ -1,3 +1,4 @@
+import { UseFormReturn } from "react-hook-form";
 
 export interface ISpaForm {
   name: string;
