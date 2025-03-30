@@ -1,4 +1,3 @@
-
 import { List } from "@refinedev/mui";
 import { useCreate, useNavigation } from "@refinedev/core";
 import { useForm } from "react-hook-form";
@@ -34,7 +33,7 @@ export default function CreateSpaPage() {
           day_of_week: "Monday",
           opening_time: "09:00",
           closing_time: "18:00",
-          is_closed: false
+          is_closed: false,
         },
       ],
     },
@@ -98,7 +97,7 @@ export default function CreateSpaPage() {
   };
 
   return (
-    <List breadcrumb={[{ label: "Spas" }, { label: "Create" }]}>
+    <List>
       <SpaForm
         form={form}
         onSubmit={onSubmit}
