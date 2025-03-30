@@ -37,9 +37,10 @@ interface ISpaForm {
     filename?: string;
   }[];
   workingHours: {
-    day: string;
-    open_time: string;
-    close_time: string;
+    day_of_week: string;
+    opening_time: string;
+    closing_time: string;
+    is_closed: boolean;
   }[];
 }
 
@@ -418,41 +419,50 @@ export default function SpaForm({
             <Grid container spacing={2}>
               <Grid item xs={12} sx={{ display: "flex", gap: 2 }}>
                 <TextField
-                  {...register(`workingHours.0.day`, { required: true })}
+                  {...register(`workingHours.0.day_of_week`, { required: true })}
                   defaultValue="Monday"
                   label="Ngày trong tuần"
                   size="small"
                   sx={{ width: 180 }}
-                  error={!!errors.workingHours?.[0]?.day && isSubmitted}
+                  error={!!errors.workingHours?.[0]?.day_of_week && isSubmitted}
                   helperText={
-                    errors.workingHours?.[0]?.day ? "Vui lòng chọn ngày" : ""
+                    errors.workingHours?.[0]?.day_of_week ? "Vui lòng chọn ngày" : ""
                   }
                 />
                 <TextField
-                  {...register(`workingHours.0.open_time`, { required: true })}
+                  {...register(`workingHours.0.opening_time`, { required: true })}
                   label="Giờ mở cửa"
                   type="time"
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  error={!!errors.workingHours?.[0]?.open_time && isSubmitted}
+                  error={!!errors.workingHours?.[0]?.opening_time && isSubmitted}
                   helperText={
-                    errors.workingHours?.[0]?.open_time
+                    errors.workingHours?.[0]?.opening_time
                       ? "Vui lòng nhập giờ mở cửa"
                       : ""
                   }
                 />
                 <TextField
-                  {...register(`workingHours.0.close_time`, { required: true })}
+                  {...register(`workingHours.0.closing_time`, { required: true })}
                   label="Giờ đóng cửa"
                   type="time"
                   size="small"
                   InputLabelProps={{ shrink: true }}
-                  error={!!errors.workingHours?.[0]?.close_time && isSubmitted}
+                  error={!!errors.workingHours?.[0]?.closing_time && isSubmitted}
                   helperText={
-                    errors.workingHours?.[0]?.close_time
+                    errors.workingHours?.[0]?.closing_time
                       ? "Vui lòng nhập giờ đóng cửa"
                       : ""
                   }
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...register(`workingHours.0.is_closed`)}
+                      defaultChecked={false}
+                    />
+                  }
+                  label="Đóng cửa"
                 />
               </Grid>
             </Grid>
