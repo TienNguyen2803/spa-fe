@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
@@ -71,11 +70,13 @@ export default function EditSpaPage() {
         facebook_url: data.data.facebook_url,
         instagram_url: data.data.instagram_url,
         banners: data.data.banners || [],
-        workingHours: [{
-          day: data.data.workingHours?.[0]?.day || "Monday",
-          open_time: data.data.workingHours?.[0]?.open_time || "09:00",
-          close_time: data.data.workingHours?.[0]?.close_time || "17:00"
-        }]
+        workingHours: [
+          {
+            day: data.data.workingHours?.[0]?.day_of_week,
+            open_time: data.data.workingHours?.[0]?.opening_time,
+            close_time: data.data.workingHours?.[0]?.closing_time,
+          },
+        ],
       });
       setShowBannerErrors(
         new Array(data.data.banners?.length || 1).fill(false),
