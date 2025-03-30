@@ -98,7 +98,7 @@ export default function CreateSpaPage() {
   };
 
   return (
-    <List>
+    <List breadcrumb={[{ label: "Spas" }, { label: "Create" }]}>
       <SpaForm
         form={form}
         onSubmit={onSubmit}
