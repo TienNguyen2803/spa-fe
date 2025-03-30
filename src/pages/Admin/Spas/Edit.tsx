@@ -45,17 +45,26 @@ export default function EditSpaPage() {
   const id = params.id;
 
   const form = useForm<ISpaForm>({
-    mode: "onSubmit",
+    mode: "onSubmit", 
     reValidateMode: "onChange",
   });
 
-  const { data, refetch } = useOne({
+  const { data, isLoading } = useOne({
     resource: "spa-info",
     id: id || "",
     queryOptions: {
-      enabled: false,
+      enabled: !!id,
     },
   });
+
+  React.useEffect(() => {
+    if (data?.data) {
+      form.reset(data.data);
+      setShowBannerErrors(
+        new Array(data.data.banners?.length || 1).fill(false),
+      );
+    }
+  }, [data, form]);
 
   const { mutate } = useUpdate({
     resource: "spa-info",
@@ -68,17 +77,6 @@ export default function EditSpaPage() {
       type: "error",
     },
   });
-
-  React.useEffect(async () => {
-    const data = await refetch();
-    console.log(data);
-    if (data?.data) {
-      form.reset(data.data);
-      setShowBannerErrors(
-        new Array(data.data.banners?.length || 1).fill(false),
-      );
-    }
-  }, [data]);
 
   const onSubmit = async (data: ISpaForm) => {
     let hasError = false;
