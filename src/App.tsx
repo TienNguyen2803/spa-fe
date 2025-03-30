@@ -150,7 +150,7 @@ function App() {
                   show: "/users/show/:id",
                 },
                 {
-                  name: "spas",
+                  name: "Quản Lý Spa",
                   list: "/spas",
                   create: "/spas/create",
                   edit: "/spas/edit/:id",

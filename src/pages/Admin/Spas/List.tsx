@@ -26,6 +26,7 @@ import {
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { ISpa } from "./types/spa";
+import { ListRefineCustome } from "../../../components/List";
 
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,7 +36,7 @@ export default function ListSpaPage() {
     dataGridProps,
     tableQueryResult: { data: tableData, isLoading, isError },
     setFilters,
-  } = useDataGrid<Spa, HttpError>({
+  } = useDataGrid<ISpa, HttpError>({
     resource: "spa-info",
     pagination: {
       pageSize: 10,
@@ -97,7 +98,8 @@ export default function ListSpaPage() {
         field: "index",
         headerName: "No.",
         width: 70,
-        renderCell: (params) => {
+        renderCell: (params: any) => {
+          console.log(params);
           try {
             // Lấy index của hàng trong trang hiện tại
             const rowIndexInPage = params.api.getRowIndexRelativeToVisibleRows
@@ -267,7 +269,24 @@ export default function ListSpaPage() {
   );
 
   return (
-    <List>
+    <ListRefineCustome
+      canCreate={false}
+      title={<p>Danh sách Spa</p>}
+      headerProps={{
+        sx: {
+          padding: "4px 16px", // giảm padding
+          height: "auto", // cho phép chiều cao tự động điều chỉnh
+          minHeight: "40px", // đặt chiều cao tối thiểu
+          "& .MuiCardHeader-content": {
+            margin: 0, // giảm margin
+          },
+          "& .MuiCardHeader-title": {
+            fontSize: "16px", // giảm kích thước font
+            lineHeight: 1.2, // giảm line height
+          },
+        },
+      }}
+    >
       <Box
         sx={{
           p: 2,

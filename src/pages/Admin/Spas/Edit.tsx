@@ -124,7 +124,7 @@ export default function EditSpaPage() {
   }
 
   return (
-    <List>
+    <List canCreate={false} title={<p>Edit Spa</p>}>
       <SpaForm
         form={form}
         onSubmit={onSubmit}

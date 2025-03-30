@@ -97,7 +97,7 @@ export default function CreateSpaPage() {
   };
 
   return (
-    <List>
+    <List canCreate={false} title={<p>Tạo Spa</p>}>
       <SpaForm
         form={form}
         onSubmit={onSubmit}
