@@ -49,6 +49,8 @@ export default function EditSpaPage() {
     id: id as string,
   });
 
+  console.log(data, id);
+
   const { mutate } = useUpdate({
     resource: "spa-info",
     successNotification: {
