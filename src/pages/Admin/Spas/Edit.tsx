@@ -38,6 +38,7 @@ export default function EditSpaPage() {
   const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
   const { push } = useNavigation();
   const { id } = useParams();
+  console.log("Edit Spa ID:", id);
 
   const form = useForm<ISpaForm>({
     mode: "onSubmit",

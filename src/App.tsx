@@ -152,7 +152,7 @@ function App() {
                 {
                   name: "Danh sách Spa",
                   list: "/spas",
-                  edit: "/users/edit/:id",
+                  edit: "/spas/edit/:id",
                 },
               ]}
               options={{
