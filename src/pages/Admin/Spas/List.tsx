@@ -26,7 +26,8 @@ import {
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { ISpa } from "./types/spa";
-import { ListRefineCustome } from "../../../components/List";
+// Importing the custom List component
+import { ListRefineCustom } from "../../../components/List";
 
 export default function ListSpaPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -269,7 +270,7 @@ export default function ListSpaPage() {
   );
 
   return (
-    <ListRefineCustome
+    <ListRefineCustom
       canCreate={false}
       title={<p>Danh sách Spa</p>}
       headerProps={{
@@ -286,163 +287,17 @@ export default function ListSpaPage() {
           },
         },
       }}
-    >
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          bgcolor: "background.paper",
-          borderRadius: 1,
-          mb: 2,
-          boxShadow: 1,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            alignItems: "center",
-            flexGrow: 1,
-            maxWidth: 800,
-          }}
-        >
-          <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-            <TextField
-              label="Tìm kiếm"
-              placeholder="Tìm theo tên, địa chỉ hoặc email..."
-              variant="outlined"
-              size="small"
-              fullWidth
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: searchTerm && (
-                  <InputAdornment position="end">
-                    <IconButton size="small" onClick={handleClearSearch}>
-                      <ClearIcon fontSize="small" />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button
-              variant="contained"
-              onClick={handleSearch}
-              sx={{
-                minWidth: "120px",
-                height: "40px",
-                backgroundColor: "#1976d2",
-                "&:hover": { backgroundColor: "#1565c0" },
-              }}
-            >
-              Tìm kiếm
-            </Button>
-          </Box>
-        </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleCreate}
-          sx={{
-            bgcolor: "success.main",
-            "&:hover": { bgcolor: "success.dark" },
-          }}
-        >
-          Tạo Spa
-        </Button>
-      </Box>
-
-      {isError ? (
-        <Box sx={{ p: 3, textAlign: "center" }}>
-          <Typography color="error" variant="h6">
-            Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại sau.
-          </Typography>
-          <Button
-            sx={{ mt: 2 }}
-            variant="outlined"
-            onClick={() => location.reload()}
-          >
-            Tải lại trang
-          </Button>
-        </Box>
-      ) : (
-        <Box sx={{ position: "relative" }}>
-          <DataGrid
-            {...dataGridProps}
-            rows={dataGridProps.rows || []}
-            columns={columns}
-            autoHeight
-            disableColumnMenu
-            disableRowSelectionOnClick
-            loading={isLoading}
-            getRowClassName={(params) =>
-              `spa-row-${params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"}`
-            }
-            sx={{
-              border: "1px solid #e0e0e0",
-              borderRadius: 2,
-              "& .MuiDataGrid-main": {
-                padding: "12px",
-              },
-              "& .MuiDataGrid-row": {
-                borderBottom: "1px solid #f0f0f0",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.02)",
-                },
-              },
-              "& .spa-row-even": {
-                backgroundColor: "rgba(0, 0, 0, 0.01)",
-              },
-              "& .MuiDataGrid-cell": {
-                padding: "12px 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                borderBottom: "2px solid #f0f0f0",
-                bgcolor: "#fafafa",
-                fontWeight: "600",
-                fontSize: "0.875rem",
-                color: "#333",
-              },
-              "& .MuiDataGrid-columnHeader": {
-                padding: "12px 16px",
-              },
-            }}
-          />
-          {isLoading && (
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.7)",
-                zIndex: 9,
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
-        </Box>
-      )}
-    </List>
+      // Passing the DataGrid props to the custom List component
+      dataGridProps={dataGridProps}
+      columns={columns}
+      isLoading={isLoading}
+      isError={isError}
+      handleSearch={handleSearch}
+      handleClearSearch={handleClearSearch}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      handleCreate={handleCreate}
+      handleEdit={handleEdit}
+    />
   );
 }
