@@ -72,7 +72,15 @@ export default function EditSpaPage() {
 
   React.useEffect(() => {
     if (data?.data) {
-      const banners = data.data.banners?.map(banner => ({
+      const banners = data.data.banners?.map((banner: {
+        image_url: string;
+        preview_url: string;
+        title: string;
+        subtitle: string;
+        order: number;
+        is_active: boolean;
+        type: number;
+      }) => ({
         ...banner,
         filename: banner.image_url?.split('/').pop() || ''
       })) || [];
