@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
-import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import { useParams } from "react-router-dom";
+import { useUpdate, useNavigation, useOne } from "@refinedev/core";
 import SpaForm from "./components/SpaForm";
 
 interface ISpaForm {
@@ -37,7 +37,8 @@ export default function EditSpaPage() {
   const [showLogoError, setShowLogoError] = useState(false);
   const [showBannerErrors, setShowBannerErrors] = useState<boolean[]>([false]);
   const { push } = useNavigation();
-  const { id } = useParams();
+  const params = useParams();
+  const id = params?.id;
   console.log("Edit Spa ID:", id);
 
   const form = useForm<ISpaForm>({
@@ -45,9 +46,12 @@ export default function EditSpaPage() {
     reValidateMode: "onChange",
   });
 
-  const { data } = useOne({
+  const { data, isLoading } = useOne({
     resource: "spa-info",
-    id: id as string,
+    id: id || "",
+    queryOptions: {
+      enabled: !!id,
+    },
   });
 
   console.log(data, id);
