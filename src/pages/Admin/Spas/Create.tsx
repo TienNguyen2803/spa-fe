@@ -1,4 +1,4 @@
-// src/pages/Admin/Spas/Create.tsx
+
 import { List } from "@refinedev/mui";
 import { useCreate, useNavigation } from "@refinedev/core";
 import { useForm } from "react-hook-form";
@@ -27,9 +27,10 @@ interface ISpaForm {
     filename?: string;
   }[];
   workingHours: {
-    day: string;
-    open_time: string;
-    close_time: string;
+    day_of_week: string;
+    opening_time: string;
+    closing_time: string;
+    is_closed: boolean;
   }[];
 }
 
@@ -57,9 +58,10 @@ export default function CreateSpaPage() {
       ],
       workingHours: [
         {
-          day: "Monday",
-          open_time: "09:00",
-          close_time: "18:00",
+          day_of_week: "Monday",
+          opening_time: "09:00",
+          closing_time: "18:00",
+          is_closed: false
         },
       ],
     },
