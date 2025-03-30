@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { List } from "@refinedev/mui";
 import { useForm } from "react-hook-form";
@@ -45,18 +44,21 @@ export default function EditSpaPage() {
 
   React.useEffect(() => {
     if (data?.data) {
-      const banners = data.data.banners?.map((banner: {
-        image_url: string;
-        preview_url: string;
-        title: string;
-        subtitle: string;
-        order: number;
-        is_active: boolean;
-        type: number;
-      }) => ({
-        ...banner,
-        filename: banner.image_url?.split('/').pop() || ''
-      })) || [];
+      const banners =
+        data.data.banners?.map(
+          (banner: {
+            image_url: string;
+            preview_url: string;
+            title: string;
+            subtitle: string;
+            order: number;
+            is_active: boolean;
+            type: number;
+          }) => ({
+            ...banner,
+            filename: banner.image_url?.split("/").pop() || "",
+          }),
+        ) || [];
 
       form.reset({
         name: data.data.name,
@@ -64,22 +66,22 @@ export default function EditSpaPage() {
         phone: data.data.phone,
         email: data.data.email,
         logo_url: data.data.logo_url,
-        logo_filename: data.data.logo_url?.split('/').pop() || "",
+        logo_filename: data.data.logo_url?.split("/").pop() || "",
         seo_title: data.data.seo_title,
         seo_description: data.data.seo_description,
         facebook_url: data.data.facebook_url,
         instagram_url: data.data.instagram_url,
         banners: banners,
-        workingHours: [{
-          day_of_week: data.data.workingHours?.[0]?.day_of_week || "Monday",
-          opening_time: data.data.workingHours?.[0]?.opening_time || "09:00",
-          closing_time: data.data.workingHours?.[0]?.closing_time || "17:00",
-          is_closed: data.data.workingHours?.[0]?.is_closed || false
-        }]
+        workingHours: [
+          {
+            day_of_week: data.data.workingHours?.[0]?.day_of_week || "Monday",
+            opening_time: data.data.workingHours?.[0]?.opening_time || "09:00",
+            closing_time: data.data.workingHours?.[0]?.closing_time || "17:00",
+            is_closed: data.data.workingHours?.[0]?.is_closed || false,
+          },
+        ],
       });
-      setShowBannerErrors(
-        new Array(banners.length || 1).fill(false)
-      );
+      setShowBannerErrors(new Array(banners.length || 1).fill(false));
     }
   }, [data, form]);
 

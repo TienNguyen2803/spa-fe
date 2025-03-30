@@ -152,6 +152,7 @@ function App() {
                 {
                   name: "spas",
                   list: "/spas",
+                  create: "/spas/create",
                   edit: "/spas/edit/:id",
                 },
               ]}
