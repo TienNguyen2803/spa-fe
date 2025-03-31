@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { useNavigation, HttpError } from "@refinedev/core";
 import { List, useDataGrid } from "@refinedev/mui";
 import {
@@ -50,6 +50,13 @@ export default function ListSpaPage() {
   });
 
   const handleSearch = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (searchTerm) {
+      params.set("search", searchTerm);
+    } else {
+      params.delete("search");
+    }
+    window.history.pushState({}, "", `${window.location.pathname}?${params.toString()}`);
     setFilters([
       {
         operator: "or",
@@ -76,6 +83,9 @@ export default function ListSpaPage() {
 
   const handleClearSearch = useCallback(() => {
     setSearchTerm("");
+    const params = new URLSearchParams(window.location.search);
+    params.delete("search");
+    window.history.pushState({}, "", `${window.location.pathname}?${params.toString()}`);
     setFilters([]);
   }, [setFilters]);
 
@@ -94,16 +104,12 @@ export default function ListSpaPage() {
         width: 70,
         renderCell: (params: any) => {
           try {
-            // Lấy index của hàng trong trang hiện tại
             const rowIndexInPage = params.api.getRowIndexRelativeToVisibleRows
               ? params.api.getRowIndexRelativeToVisibleRows(params.row.id)
               : params.api.getRowIndex(params.row.id) %
                 params.api.getPageSize();
-
-            // Tính toán STT dựa trên trang hiện tại
             const currentPage = params.api.state?.pagination?.page || 0;
             const pageSize = params.api.state?.pagination?.pageSize || 10;
-
             return currentPage * pageSize + rowIndexInPage + 1;
           } catch (error) {
             console.warn("Error calculating row number:", error);
@@ -260,6 +266,15 @@ export default function ListSpaPage() {
     ],
     [],
   );
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const search = urlParams.get('search');
+    if (search) {
+      setSearchTerm(search);
+      handleSearch();
+    }
+  }, []);
 
   return (
     <ListRefineCustom
