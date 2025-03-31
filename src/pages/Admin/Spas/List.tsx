@@ -47,36 +47,36 @@ export default function ListSpaPage() {
         },
       ],
     },
-    filters: {
-      initial: [
-        {
-          field: "q",
-          operator: "contains",
-          value: searchTerm,
-        },
-      ],
-    },
   });
 
   const handleSearch = useCallback(() => {
     setFilters([
       {
-        field: "q",
-        operator: "contains",
-        value: searchTerm,
+        operator: "or",
+        value: [
+          {
+            field: "name",
+            operator: "contains",
+            value: searchTerm,
+          },
+          {
+            field: "address",
+            operator: "contains",
+            value: searchTerm,
+          },
+          {
+            field: "email",
+            operator: "contains",
+            value: searchTerm,
+          },
+        ],
       },
     ]);
   }, [searchTerm, setFilters]);
 
   const handleClearSearch = useCallback(() => {
     setSearchTerm("");
-    setFilters([
-      {
-        field: "q",
-        operator: "contains",
-        value: "",
-      },
-    ]);
+    setFilters([]);
   }, [setFilters]);
 
   const handleEdit = useCallback(
