@@ -16,7 +16,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { IServiceCategory } from "./types";
 import { ListRefineCustom } from "../../../components/List/ListRefineCustom";
-import { SearchBar } from "../Spas/components/SearchBar";
+import { SearchBar } from "./components/SearchBar";
 
 export default function ListServiceCategoryPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -200,7 +200,6 @@ export default function ListServiceCategoryPage() {
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
         handleClearSearch={handleClearSearch}
-        placeholder="Tìm kiếm theo tên và mô tả"
       />
 
       {isError ? (

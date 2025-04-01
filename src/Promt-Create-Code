@@ -33,5 +33,6 @@ Tham khảo cấu trúc JSON sau:
 - khi thêm router page xong , nhớ import nhưng trang ở trong router.
 - Tham khảo cấu trúc từ `Spa-info`. 
 - Chú ý lỗi import ở file List cho đúng.
+- Thanh searchbar dùng riêng, ko import chung với folder khác.
 - Chỉnh sửa tên place holder của search theo json cho đúng.
 - Kiểm tra kỹ và chạy thử các API để đảm bảo hoạt động chính xác.  
