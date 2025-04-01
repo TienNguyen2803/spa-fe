@@ -56,19 +56,8 @@ export default function EditServiceCategoryPage() {
   }, [data, form]);
 
   const onSubmit = async (data: IServiceCategoryForm) => {
-    let hasError = false;
-
-    if (!data.image_url) {
-      setShowImageError(true);
-      hasError = true;
-    }
-
     await form.trigger();
-    if (hasError) {
-      window.alert("Vui lòng upload hình ảnh danh mục");
-      return;
-    }
-
+    
     mutate(
       {
         resource: "service-categories",
