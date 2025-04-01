@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useMemo } from "react";
 import { useNavigation, HttpError } from "@refinedev/core";
 import { useDataGrid } from "@refinedev/mui";
@@ -12,15 +11,12 @@ import {
   CircularProgress,
   Button,
 } from "@mui/material";
-import {
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-} from "@mui/icons-material";
+import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { IServiceCategory } from "./types";
 import { ListRefineCustom } from "../../../components/List/ListRefineCustom";
-import { SearchBar } from "../../../components/Search/SearchBar";
+import { SearchBar } from "../Spas/components/SearchBar";
 
 export default function ListServiceCategoryPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,7 +82,8 @@ export default function ListServiceCategoryPage() {
           try {
             const rowIndexInPage = params.api.getRowIndexRelativeToVisibleRows
               ? params.api.getRowIndexRelativeToVisibleRows(params.row.id)
-              : params.api.getRowIndex(params.row.id) % params.api.getPageSize();
+              : params.api.getRowIndex(params.row.id) %
+                params.api.getPageSize();
             const currentPage = params.api.state?.pagination?.page || 0;
             const pageSize = params.api.state?.pagination?.pageSize || 10;
             return currentPage * pageSize + rowIndexInPage + 1;
@@ -115,7 +112,9 @@ export default function ListServiceCategoryPage() {
         headerName: "Hình Ảnh",
         width: 120,
         renderCell: (params) => (
-          <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Box
+            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
             <Avatar
               src={params.value}
               alt={params.row.name}
@@ -192,7 +191,9 @@ export default function ListServiceCategoryPage() {
   return (
     <ListRefineCustom
       canCreate={true}
-      title={<Typography fontWeight={"bold"}>Danh sách Danh Mục Dịch Vụ</Typography>}
+      title={
+        <Typography fontWeight={"bold"}>Danh sách Danh Mục Dịch Vụ</Typography>
+      }
     >
       <SearchBar
         searchTerm={searchTerm}
@@ -235,7 +236,9 @@ export default function ListServiceCategoryPage() {
                 borderBottom: "1px solid #f0f0f0",
                 "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.02)" },
               },
-              "& .category-row-even": { backgroundColor: "rgba(0, 0, 0, 0.01)" },
+              "& .category-row-even": {
+                backgroundColor: "rgba(0, 0, 0, 0.01)",
+              },
               "& .MuiDataGrid-cell": {
                 padding: "12px 16px",
                 display: "flex",

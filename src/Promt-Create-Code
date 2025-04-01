@@ -29,6 +29,9 @@ Tham khảo cấu trúc JSON sau:
 
 **Yêu cầu:**  
 - Tạo các trường tương tự với response trong JSON.  
-- Đừng quên thêm router và resource vào file `app.tsx`.  
-- Tham khảo cấu trúc từ `Spa-info`.  
+- thêm router, resources  vào file `app.tsx`.  
+- khi thêm router page xong , nhớ import nhưng trang ở trong router.
+- Tham khảo cấu trúc từ `Spa-info`. 
+- Chú ý lỗi import ở file List cho đúng.
+- Chỉnh sửa tên place holder của search theo json cho đúng.
 - Kiểm tra kỹ và chạy thử các API để đảm bảo hoạt động chính xác.  

@@ -39,14 +39,14 @@ export default function ListSpaPage() {
     pagination: {
       pageSize: 10,
     },
-    sorters: {
-      initial: [
-        {
-          field: "name",
-          order: "asc",
-        },
-      ],
-    },
+    // sorters: {
+    //   initial: [
+    //     {
+    //       field: "name",
+    //       order: "asc",
+    //     },
+    //   ],
+    // },
   });
 
   const handleSearch = useCallback(() => {

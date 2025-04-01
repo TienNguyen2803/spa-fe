@@ -36,6 +36,9 @@ import { LoginPage } from "./pages/Admin/Login";
 import ListSpaPage from "./pages/Admin/Spas/List";
 import CreateSpaPage from "./pages/Admin/Spas/Create";
 import EditSpaPage from "./pages/Admin/Spas/Edit";
+import ListServiceCategoryPage from "./pages/Admin/ServiceCategory/List";
+import CreateServiceCategoryPage from "./pages/Admin/ServiceCategory/Create";
+import EditServiceCategoryPage from "./pages/Admin/ServiceCategory/Edit";
 
 const axiosInstance = axios.create({
   baseURL:
@@ -155,6 +158,12 @@ function App() {
                   create: "/spas/create",
                   edit: "/spas/edit/:id",
                 },
+                {
+                  name: "Quản lý Loại service",
+                  list: "/service-categories",
+                  create: "/service-categories/create",
+                  edit: "/service-categories/edit/:id",
+                },
               ]}
               options={{
                 syncWithLocation: true,
@@ -204,8 +213,14 @@ function App() {
                   </Route>
                   <Route path="/service-categories">
                     <Route index element={<ListServiceCategoryPage />} />
-                    <Route path="create" element={<CreateServiceCategoryPage />} />
-                    <Route path="edit/:id" element={<EditServiceCategoryPage />} />
+                    <Route
+                      path="create"
+                      element={<CreateServiceCategoryPage />}
+                    />
+                    <Route
+                      path="edit/:id"
+                      element={<EditServiceCategoryPage />}
+                    />
                   </Route>
                   <Route path="/users">
                     <Route index element={<UsersList />} />
