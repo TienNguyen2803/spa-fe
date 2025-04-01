@@ -50,28 +50,33 @@ export default function ListSpaPage() {
   });
 
   const handleSearch = useCallback(() => {
-    setFilters([
-      {
-        operator: "or",
-        value: [
-          {
-            field: "name",
-            operator: "contains",
-            value: searchTerm,
-          },
-          {
-            field: "address",
-            operator: "contains",
-            value: searchTerm,
-          },
-          {
-            field: "email",
-            operator: "contains",
-            value: searchTerm,
-          },
-        ],
-      },
-    ]);
+    if (!searchTerm || searchTerm.trim() === "") {
+      // Nếu giá trị tìm kiếm rỗng, xóa tất cả filter
+      setFilters([], "replace");
+    } else {
+      setFilters([
+        {
+          operator: "or",
+          value: [
+            {
+              field: "name",
+              operator: "contains",
+              value: searchTerm,
+            },
+            {
+              field: "address",
+              operator: "contains",
+              value: searchTerm,
+            },
+            {
+              field: "email",
+              operator: "contains",
+              value: searchTerm,
+            },
+          ],
+        },
+      ]);
+    }
   }, [searchTerm, setFilters]);
 
   const handleClearSearch = useCallback(() => {
