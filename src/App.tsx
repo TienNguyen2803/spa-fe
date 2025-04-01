@@ -202,6 +202,11 @@ function App() {
                     <Route path="create" element={<CreateSpaPage />} />
                     <Route path="edit/:id" element={<EditSpaPage />} />
                   </Route>
+                  <Route path="/service-categories">
+                    <Route index element={<ListServiceCategoryPage />} />
+                    <Route path="create" element={<CreateServiceCategoryPage />} />
+                    <Route path="edit/:id" element={<EditServiceCategoryPage />} />
+                  </Route>
                   <Route path="/users">
                     <Route index element={<UsersList />} />
                     <Route path="create" element={<UsersCreate />} />
