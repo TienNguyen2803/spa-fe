@@ -200,6 +200,7 @@ export default function ListServiceCategoryPage() {
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
         handleClearSearch={handleClearSearch}
+        placeholder="Tìm kiếm theo tên và mô tả"
       />
 
       {isError ? (
